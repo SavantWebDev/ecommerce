@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="/src/css/login.css" />
+</head>
+
+<body>
+  <header>
+    <img class="dashboard-img" src="/src/image/dasboard-img.svg" alt="" />
+  </header>
+  <section class="login">
+    <h2 class="name-login">Login Administrativo</h2>
+
+    <% if(error){ %>
+      <div style="color: red; text-align: center; margin: 0 15px;">
+        <%= error %>
+      </div>
+      <% } %>
+
+        <form action="/login" id="form" method="post" class="form-login">
+          <label for="">Email</label>
+          <input type="email" name="email" value="<%= mail %>" id="email" placeholder="Digite seu e-mail" />
+          <label for="">Senha</label>
+          <input type="password" name="senha" id="senha" placeholder="Digite sua senha" />
+          <div class="dados-login">
+            <div class="checkbox-dados">
+              <input type="checkbox" id="checkbox" />
+              <label class="checkbox-name" for="">Lembrar-me</label>
+            </div>
+          </div>
+          <input class="btnForms" type="submit" value="Entrar" />
+        </form>
+  </section>
+  <script src="/src/js/login.js"></script>
+</body>
+
+</html>
