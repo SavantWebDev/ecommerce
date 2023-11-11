@@ -75,11 +75,14 @@
                 <label for="quantidade">Quantidade:</label>
                 <input type="number" id="quantidade" name="qnt" required />
 
-                <!-- <label for="categoria">Categoria: </label>
-                <select name="" id="">
-                  <option value="">Bebidas Frias</option>
-                  <option value="">Bebidas Quentes</option>
-                </select> -->
+                <label for="categoria">Categoria: </label>
+                <select name="categoria" id="">
+                  <% categorias.forEach(function (categoria){ %>
+                    <option value="<%= categoria.idcategoria %>">
+                      <%= categoria.nomecategoria %>
+                    </option>
+                    <% }) %>
+                </select>
 
                 <input id="btnAddForm" type="submit" value="Cadastrar Produto" />
               </form>
@@ -130,6 +133,15 @@
                 <label for="preco">Preço: (R$)</label>
                 <input type="text" id="precoEdit" name="valor" onkeypress="$(this).mask('#.##0,00', {reverse: true})"
                   required />
+
+                <label for="categoria">Categoria: </label>
+                <select name="categoria" id="categorias">
+                  <% categorias.forEach(function (categoria){ %>
+                    <option value="<%= categoria.idcategoria %>">
+                      <%= categoria.nomecategoria %>
+                    </option>
+                    <% }) %>
+                </select>
 
                 <input type="submit" id="addEdit" value="Salvar produto" />
               </form>
@@ -250,7 +262,7 @@
                                   <%= produtos.valor %>
                                 </td>
                                 <td>
-                                  <%= produtos.categoria %>
+                                  <%= produtos.nomecategoria %>
                                 </td>
                                 <td class="container-actions-btn">
                                   <span class="material-symbols-outlined edit-btn">

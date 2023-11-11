@@ -25,14 +25,18 @@
   padding: 30px;
 }
 
-.forms-Addproduct input {
+.forms-Addproduct input,
+.forms-Addproduct select,
+.form-edit select {
   padding: 5px 10px;
   border: 1px solid #ccc;
   font-family: "Poppins", sans-serif !important;
 }
 
 .forms-Addproduct input,
-.forms-Addproduct textarea {
+.forms-Addproduct textarea,
+.forms-Addproduct select,
+.form-edit select {
   font-size: 0.9rem;
   color: #000000;
   border-radius: 5px;
@@ -201,14 +205,17 @@ Inpút file */
   gap: 10px;
   margin-top: 10px;
 }
+
 .label input[type="file"] {
   display: none;
 }
+
 .personal-figure {
   position: relative;
   width: 120px;
   height: 120px;
 }
+
 .personal-avatar {
   cursor: pointer;
   width: 120px;
@@ -219,9 +226,11 @@ Inpút file */
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
   transition: all ease-in-out 0.3s;
 }
+
 .personal-avatar:hover {
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
 }
+
 .personal-figcaption {
   cursor: pointer;
   position: absolute;
@@ -236,11 +245,13 @@ Inpút file */
   background-color: rgba(0, 0, 0, 0);
   transition: all ease-in-out 0.3s;
 }
+
 .personal-figcaption:hover {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.personal-figcaption > img {
+
+.personal-figcaption>img {
   width: 50px;
   height: 50px;
 }

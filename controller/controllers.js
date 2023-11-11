@@ -25,7 +25,6 @@ router.get('/product', auth, async (req, res) => {
             })
         })
 })
-
 router.get('/', auth, (req, res) => {
     res.render('dashboard', { username: req.session.user, funcao: req.session.funcao })
 })
@@ -45,12 +44,14 @@ router.get('/estoque', auth, async (req, res) => {
     ean = (ean == undefined || ean.length == 0) ? undefined : ean
     qntExist = (qntExist == undefined || qntExist.length == 0) ? undefined : qntExist
 
-    await knex.raw('SELECT * FROM estoque ORDER BY id ASC')
+    await knex.raw('SELECT * FROM estoque a INNER JOIN tb_categorias b ON a.idcategoria = b.idcategoria ORDER BY a.id ASC')
         .then(async (result) => {
 
             var totalProdutos = await knex.raw(`
                 SELECT SUM(qnt) FROM estoque
             `)
+
+            var categorias = await knex.raw('SELECT idcategoria, nomecategoria FROM tb_categorias')
 
             res.render('index', {
                 products: result.rows,
@@ -62,7 +63,8 @@ router.get('/estoque', auth, async (req, res) => {
                 qntExist: qntExist,
                 totalProdutos: totalProdutos.rows[0].sum,
                 username: req.session.user,
-                funcao: req.session.funcao
+                funcao: req.session.funcao,
+                categorias: categorias.rows
             })
         })
         .catch(err => console.log(err))
@@ -71,7 +73,7 @@ router.get('/estoque', auth, async (req, res) => {
 
 router.post('/add-product', auth, upload.single('foto'), async (req, res) => {
 
-    var { ean, nomeproduto, descricao, qnt, valor } = req.body
+    var { ean, nomeproduto, descricao, qnt, valor, categoria } = req.body
     var foto = req.file
 
     console.log('===========================')
@@ -109,7 +111,7 @@ router.post('/add-product', auth, upload.single('foto'), async (req, res) => {
         req.flash('qntExist', exist.rows[0].qnt)
         res.redirect('/estoque')
     } else {
-        await knex.raw(`INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto}', '${descricao}', ${qnt}, '${foto}') `)
+        await knex.raw(`INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto}', '${descricao}', ${qnt}, '${foto}', '${categoria}') `)
             .then(() => {
                 console.log('Inserido')
                 var success = 'Produto adicionado com sucesso!';
@@ -155,10 +157,10 @@ router.get('/add-product/exist', auth, async (req, res) => {
 })
 
 router.post('/edit-product', auth, upload.single('foto'), async (req, res) => {
-    var { ean, nomeproduto, descricao, qnt, valor, id } = req.body
+    var { ean, nomeproduto, descricao, qnt, valor, id, categoria } = req.body
     var foto = req.file
 
-    console.log(foto)
+    console.log(categoria)
 
     var prod = await knex.raw(`SELECT * FROM estoque WHERE id = ${id}`)
 
@@ -189,7 +191,7 @@ router.post('/edit-product', auth, upload.single('foto'), async (req, res) => {
     if (prod != undefined) {
         try {
             await knex.raw(`
-        UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}' WHERE id = ${id}
+        UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}', idcategoria = ${categoria} WHERE id = ${id}
     `)
                 .then(function () {
                     var success = 'Produto editado com sucesso!';
