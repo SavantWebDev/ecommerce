@@ -121,11 +121,15 @@
             <label for="quantidade">Quantidade:</label>
             <input type="number" id="quantidade" name="qnt" required />
 
-            <!-- <label for="categoria">Categoria: </label>
-                <select name="" id="">
-                  <option value="">Bebidas Frias</option>
-                  <option value="">Bebidas Quentes</option>
-                </select> -->
+
+                <label for="categoria">Categoria: </label>
+                <select name="categoria" id="">
+                  <% categorias.forEach(function (categoria){ %>
+                    <option value="<%= categoria.idcategoria %>">
+                      <%= categoria.nomecategoria %>
+                    </option>
+                    <% }) %>
+                </select>
 
             <input id="btnAddForm" type="submit" value="Cadastrar Produto" />
           </form>
@@ -214,9 +218,19 @@
               required
             />
 
-            <input type="submit" id="addEdit" value="Salvar produto" />
-          </form>
-        </div>
+
+                <label for="categoria">Categoria: </label>
+                <select name="categoria" id="categorias">
+                  <% categorias.forEach(function (categoria){ %>
+                    <option value="<%= categoria.idcategoria %>">
+                      <%= categoria.nomecategoria %>
+                    </option>
+                    <% }) %>
+                </select>
+
+                <input type="submit" id="addEdit" value="Salvar produto" />
+              </form>
+            </div>
 
         <!-- Alertas ao adicionar produtos -->
         <% if(error){ %>
@@ -257,61 +271,100 @@
 
         <!-- Modal Produto Existe -->
 
-        <% if(alert){ %>
-        <div class="modal-confirm-addProd">
-          <div class="background-modal-confirm"></div>
-          <div class="container-modal-confirm">
-            <div class="containar-img-confirmation">
-              <span class="material-symbols-outlined"> report </span>
-              <h2 class="confirmation-text-prod">Você tem certeza?</h2>
-            </div>
-            <h3 class="paragraph-text-prod">
-              O produto que você está tentando adicionar já existe. Caso
-              prossiga a quantidade indicada será somada ao produto atual.
-              Deseja continuar?
-            </h3>
-            <p style="margin-top: 10px">
-              Código de Barras: <%= ean %><br />
-              Quantidade existente deste Produto: <%= qntExist %><br />
-            </p>
-            <div class="btns-confirm-add-prod">
-              <a
-                class="btn-confirm-prod"
-                href="/add-product/exist?ean=<%= ean %>&qnt=<%= qnt %>"
-                >Confirmar</a
-              >
-              <a class="btn-cancel-prod" href="/estoque">Cancelar</a>
-            </div>
-          </div>
-        </div>
-        <% } %>
-        <table id="table_produtos" class="table_produtos">
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>Imagem</th>
-              <th>EAN</th>
-              <th>Nome do Produto</th>
-              <th>Descrição</th>
-              <th>Quantidade</th>
-              <th>Preço (R$)</th>
-              <th>Categoria</th>
-              <th>Açoes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% products.forEach(function(produtos){ %>
-            <tr>
-              <td><%= produtos.id %></td>
-              <td>
-                <img width="50" src="<%- produtos.image %>" />
-              </td>
-              <td><%= produtos.ean %></td>
-              <td><%= produtos.nomeproduto %></td>
-              <td>
-                <% if(!produtos.descricao){ %>
-                <p style="color: red; font-weight: bold">Sem Descrição</p>
-                <p><% } else { %></p>
+                    <% if(alert){ %>
+                      <div class="modal-confirm-addProd">
+                        <div class="background-modal-confirm"></div>
+                        <div class="container-modal-confirm">
+                          <div class="containar-img-confirmation">
+                            <span class="material-symbols-outlined"> report </span>
+                            <h2 class="confirmation-text-prod">Você tem certeza?</h2>
+                          </div>
+                          <h3 class="paragraph-text-prod">
+                            O produto que você está tentando adicionar já existe. Caso
+                            prossiga a quantidade indicada será somada ao produto atual.
+                            Deseja continuar?
+                          </h3>
+                          <p style="margin-top: 10px">
+                            Código de Barras: <%= ean %><br />
+                              Quantidade existente deste Produto: <%= qntExist %><br />
+                          </p>
+                          <div class="btns-confirm-add-prod">
+                            <a class="btn-confirm-prod"
+                              href="/add-product/exist?ean=<%= ean %>&qnt=<%= qnt %>">Confirmar</a>
+                            <a class="btn-cancel-prod" href="/estoque">Cancelar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                        <table id="table_produtos" class="table_produtos">
+                          <thead>
+                            <tr>
+                              <th>id</th>
+                              <th>Imagem</th>
+                              <th>EAN</th>
+                              <th>Nome do Produto</th>
+                              <th>Descrição</th>
+                              <th>Quantidade</th>
+                              <th>Preço (R$)</th>
+                              <th>Categoria</th>
+                              <th>Açoes</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% products.forEach(function(produtos){ %>
+                              <tr>
+                                <td>
+                                  <%= produtos.id %>
+                                </td>
+                                <td>
+                                  <img width="50" src="<%- produtos.image %>" />
+                                </td>
+                                <td>
+                                  <%= produtos.ean %>
+                                </td>
+                                <td>
+                                  <%= produtos.nomeproduto %>
+                                </td>
+                                <td>
+                                  <% if(!produtos.descricao){ %>
+                                    <p style="color: red; font-weight: bold;">Sem Descrição
+                                    <p>
+                                      <% } else { %>
+                                        <p>
+                                          <%= produtos.descricao %>
+                                        </p>
+                                        <% } %>
+                                </td>
+                                <td>
+                                  <%= produtos.qnt %>
+                                </td>
+                                <td>
+                                  <%= produtos.valor %>
+                                </td>
+                                <td>
+                                  <%= produtos.nomecategoria %>
+                                </td>
+                                <td class="container-actions-btn">
+                                  <span class="material-symbols-outlined edit-btn">
+                                    edit_square
+                                  </span>
+                                  <button onclick="delProd('<%= produtos.ean %>')" class="delete-btn" type="button">
+                                    <span class="material-symbols-outlined"> delete </span>
+                                  </button>
+                                </td>
+                              </tr>
+                              <% }) %>
+                          </tbody>
+                        </table>
+          </section>
+      </main>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="/src/js/graphsProdutos.js"></script>
+      <script src="/src/js/index.js"></script>
+      <script src="/src/js/tables.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+      <%- include('./partials/scripts.ejs') %>
+        <script>
 
                 <p><%= produtos.descricao %></p>
                 <% } %>

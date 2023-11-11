@@ -13,6 +13,7 @@
   --color-links-menu: #7c7c7c;
   --color-links-menu-hover: #fff;
 }
+
 body {
   display: flex;
   height: 100vh;
@@ -105,6 +106,7 @@ main {
   width: 30px;
   transition: all 0.5s;
 }
+
 #btnMenuHeader {
   width: 100%;
   display: flex;
@@ -114,5 +116,4 @@ main {
   cursor: pointer;
 }
 
-@media (max-width: 1300px) {
-}
+@media (max-width: 1300px) {}

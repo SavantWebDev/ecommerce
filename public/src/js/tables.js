@@ -97,8 +97,7 @@ tr.forEach((el) => {
     $(window).bind("scroll", 0);
     var dadosProd = result.target.parentElement.parentElement.children;
 
-    console.log("dataaas");
-    console.log(dadosProd);
+    console.log(dadosProd[7].innerText)
 
     $("#id").val(dadosProd[0].innerText);
     var srcImage = dadosProd[1].children[0].src.replace(location.href.split('/estoque')[0], '')
@@ -112,6 +111,14 @@ tr.forEach((el) => {
     }
     $("#quantidadeEdit").val(dadosProd[5].innerText);
     $("#precoEdit").val(dadosProd[6].innerText);
+    $("#categorias").each(function (a, b) {
+      for (var i = 0; i < b.children.length; i++) {
+        if (dadosProd[7].innerText == b.children[i].text) {
+          console.log(i + 1)
+          $("#categorias").val(i + 1)
+        }
+      }
+    })
   });
 });
 
