@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  gap: 1.1rem;
 }
 
 .chart {
@@ -14,7 +15,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 15px;
-  margin: 0 1.1rem;
 }
 
 .chart h3 {
@@ -46,6 +46,6 @@
 }
 
 .img-control-inventory {
-  width: 30%;
+  width: 20%;
   height: 400px;
 }
