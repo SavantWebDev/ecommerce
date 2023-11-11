@@ -1,13 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const knex = require("../Database/connection");
-const auth = require("../middleware/auth");
-const fs = require("fs");
-const multer = require("multer");
-const path = require("path");
+const express = require('express')
+const router = express.Router()
+const knex = require('../Database/connection')
+const auth = require('../middleware/auth')
+const fs = require('fs')
+const multer = require('multer')
+const path = require('path')
 
 const storage = multer.diskStorage({
-
     destination: function (req, file, cb) {
         cb(null, 'public/uploads/')
     },
@@ -228,58 +227,38 @@ router.get('/del-product', auth, async (req, res) => {
         req.flash('error', error)
         res.redirect('/estoque')
     }
-  } else {
-    var error = "Produto não encontrado!";
-    req.flash("error", error);
-    res.redirect("/estoque");
-  }
-});
 
-router.get("/del-product", auth, async (req, res) => {
-  var { ean } = req.query;
-
-  console.log(ean);
-
-  if (ean == undefined || ean.length == 0) {
-    var error = "Produto não Informado!";
-    req.flash("error", error);
-    res.redirect("/estoque");
-  }
-
-  var exist = await knex.raw(`SELECT * FROM estoque WHERE ean = ${ean}`);
-  console.log(exist);
-  if (exist.rows[0] != undefined) {
-    try {
-      if (exist.rows[0].image != "/src/image/imagemImagem.png") {
-        var x = await fs.unlinkSync(`public/${exist.rows[0].image}`);
-        console.log(x);
-      }
-      await knex
-        .raw(
-          `
+    var exist = await knex.raw(`SELECT * FROM estoque WHERE ean = ${ean}`)
+    console.log(exist)
+    if (exist.rows[0] != undefined) {
+        try {
+            if (exist.rows[0].image != '/src/image/imagemImagem.png') {
+                var x = await fs.unlinkSync(`public/${exist.rows[0].image}`)
+                console.log(x)
+            }
+            await knex.raw(`
             DELETE FROM estoque WHERE ean = ${ean}
-        `
-        )
-        .then(() => {
-          var success = "O Produto foi deletado!";
-          req.flash("success", success);
-          res.redirect("/estoque");
-        })
-        .catch(() => {
-          var error = "Erro em deletar produto.";
-          req.flash("error", error);
-          res.redirect("/estoque");
-        });
-    } catch (e) {
-      var error = "Erro em deletar produto.";
-      req.flash("error", error);
-      res.redirect("/estoque");
+        `)
+                .then(() => {
+                    var success = 'O Produto foi deletado!'
+                    req.flash('success', success)
+                    res.redirect('/estoque')
+                })
+                .catch(() => {
+                    var error = 'Erro em deletar produto.'
+                    req.flash('error', error)
+                    res.redirect('/estoque')
+                })
+        } catch (e) {
+            var error = 'Erro em deletar produto.'
+            req.flash('error', error)
+            res.redirect('/estoque')
+        }
+    } else {
+        var error = 'Produto não encontrado!';
+        req.flash('error', error)
+        res.redirect('/estoque')
     }
-  } else {
-    var error = "Produto não encontrado!";
-    req.flash("error", error);
-    res.redirect("/estoque");
-  }
-});
+})
 
-module.exports = router;
+module.exports = router
