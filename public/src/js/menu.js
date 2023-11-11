@@ -23,7 +23,7 @@ $(document).ready(function () {
       isActive = false;
     } else {
       $("header").width("15%");
-      $("main").width("86%");
+      $("main").width("100%");
       $(".logo-dashboard").css("display", "block");
       $("#btnMenuHeader").css("justifyContent", "right");
       $(".menu").css({
