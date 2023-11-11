@@ -137,7 +137,12 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
       });
   }
 });
-
+router.get("/pdv", auth, (req, res) => {
+  res.render("pdv", {
+    username: req.session.user,
+    funcao: req.session.funcao,
+  });
+});
 router.get("/add-product/exist", auth, async (req, res) => {
   var { ean, qnt } = req.query;
 
