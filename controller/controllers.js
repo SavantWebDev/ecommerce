@@ -23,6 +23,7 @@ router.get("/usuarios", auth, (req, res) => {
     funcao: req.session.funcao,
   });
 });
+
 router.get("/product", auth, async (req, res) => {
   await knex.raw("SELECT * FROM estoque ORDER BY id ASC").then((result) => {
     res.json({
@@ -30,6 +31,7 @@ router.get("/product", auth, async (req, res) => {
     });
   });
 });
+
 router.get("/", auth, (req, res) => {
   res.render("dashboard", {
     username: req.session.user,
@@ -192,8 +194,10 @@ router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
 
   if (foto != undefined) {
     foto = foto.path.replace("public", "");
-    var x = await fs.unlinkSync(`public/${prod.rows[0].image}`);
-    console.log(x);
+    if (prod.rows[0].image != "/src/image/imagemImagem.png") {
+      var x = await fs.unlinkSync(`public/${prod.rows[0].image}`);
+      console.log(x);
+    }
   } else {
     foto = prod.rows[0].image;
   }
