@@ -6,6 +6,10 @@
 @import url(./alertsProdutos.css);
 @import url(./modalDeleteProd.css);
 @import url(./graphsProdutos.css);
+@import url(../css/UsuarioLista/usuario.css);
+@import url(../css/UsuarioLista/modaladd.css);
+@import url(../css/UsuarioLista/modaledit.css);
+@import url(../css/UsuarioLista/modaldelete.css);
 @import url("https://fonts.cdnfonts.com/css/poppins");
 @import url("https://fonts.cdnfonts.com/css/montserrat");
 
@@ -116,4 +120,5 @@ main {
   cursor: pointer;
 }
 
-@media (max-width: 1300px) {}
+@media (max-width: 1300px) {
+}

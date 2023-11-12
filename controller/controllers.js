@@ -17,6 +17,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get("/usuarios", auth, (req, res) => {
+  res.render("usuarios", {
+    username: req.session.user,
+    funcao: req.session.funcao,
+  });
+});
 router.get("/product", auth, async (req, res) => {
   await knex.raw("SELECT * FROM estoque ORDER BY id ASC").then((result) => {
     res.json({
