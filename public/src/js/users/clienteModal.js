@@ -15,31 +15,46 @@ function addCliente() {
 
 addCliente();
 
-function editCliente(event) {
-  event.preventDefault();
-  $("#containerEdit").show();
-  $(window).bind("scroll, 0");
+$("#closeEdit").click(function () {
+  $("#containerEdit").hide();
+  $(window).bind("scroll", 0);
+});
 
-  $("#closeEdit").click(function () {
-    $("#containerEdit").hide();
+var tr = document.querySelectorAll(".edit-btn");
+tr.forEach((el) => {
+  el.addEventListener("click", (result) => {
+    $("#containerEdit").show();
     $(window).bind("scroll", 0);
+    var dadosProd = result.target.parentElement.parentElement.children;
+    //console.log(dadosProd[1].innerText)
+
+    $('#nomeEdit').val(dadosProd[1].innerText)
+    $('#cargoEdit').val(dadosProd[2].innerText)
+    $('#emailEdit').val(dadosProd[4].innerText)
+    $("#statusEdit").each(function (a, b) {
+      for (var i = 0; i < b.children.length; i++) {
+        if (dadosProd[5].innerText == b.children[i].text) {
+          $("#statusEdit").val(i + 1)
+        }
+      }
+    })
   });
+});
 
-  const dadosUsuarios = event.target.closest("tr").querySelectorAll("td");  
-  const usuariosInfo = {};
+/* const dadosUsuarios = event.target.closest("tr").querySelectorAll("td");
+const usuariosInfo = {};
 
-  dadosUsuarios.forEach(function (element) {
-    usuariosInfo[element.cellIndex] = element.textContent;
-  });
+dadosUsuarios.forEach(function (element) {
+  console.log(element)
+  usuariosInfo[element.cellIndex] = element.textContent;
+});
 
-  console.log("dataaas");
-  console.log(usuariosInfo);
+console.log("dataaas");
+console.log(usuariosInfo);
 
-  $(".nome").val(usuariosInfo[1]);
-  $(".cargo").val(usuariosInfo[2]);
-  $(".email").val(usuariosInfo[4]);
-
-}
+$(".nome").val(usuariosInfo[1]);
+$(".cargo").val(usuariosInfo[2]);
+$(".email").val(usuariosInfo[4]); */
 
 
 

@@ -17,12 +17,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.get("/usuarios", auth, (req, res) => {
-  res.render("usuarios", {
-    username: req.session.user,
-    funcao: req.session.funcao,
-  });
-});
 
 router.get("/product", auth, async (req, res) => {
   await knex.raw("SELECT * FROM estoque ORDER BY id ASC").then((result) => {
@@ -68,6 +62,17 @@ router.get("/estoque", auth, async (req, res) => {
         "SELECT idcategoria, nomecategoria FROM tb_categorias"
       );
 
+      var qntCategoria = await knex.raw(
+        `
+          SELECT COUNT(b.nomecategoria) as value, 
+          b.nomecategoria as name
+          FROM estoque a 
+          inner join tb_categorias b 
+          ON a.idcategoria = b.idcategoria 
+          GROUP BY b.nomecategoria
+        `
+      )
+
       res.render("index", {
         products: result.rows,
         error: error,
@@ -80,6 +85,7 @@ router.get("/estoque", auth, async (req, res) => {
         username: req.session.user,
         funcao: req.session.funcao,
         categorias: categorias.rows,
+        qntCategoria: qntCategoria.rows
       });
     })
     .catch((err) => console.log(err));

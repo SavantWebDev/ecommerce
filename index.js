@@ -12,11 +12,10 @@ const session = require('express-session')
 const path = require('path')
 const bcrypt = require('bcrypt')
 
-const auth = require('./middleware/auth')
-
 const knex = require('./Database/connection')
 
-const controllers = require('./controller/controllers')
+const produtoControllers = require('./controller/produtoControllers')
+const usersControllers = require('./controller/usersControllers')
 
 app.use(session({
     secret: process.env.SECRET,
@@ -36,7 +35,8 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
-app.use('/', controllers)
+app.use('/', produtoControllers)
+app.use('/', usersControllers)
 
 app.get('/login', (req, res) => {
     var error = req.flash('error')
@@ -55,11 +55,17 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
     var { email, senha } = req.body
 
-    var users = await knex.raw(`SELECT * FROM users WHERE email = '${email}' AND senha = '${senha}'`)
+    var users = await knex.raw(`
+    SELECT * FROM users u
+     INNER JOIN tb_funcao tf
+      ON u.funcao = tf.idfuncao
+       WHERE email = '${email}'
+        AND senha = '${senha}'
+    `)
 
     if (users.rows[0] != undefined) {
         req.session.user = users.rows[0]['username']
-        req.session.funcao = users.rows[0]['funcao']
+        req.session.funcao = users.rows[0]['nomefuncao']
         res.redirect('/')
     } else {
         var error = 'Credenciais inválidas!'
