@@ -66,6 +66,7 @@ app.post('/login', async (req, res) => {
     if (users.rows[0] != undefined) {
         req.session.user = users.rows[0]['username']
         req.session.funcao = users.rows[0]['nomefuncao']
+        req.session.email = users.rows[0]['email']
         res.redirect('/')
     } else {
         var error = 'Credenciais inválidas!'

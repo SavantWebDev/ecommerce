@@ -83,7 +83,6 @@ $(document).ready(function () {
     console.log(inputSearchProd.length);
     if (inputSearchProd == "") {
       $("#search-prod-filter").css("display", "block");
-      console.log("tetse");
     }
   });
 });

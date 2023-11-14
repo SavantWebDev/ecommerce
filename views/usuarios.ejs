@@ -90,7 +90,7 @@
                     <div id="containerEdit" class="container-edit-user">
                       <div class="background-edit-user"></div>
 
-                      <form class="form-edit" action="" method="post">
+                      <form id="form-edit" class="form-edit" method="post">
                         <h2 class="name-edit-user">Edição de Produto</h2>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="34"
                           height="34" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
@@ -100,24 +100,20 @@
                           <path d="M6 6l12 12" />
                         </svg>
 
-                        <input type="number" id="id" name="id" hidden />
-
                         <label for="nome">Nome:</label>
-                        <input type="text" id="nomeEdit" class="nome" name="nomeusuario" minlength="3" required />
+                        <input type="text" id="nomeEdit" class="nome" name="nomeusuarioEdit" minlength="3" required />
 
                         <label for="cargo">Cargo:</label>
-                        <input type="text" id="cargoEdit" class="cargo" name="endereco" required />
+                        <select name="cargoEdit" id="statusEdit">
+                          <% funcoes.forEach(function (funcao){ %>
+                            <option value="<%= funcao.idfuncao %>">
+                              <%= funcao.nomefuncao %>
+                            </option>
+                            <% }) %>
+                        </select>
 
                         <label for="email">Email:</label>
-                        <input type="email" class="email" id="emailEdit" name="email" minlength="4" required />
-
-                        <label for="status">Defina o Status</label>
-                        <select name="status" id="statusEdit">
-                          <option value="1">Escolha o status</option>
-                          <option value="2">Ativo</option>
-                          <option value="3">Inativo</option>
-                          <option value="4">Pendente</option>
-                        </select>
+                        <input type="email" class="email" id="emailEdit" name="emailEdit" minlength="4" required />
 
                         <input type="submit" id="addEditUser" value="Salvar usuario" />
                       </form>
@@ -141,7 +137,7 @@
                       </div>
                     </div>
 
-                    <input id="uuid" name="id" type="text" readonly style="visibility: hidden;" />
+                    <!-- <input id="uuid" name="id" type="text" readonly style="visibility: hidden;" /> -->
 
                     <table id="tabela" class="cell-border tabela">
                       <thead>
@@ -168,14 +164,21 @@
                               <%= usuario.email %>
                             </td>
                             <td><span class="status__ativo">Ativo</span></td>
-                            <td class="container-actions-btn">
-                              <span onclick="editCliente(event)" class="material-symbols-outlined edit-btn">
-                                edit_square
-                              </span>
-                              <button onclick="delProd('<%= usuario.id %>')" class="delete-btn" type="button">
-                                <span class="material-symbols-outlined"> delete </span>
-                              </button>
-                            </td>
+                            <% if(username !=usuario.username){ %>
+                              <td class="container-actions-btn">
+                                <span onclick="editCliente('<%= usuario.id %>')"
+                                  class="material-symbols-outlined edit-btn">
+                                  edit_square
+                                </span>
+                                <button onclick="delProd('<%= usuario.id %>')" class="delete-btn" type="button">
+                                  <span class="material-symbols-outlined"> delete </span>
+                                </button>
+                              </td>
+                              <% }else{ %>
+                                <td>
+                                  <p>-</p>
+                                </td>
+                                <% } %>
                           </tr>
                           <% }); %>
                       </tbody>
@@ -186,16 +189,45 @@
       <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
       <script src="/src/js/users/clientes.js"></script>
       <script src="/src/js/users/clienteModal.js"></script>
+      <script src="/src/js/users/editForm.js"></script>
       <%- include('./partials/scripts.ejs') %>
         <script>
-          function delProd(id) {
-            $(".modal-confirm-deleteProd").css({
-              display: "flex",
-            });
+          const btn = document.getElementById('btnAddUser')
+          const removerModal = {
+            success: function () {
+              setTimeout(() => {
+                console.log("teste success");
+                $("#alertSuccess").css({
+                  opacity: "0",
+                  transition: "all 1s",
+                });
+              }, 1000);
+              setTimeout(() => {
+                console.log("teste success");
+                $("#alertSuccess").css({
+                  display: "none",
+                });
+              }, 2000);
+            },
+            error: function () {
+              setTimeout(() => {
+                console.log("teste error");
+                $("#alertError").css({
+                  opacity: "0",
+                  transition: "all 1s",
+                });
+              }, 1000);
+              setTimeout(() => {
+                console.log("teste success");
+                $("#alertError").css({
+                  display: "none",
+                });
+              }, 2000);
+            },
+          };
 
-            $('#uuid').val(id)
-            $('.btn-delete-prod').attr('href', `/del-user?id=${id}`)
-          }
+          btn.addEventListener("click", removerModal["success"]());
+          btn.addEventListener("click", removerModal["error"]());
         </script>
   </body>
 

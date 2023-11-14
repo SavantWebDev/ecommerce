@@ -28,12 +28,12 @@ tr.forEach((el) => {
     var dadosProd = result.target.parentElement.parentElement.children;
     //console.log(dadosProd[1].innerText)
 
-    $('#nomeEdit').val(dadosProd[1].innerText)
-    $('#cargoEdit').val(dadosProd[2].innerText)
-    $('#emailEdit').val(dadosProd[4].innerText)
+    $('#nomeEdit').val(dadosProd[0].innerText)
+    $('#cargoEdit').val(dadosProd[1].innerText)
+    $('#emailEdit').val(dadosProd[3].innerText)
     $("#statusEdit").each(function (a, b) {
       for (var i = 0; i < b.children.length; i++) {
-        if (dadosProd[5].innerText == b.children[i].text) {
+        if (dadosProd[1].innerText == b.children[i].text) {
           $("#statusEdit").val(i + 1)
         }
       }
