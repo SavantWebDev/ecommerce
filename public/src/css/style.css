@@ -41,11 +41,8 @@ main {
 }
 
 .logo-dashboard {
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
+  object-fit: cover;
   width: 100%;
-  display: none;
 }
 
 .line {
@@ -120,5 +117,4 @@ main {
   cursor: pointer;
 }
 
-@media (max-width: 1300px) {
-}
+@media (max-width: 1300px) {}

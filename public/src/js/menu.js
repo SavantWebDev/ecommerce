@@ -6,7 +6,7 @@ $(document).ready(function () {
     if (isActive) {
       $("header").width("4%");
       $("main").width("96%");
-      $(".logo-dashboard").css("display", "none");
+      //$(".logo-dashboard").css("display", "none");
       $("#btnMenuHeader").css("justifyContent", "center");
       $(".menu").css({
         padding: "5px",
