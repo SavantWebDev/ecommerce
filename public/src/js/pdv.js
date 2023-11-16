@@ -140,7 +140,6 @@ document.getElementById("formaPag").innerHTML =
                                                     '<option value="especie">Dinheiro Especie</option>' +
                                                     '<option value="cartao">Cartão</option>' +
                                                     '<option value="boleto">Boleto</option>' +
-                                                    '<option value="bunda">Bunda</option>' +
                                                 '</select>' +
                                               '</div>';
 document.getElementById("parcelas").innerHTML =      

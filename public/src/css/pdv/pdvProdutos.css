@@ -85,6 +85,9 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+  border: 1px solid #484646;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
 .lista-produtos-compra {
@@ -94,6 +97,7 @@
   height: 350px;
   overflow: auto;
   padding: 0 10px;
+  
 }
 .produto-single-store {
   width: 100%;
@@ -140,6 +144,7 @@
   cursor: pointer;
   font-family: "Poppins", sans-serif !important;
   margin-bottom: 14px;
+  border-radius: 15px;
 }
 
 .btn-cancelarCompra {
@@ -151,6 +156,7 @@
   font-size: 1.2rem;
   cursor: pointer;
   font-family: "Poppins", sans-serif !important;
+  border-radius: 15px;
 }
 
 /* Parte criada by pereira */
@@ -197,7 +203,7 @@
 .vizualizador-prod {
   display: flex;
 }
-.vizualizar-img {
+.vizualizar-img{
   width: 30%;
   height: 300px;
   background-color: red;
@@ -244,6 +250,7 @@
   font-size: 1.2rem;
   cursor: pointer;
   font-family: "Poppins", sans-serif !important;
+  
 }
 
 .al-btns {
@@ -271,18 +278,27 @@
 }
 
 .btn-editar{
-  width: 50%;
+  width: 48%;
+  height: 25px;
+  font-size: 14px;
   font-family: "Poppins", sans-serif !important;
   border: 0;
   cursor: pointer;
   background-color: rgba(177, 194, 25, 0.616);
+  border-radius: 15px;
+  margin-top: 2px;
 }
 .btn-excluir{
-  width: 50%;
+  margin-left: 4%;
+  width: 48%;
+  height: 25px;
+  font-size: 14px;
   font-family: "Poppins", sans-serif !important;
   border: 0;
   cursor: pointer;
   background-color: rgba(194, 58, 25, 0.616);
+  border-radius: 15px;
+  margin-top: 2px;
 }
 #overlay {
   display: none;
@@ -371,4 +387,11 @@
 select {
   font-size: 15px;
   font-family: "Poppins", sans-serif;
+}
+
+.edit-input{
+  height: 22px;
+  border-radius: 5px;
+  border-width: 1px;
+  transition: border-width 0.3s;
 }
