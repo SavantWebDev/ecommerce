@@ -136,7 +136,7 @@ document.getElementById("precoFin").innerHTML =
 document.getElementById("formaPag").innerHTML =     
                                               '<div class="modal-c">' +            
                                                 '<label for="formPag">Escolha uma forma de pagamento:</label>' +
-                                                '<select id="formpagmt" name="formas">' +
+                                                '<select id="formpagmt" name="formas"  style="border-width: 1px; border-radius: 5px;">' +
                                                     '<option value="especie">Dinheiro Especie</option>' +
                                                     '<option value="cartao">Cartão</option>' +
                                                     '<option value="boleto">Boleto</option>' +
@@ -145,7 +145,7 @@ document.getElementById("formaPag").innerHTML =
 document.getElementById("parcelas").innerHTML =      
                                               '<div class="modal-c">' +           
                                                 '<label for="parcPag">Quantidade de Parcelas:</label>' +
-                                                '<select id="parcPagt" name="parcelas">' +
+                                                '<select id="parcPagt" name="parcelas" style="border-width: 1px; border-radius: 5px;">' +
                                                     '<option value="umP">1x</option>' +
                                                     '<option value="doisP">2x</option>' +
                                                     '<option value="tresP">3x</option>' +

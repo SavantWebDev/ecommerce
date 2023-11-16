@@ -300,6 +300,7 @@
   border-radius: 15px;
   margin-top: 2px;
 }
+
 #overlay {
   display: none;
   position: fixed;
@@ -394,4 +395,28 @@ select {
   border-radius: 5px;
   border-width: 1px;
   transition: border-width 0.3s;
+}
+
+.btn-voltar{
+  width: 48%;
+  height: 45px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif !important;
+  border: 0;
+  cursor: pointer;
+  background-color: rgba(177, 194, 25, 0.616);
+  border-radius: 15px;
+  margin-top: 2px;
+}
+.btn-cancelar{
+  margin-left: 4%;
+  width: 48%;
+  height: 45px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif !important;
+  border: 0;
+  cursor: pointer;
+  background-color: rgba(194, 58, 25, 0.616);
+  border-radius: 15px;
+  margin-top: 2px;
 }
