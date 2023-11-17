@@ -31,7 +31,7 @@ function gerarCard() {
           "<br>" +
           "<span class='nome-produto-compra'> Código:" + codigo +"</span>" +
           "<div class='dados-compra-single'>" +
-            "<span>Quantidade: "+ quantidade +"</span>" +
+            "<span>Quantidade: x"+ quantidade +"</span>" +
             "<span>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
             "<div class='btn-comp-al'>" +
               "<button class='btn-editar' onclick='abrirModal()'>Editar</button>" +
@@ -108,7 +108,7 @@ function checarTinput() {
           '<div class="al-f-dados">' +
           '<h1 class="nome-ad-prod font-nome"><b>Produto: Bohemia Lata</b></h1>' +
           '<h2 class="nome-ad-prod"><b>Código: ' + inputValue + '</b></h2>' +
-          '<h2 class="nome-ad-prod"><b>Quantidade: ' + inputQuantidade +'</b></h2>' +
+          '<h2 class="nome-ad-prod"><b>Quantidade: x' + inputQuantidade +'</b></h2>' +
           '<h2 class="nome-ad-prod"><b>Valor : R$ ' + inputPreco + '</b></h2>' +
           '</div>' +
           '</div>';
