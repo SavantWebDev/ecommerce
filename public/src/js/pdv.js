@@ -34,7 +34,9 @@ function gerarCard() {
             "<span id='quantidadeE'>Quantidade: x"+ quantidade +"</span>" +
             "<span id='precoE'>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
             "<div class='btn-comp-al'>" +
+              "<!--" +
               "<button class='btn-editar' onclick='abrirModalEditar()'>Editar</button>" +
+              "-->" +
               "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
             "</div>"
           "</div>" +
