@@ -1,9 +1,30 @@
 var contadorCards = 0;
+// Gerar cards e somar valores:
+
+var contadorCards = 0;
+var totalPreco = 0;
 
 function gerarCard() {
     var codigo = document.getElementById("codigo").value;
-    var preco = document.getElementById("preco").value;
-    var quantidade = document.getElementById("quantidade").value;
+    var quantidade = parseInt(document.getElementById("quantidade").value);
+    var precoUnitario = document.getElementById("preco").value;
+    
+    // Validar se o preço unitário é um número antes de continuar
+    if (isNaN(parseFloat(precoUnitario))) {
+        alert("Por favor, insira um preço unitário válido.");
+        return;
+    }
+
+    // Validar se a quantidade é um número inteiro maior que zero
+    if (isNaN(quantidade) || quantidade <= 0 || !Number.isInteger(quantidade)) {
+        alert("Por favor, insira uma quantidade válida (um número inteiro maior que zero).");
+        return;
+    }
+
+    var precoTotal = quantidade * parseFloat(precoUnitario);
+
+    totalPreco += precoTotal; // Adiciona o preço total ao total geral
+
     contadorCards++;
     var novoCard = document.createElement("div");
     novoCard.id = "card" + contadorCards;
@@ -13,18 +34,38 @@ function gerarCard() {
           "<span class='nome-produto-compra'> Código:" + codigo +"</span>" +
           "<div class='dados-compra-single'>" +
             "<span>Quantidade: "+ quantidade +"</span>" +
-            "<span>Valor: R$" + preco + "</span>" +
+            "<span>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
           "</div>" +
           "<div class='btn-comp-al'>" +
             "<button class='btn-editar' onclick='abrirModal()'>Editar</button>" +
             "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
           "</div>"
         "</div>"
+
     document.getElementById("cardsContainer").appendChild(novoCard);
     document.getElementById("codigo").value = "";
     document.getElementById("preco").value = "";
-    document.getElementById("quantidade").value = "";
+    document.getElementById("quantidade").value = 1; // Reinicia a quantidade para 1
+
+    atualizarTotal(); // Chama a função para atualizar o total na tela
 }
+
+function atualizarTotal() {
+    // Atualiza o conteúdo de algum elemento HTML com o total do preço
+    document.getElementById("totalPreco").innerHTML = "Total: R$" + totalPreco.toFixed(2);
+}
+
+// Função de exemplo para abrir modal (não implementada)
+function abrirModal() {
+    console.log("Modal aberto");
+}
+
+// Função de exemplo para excluir card (não implementada)
+function excluirCard(cardId) {
+    console.log("Card excluído: " + cardId);
+}
+
+// --------------------------------
 
 function excluirCard(cardID) {
   var card = document.getElementById("card" + cardID);
@@ -54,7 +95,12 @@ function fecharModal() {
 
 function checarTinput() {
   var ElementoI = document.getElementById("codigo");
+  var ElementoP = document.getElementById("preco");
+  var ElementoQ = document.getElementById("quantidade");
+
   var inputValue = ElementoI.value;
+  var inputPreco = ElementoP.value;
+  var inputQuantidade = ElementoQ.value;
   var tamanhoCaracteres = 12;
   if (inputValue.length >= tamanhoCaracteres) {
       ElementoI.value = inputValue.substring(0, tamanhoCaracteres);
@@ -65,8 +111,8 @@ function checarTinput() {
           '<div class="al-f-dados">' +
           '<h1 class="nome-ad-prod"><b>Prod.: Bohemia Lata</b></h1>' +
           '<h1 class="nome-ad-prod"><b>Cód.: ' + inputValue + '</b></h1>' +
-          '<h1 class="nome-ad-prod"><b>Qt.: XXX</b></h1>' +
-          '<h1 class="nome-ad-prod"><b>Valor.: R$ XX,XX</b></h1>' +
+          '<h1 class="nome-ad-prod"><b>Qt.: ' + inputQuantidade +'</b></h1>' +
+          '<h1 class="nome-ad-prod"><b>Valor.: R$ ' + inputPreco + '</b></h1>' +
           '</div>' +
           '</div>';
   }
@@ -110,7 +156,7 @@ function cancelarCompra() {
 //Soma Preços
 document.getElementById("somaPrecos").innerHTML = 
                                                   '<div class="info-total-descontos">' +
-                                                    '<span class="total-produtos">Total:</span>' +
+                                                    '<span id="totalPreco" class="total-produtos">Total: R$0.00</span>' +
                                                     '<span>Descontos:</span>' +
                                                     '<span></span>' +
                                                   '</div>';
