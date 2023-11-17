@@ -63,22 +63,22 @@
               <h2>Editar Dados De Compra</h2>
 
               <div class="modal-c">
-                <label for="codigo">Código:</label>
-                <input type="text" id="codigoModal" disabled>
+                <label for="editCodigo">Código:</label>
+                <input type="text" id="codigoModal">
               </div>
 
               <div class="modal-c">
-                <label for="preco">Preço:</label>
+                <label for="editPreco">Preço:</label>
                 <input type="text" id="precoModal">  
               </div>
 
               <div class="modal-c">
-                <label for="quantidade">Quantidade:</label>
+                <label for="editQuantidade">Quantidade:</label>
                 <input type="text" id="quantidadeModal">
               </div>
 
               <div class="modal-c al-btn-modal">
-                <button class="btn-excluir" onclick="salvarEdicao()">Sair</button>
+                <button class="btn-excluir" onclick="fecharModal()">Sair</button>
                 <button class="btn-editar" onclick="salvarEdicao()">Salvar</button>
               </div>
 
@@ -127,7 +127,7 @@
         </section>
         
         <section class="pdv-finalizar">
-          <h2 class="subTitulo"><b class=" fn-h2">Finalização de Venda</b></h2>
+          <h2 class="subTitulo"><b class="lista fn-h2">Finalização de Venda</b></h2>
 
           <div class="finalizar-compra">
             <div class="lista-produtos-compra">

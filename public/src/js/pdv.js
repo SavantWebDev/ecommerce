@@ -29,12 +29,12 @@ function gerarCard() {
     novoCard.innerHTML = 
        "<div class='produto-single-store'>" +
           "<br>" +
-          "<span class='nome-produto-compra'> Código:" + codigo +"</span>" +
+          "<span id='codigoE' class='nome-produto-compra' > Código:" + codigo +"</span>" +
           "<div class='dados-compra-single'>" +
-            "<span>Quantidade: x"+ quantidade +"</span>" +
-            "<span>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
+            "<span id='quantidadeE'>Quantidade: x"+ quantidade +"</span>" +
+            "<span id='precoE'>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
             "<div class='btn-comp-al'>" +
-              "<button class='btn-editar' onclick='abrirModal()'>Editar</button>" +
+              "<button class='btn-editar' onclick='abrirModalEditar()'>Editar</button>" +
               "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
             "</div>"
           "</div>" +
@@ -48,20 +48,15 @@ function gerarCard() {
     atualizarTotal(); // Chama a função para atualizar o total na tela
 }
 
-// Função Editar
 
-// YYYYYYYYYYYY
 
 function atualizarTotal() {
     document.getElementById("totalPreco").innerHTML = "Total: R$" + totalPreco.toFixed(2);
 }
 
-function abrirModal() {
-    console.log("Modal aberto");
-}
 
 function excluirCard(cardId) {
-    console.log("Card excluído: " + cardId);
+  console.log("Card excluído: " + cardId);
 }
 
 function excluirCard(cardID) {
@@ -69,17 +64,26 @@ function excluirCard(cardID) {
   card.remove();
 }
 
-function abrirModal() {
-  var overlay = document.getElementById('overlay');
-  var modal = document.getElementById('modal');
-  overlay.style.display = 'block';
-  modal.style.display = 'block';
+function abrirModalEditar() {
+  
+  console.log("Modal aberto");
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('modal').style.display = 'block';
+  
+  document.getElementById("editCodigo").value = document.getElementById("codigoE").innerText;
+  document.getElementById("editQuantidade").value = document.getElementById("quantidadeE").innerText;
+  document.getElementById("editPreco").value = document.getElementById("precoE").innerText;
+
 }
 
 function salvarEdicao() {
   var codigo = document.getElementById('codigo').value;
   var preco = document.getElementById('preco').value;
   var quantidade = document.getElementById('quantidade').value;
+  
+  document.getElementById("codigoE").innerText = document.getElementById("editCodigo").value;
+  document.getElementById("quantidadeE").innerText = document.getElementById("editQuantidade").value;
+  document.getElementById("valorE").innerText = document.getElementById("editValor").value;
   fecharModal();
 }
 
