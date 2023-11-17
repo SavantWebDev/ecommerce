@@ -17,7 +17,7 @@ function gerarCard() {
 
     // Validar se a quantidade é um número inteiro maior que zero
     if (isNaN(quantidade) || quantidade <= 0 || !Number.isInteger(quantidade)) {
-        alert("Por favor, insira uma quantidade válida (um número inteiro maior que zero).");
+        alert("Por favor, insira uma quantidade válida.");
         return;
     }
 
@@ -49,6 +49,34 @@ function gerarCard() {
 
     atualizarTotal(); // Chama a função para atualizar o total na tela
 }
+
+// Função Editar
+
+
+function editarCard(id) {
+  var card = document.getElementById("card" + id);
+  var codigo = card.querySelector(".nome-produto-compra").textContent.split(":")[1].trim();
+  var quantidade = parseInt(card.querySelector(".dados-compra-single span:nth-child(1)").textContent.split(":")[1].trim());
+  var valorTotal = parseFloat(card.querySelector(".dados-compra-single span:nth-child(2)").textContent.split(":")[1].trim().replace("R$", ""));
+
+  // Preencha os campos do modal ou formulário com os valores atuais
+  document.getElementById("codigoEdit").value = codigo;
+  document.getElementById("quantidadeEdit").value = quantidade;
+  document.getElementById("precoEdit").value = valorTotal / quantidade;
+
+  // Abra o modal ou formulário
+  abrirModal();
+}
+
+function excluirCard(id) {
+  var card = document.getElementById("card" + id);
+  var precoTotalCard = parseFloat(card.querySelector(".dados-compra-single span:nth-child(2)").textContent.split(":")[1].trim().replace("R$", ""));
+  totalPreco -= precoTotalCard;
+  card.parentNode.removeChild(card);
+  atualizarTotal();
+}
+
+// YYYYYYYYYYYY
 
 function atualizarTotal() {
     // Atualiza o conteúdo de algum elemento HTML com o total do preço
