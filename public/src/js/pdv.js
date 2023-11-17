@@ -1,5 +1,3 @@
-var contadorCards = 0;
-// Gerar cards e somar valores:
 
 var contadorCards = 0;
 var totalPreco = 0;
@@ -35,11 +33,11 @@ function gerarCard() {
           "<div class='dados-compra-single'>" +
             "<span>Quantidade: "+ quantidade +"</span>" +
             "<span>Valor Total: R$" + precoTotal.toFixed(2) + "</span>" +
+            "<div class='btn-comp-al'>" +
+              "<button class='btn-editar' onclick='abrirModal()'>Editar</button>" +
+              "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
+            "</div>"
           "</div>" +
-          "<div class='btn-comp-al'>" +
-            "<button class='btn-editar' onclick='abrirModal()'>Editar</button>" +
-            "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
-          "</div>"
         "</div>"
 
     document.getElementById("cardsContainer").appendChild(novoCard);
@@ -52,48 +50,19 @@ function gerarCard() {
 
 // Função Editar
 
-
-function editarCard(id) {
-  var card = document.getElementById("card" + id);
-  var codigo = card.querySelector(".nome-produto-compra").textContent.split(":")[1].trim();
-  var quantidade = parseInt(card.querySelector(".dados-compra-single span:nth-child(1)").textContent.split(":")[1].trim());
-  var valorTotal = parseFloat(card.querySelector(".dados-compra-single span:nth-child(2)").textContent.split(":")[1].trim().replace("R$", ""));
-
-  // Preencha os campos do modal ou formulário com os valores atuais
-  document.getElementById("codigoEdit").value = codigo;
-  document.getElementById("quantidadeEdit").value = quantidade;
-  document.getElementById("precoEdit").value = valorTotal / quantidade;
-
-  // Abra o modal ou formulário
-  abrirModal();
-}
-
-function excluirCard(id) {
-  var card = document.getElementById("card" + id);
-  var precoTotalCard = parseFloat(card.querySelector(".dados-compra-single span:nth-child(2)").textContent.split(":")[1].trim().replace("R$", ""));
-  totalPreco -= precoTotalCard;
-  card.parentNode.removeChild(card);
-  atualizarTotal();
-}
-
 // YYYYYYYYYYYY
 
 function atualizarTotal() {
-    // Atualiza o conteúdo de algum elemento HTML com o total do preço
     document.getElementById("totalPreco").innerHTML = "Total: R$" + totalPreco.toFixed(2);
 }
 
-// Função de exemplo para abrir modal (não implementada)
 function abrirModal() {
     console.log("Modal aberto");
 }
 
-// Função de exemplo para excluir card (não implementada)
 function excluirCard(cardId) {
     console.log("Card excluído: " + cardId);
 }
-
-// --------------------------------
 
 function excluirCard(cardID) {
   var card = document.getElementById("card" + cardID);
@@ -137,10 +106,10 @@ function checarTinput() {
           '<div id="displayValues" class="al-f-dados"></div>' +
           '<div class="vizualizar-dados">' +
           '<div class="al-f-dados">' +
-          '<h1 class="nome-ad-prod"><b>Prod.: Bohemia Lata</b></h1>' +
-          '<h1 class="nome-ad-prod"><b>Cód.: ' + inputValue + '</b></h1>' +
-          '<h1 class="nome-ad-prod"><b>Qt.: ' + inputQuantidade +'</b></h1>' +
-          '<h1 class="nome-ad-prod"><b>Valor.: R$ ' + inputPreco + '</b></h1>' +
+          '<h1 class="nome-ad-prod font-nome"><b>Produto: Bohemia Lata</b></h1>' +
+          '<h2 class="nome-ad-prod"><b>Código: ' + inputValue + '</b></h2>' +
+          '<h2 class="nome-ad-prod"><b>Quantidade: ' + inputQuantidade +'</b></h2>' +
+          '<h2 class="nome-ad-prod"><b>Valor : R$ ' + inputPreco + '</b></h2>' +
           '</div>' +
           '</div>';
   }

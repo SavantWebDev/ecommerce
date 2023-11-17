@@ -85,7 +85,7 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
-  border: 1px solid #484646;
+  /*border: 1px solid #484646;*/
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -97,7 +97,8 @@
   height: 350px;
   overflow: auto;
   padding: 0 10px;
-  
+  background-color: #9db2bf48;
+  border-radius: 15px;
 }
 .produto-single-store {
   width: 100%;
@@ -131,7 +132,7 @@
 
 .total-produtos {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2.6rem;
 }
 
 .btn-finalizarCompra {
@@ -206,7 +207,8 @@
 .vizualizar-img{
   width: 30%;
   height: 300px;
-  background-color: red;
+  background-color: #9db2bf48;
+  border-radius: 15px;
 }
 .vizualizar-dados {
   width: 100%;
@@ -224,6 +226,10 @@
 .al-f-dados {
   width: 100%;
   margin-left: 20px;
+}
+.al-f-dados h1{
+  font-weight: bold;
+  font-size: 40px;
 }
 
 .ed-del-btn {
@@ -284,7 +290,7 @@
   font-family: "Poppins", sans-serif !important;
   border: 0;
   cursor: pointer;
-  background-color: rgba(177, 194, 25, 0.616);
+  background-color: rgb(212, 235, 11);
   border-radius: 15px;
   margin-top: 2px;
 }
@@ -419,4 +425,21 @@ select {
   background-color: rgba(194, 58, 25, 0.616);
   border-radius: 15px;
   margin-top: 2px;
+}
+.subTitulo {
+  font-weight: bold;
+  font-size: 1.3rem;
+  font-family: "Poppins", sans-serif;
+  color: rgb(0, 0, 138);
+}
+label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.fn-h2 {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.fonte-nome {
+  font-size: 40px;
 }
