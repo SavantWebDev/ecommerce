@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* c */
+h1, h2, h3, h4{
+  font-weight: 600;
+}
+h5, p{
+  font-weight: 400;
+}
+/* .h1{
+
+}
+.h2{
+
+}
+.h3{
+
+}
+.h4{
+
+}
+.h5{
+
+}
+.p{
+
+} */
+
+/* Fim Estilização de fonte, escala e peso */
