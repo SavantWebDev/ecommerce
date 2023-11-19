@@ -1,9 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit',
+ 
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/Components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{jpg,png,svg}',
   ],
   theme: {
     // spacing: {
@@ -21,13 +25,18 @@ module.exports = {
       'neutral-light': '',
       'suport-dark': '',
       'suport-light': '',
-
+    
     },
     extend: {
       fontFamily: {
         primary: ['var(--font-urbanist)'] 
       },
-      
+      backgroundImage:{
+        login: "url('/images/login.svg')"
+      },
+      height:{
+        'screendv': '100dvh'
+      }
       
     },
   },

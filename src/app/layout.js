@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${urbanist.variable} `}>
-        <main className='font-primary'>
+        <main className='font-primary h-screendv'>
         {children}
         </main>
         </body>
