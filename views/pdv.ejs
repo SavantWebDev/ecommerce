@@ -22,7 +22,7 @@
             <div class="alinhamento-ad-compra-1">
               <div class="campo-produto">
                 <label for="codigo">Código:</label>
-                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" required><br><br>
+                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" maxlength="15" required><br><br>
               </div>
   
               <div class="campo-produto">
@@ -55,33 +55,6 @@
               -->
             </div>
             <div id="vizualizaProd"></div>
-          </div>
-
-          <!-- Modal Editar-->
-          <div id="overlay"></div>
-          <div id="modal" class="modal-p">
-              <h2>Editar Dados De Compra</h2>
-
-              <div class="modal-c">
-                <label for="editCodigo">Código:</label>
-                <input type="text" id="codigoModal">
-              </div>
-
-              <div class="modal-c">
-                <label for="editPreco">Preço:</label>
-                <input type="text" id="precoModal">  
-              </div>
-
-              <div class="modal-c">
-                <label for="editQuantidade">Quantidade:</label>
-                <input type="text" id="quantidadeModal">
-              </div>
-
-              <div class="modal-c al-btn-modal">
-                <button class="btn-excluir" onclick="fecharModal()">Sair</button>
-                <button class="btn-editar" onclick="salvarEdicao()">Salvar</button>
-              </div>
-
           </div>
 
           <!--Modal Finalizar Compra-->
@@ -154,6 +127,23 @@
       </section>
     </main>
     <%- include('./partials/scripts.ejs') %>
-    <script src="/src/js/pdv.js"></script>
+    <script src="/src/js/pdv/pdv.js"></script>
+    <script src="/src/js/pdv/pdvVerificador.js"></script>
+    <script>
+      /*
+      const ean = document.getElementById('codigo').value;
+      
+      fetch(`https://api-n56x.onrender.com/v1/api/produto?ean=${ean}`)
+      .then(response => response.json())  
+      .then(data =>{
+        console.log(data.ean)
+      })  // os dados estão vindo aqui,
+      .catch(error => console.error('Erro:', error));
+      /*
+      if(ean!=null){
+      }
+      */
+
+    </script>
   </body>
 </html>

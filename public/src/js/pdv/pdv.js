@@ -48,6 +48,7 @@ function gerarCard() {
     document.getElementById("quantidade").value = 1; // Reinicia a quantidade para 1
 
     atualizarTotal(); // Chama a função para atualizar o total na tela
+    //salvarCardsNoLocalStorage()
 }
 
 
@@ -56,70 +57,20 @@ function atualizarTotal() {
     document.getElementById("totalPreco").innerHTML = "Total: R$" + totalPreco.toFixed(2);
 }
 
-
-function excluirCard(cardId) {
-  console.log("Card excluído: " + cardId);
-}
-
 function excluirCard(cardID) {
   var card = document.getElementById("card" + cardID);
   card.remove();
 }
 
-function abrirModalEditar() {
-  
-  console.log("Modal aberto");
-  document.getElementById('overlay').style.display = 'block';
-  document.getElementById('modal').style.display = 'block';
-  
-  document.getElementById("editCodigo").value = document.getElementById("codigoE").innerText;
-  document.getElementById("editQuantidade").value = document.getElementById("quantidadeE").innerText;
-  document.getElementById("editPreco").value = document.getElementById("precoE").innerText;
+function salvarCardsNoLocalStorage() {
+  var cardsContainer = document.getElementById('cardsContainer');
+  var cards = cardsContainer.getElementsByClassName('card');
+  var cardsArray = Array.from(cards).map(card => card.textContent);
 
+  // Salva os cards no localStorage como uma string JSON
+  localStorage.setItem('cards', JSON.stringify(cardsArray));
 }
 
-function salvarEdicao() {
-  var codigo = document.getElementById('codigo').value;
-  var preco = document.getElementById('preco').value;
-  var quantidade = document.getElementById('quantidade').value;
-  
-  document.getElementById("codigoE").innerText = document.getElementById("editCodigo").value;
-  document.getElementById("quantidadeE").innerText = document.getElementById("editQuantidade").value;
-  document.getElementById("valorE").innerText = document.getElementById("editValor").value;
-  fecharModal();
-}
-
-function fecharModal() {
-  var overlay = document.getElementById('overlay');
-  var modal = document.getElementById('modal');
-  overlay.style.display = 'none';
-  modal.style.display = 'none';
-}
-
-function checarTinput() {
-  var ElementoI = document.getElementById("codigo");
-  var ElementoP = document.getElementById("preco");
-  var ElementoQ = document.getElementById("quantidade");
-
-  var inputValue = ElementoI.value;
-  var inputPreco = ElementoP.value;
-  var inputQuantidade = ElementoQ.value;
-  var tamanhoCaracteres = 12;
-  if (inputValue.length >= tamanhoCaracteres) {
-      ElementoI.value = inputValue.substring(0, tamanhoCaracteres);
-      gerarCard();
-      document.getElementById("vizualizaProd").innerHTML =
-          '<div id="displayValues" class="al-f-dados"></div>' +
-          '<div class="vizualizar-dados">' +
-          '<div class="al-f-dados">' +
-          '<h1 class="nome-ad-prod font-nome"><b>Produto: Bohemia Lata</b></h1>' +
-          '<h2 class="nome-ad-prod"><b>Código: ' + inputValue + '</b></h2>' +
-          '<h2 class="nome-ad-prod"><b>Quantidade: x' + inputQuantidade +'</b></h2>' +
-          '<h2 class="nome-ad-prod"><b>Valor : R$ ' + inputPreco + '</b></h2>' +
-          '</div>' +
-          '</div>';
-  }
-}
 
 // Modal finalizar Compra
 function abrirModalfinalizar() {
