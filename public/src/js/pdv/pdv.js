@@ -10,6 +10,9 @@ function gerarCard() {
     // Validar se o preço unitário é um número antes de continuar
     if (isNaN(parseFloat(precoUnitario))) {
         alert("Por favor, insira um preço unitário válido.");
+        document.getElementById("codigo").value = "";
+
+        
         return;
     }
 
