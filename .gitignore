@@ -3,4 +3,3 @@ node_modules
 dockerfile
 docker-compose.yml
 package.json
-aaa
