@@ -4,12 +4,13 @@ import Image from 'next/image'
 export default function LayoutAuth({children}){
   return (
         
-        <section className="flex w-full h-full gap-2 overflow-none  ">
-            <div className="w-[40%] h-screen bg-login bg-cover bg-center  ">
+        <section className="flex w-full gap-2  h-screen overflow-hidden">
+          
+            <div className="w-[40%] h-auto bg-login bg-no-repeat bg-cover">
 
             </div>
             
-            <div className="sd w-[60%] h-full flex flex-col items-center justify-center overflow-auto ">
+            <div className="w-[60%] overflow-auto">
               
               {children}
               

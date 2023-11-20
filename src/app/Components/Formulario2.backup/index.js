@@ -1,6 +1,6 @@
 import { CiMail } from "react-icons/ci";
 import { IoKeyOutline } from "react-icons/io5";
-import Input from "../InputComponent";
+import Input from "../InputComponent/index2";
 
 
 

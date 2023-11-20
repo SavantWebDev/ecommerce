@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const {nextui} = require("@nextui-org/react");
 module.exports = {
   mode: 'jit',
  
@@ -8,6 +9,7 @@ module.exports = {
     './src/app/Components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{jpg,png,svg}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     // spacing: {
@@ -39,6 +41,8 @@ module.exports = {
       }
       
     },
+
   },
+  // darkMode: "dark",
   plugins: [],
 }
