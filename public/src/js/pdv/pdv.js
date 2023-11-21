@@ -1,7 +1,7 @@
 var contadorCards = 0;
 var totalPreco = 0;
 
-function gerarCard(nome, ean, preco) { // depois adiciono quantidade
+function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
   //var codigo = document.getElementById("codigo").value;
 
   // Validar se o código é não vazio
@@ -11,6 +11,10 @@ function gerarCard(nome, ean, preco) { // depois adiciono quantidade
   }
 
   contadorCards++;
+  var precoU = parseFloat(preco)
+  var quantidadeT = parseFloat(quantidade)
+  var ValorTotalCard = precoU * quantidadeT
+
   var novoCard = document.createElement("div");
   novoCard.id = "card" + contadorCards;
   novoCard.innerHTML =
@@ -19,8 +23,8 @@ function gerarCard(nome, ean, preco) { // depois adiciono quantidade
     "<span id='nomeE' class='nome-produto-compra' >" + nome + "</span>" +
     "<span id='codigoE'>Código: " + ean + "</span>" +
     "<div class='dados-compra-single'>" +
-    "<span id='quantidadeE'>Quantidade: " + "XX" + "</span>" +
-    "<span id='precoE'>Valor Total: R$" + preco + "</span>" + // Aqui multiplico o preço pela quantidade
+    "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
+    "<span id='precoE'>Valor Total: R$" + ValorTotalCard + "</span>" + // Aqui multiplico o preço pela quantidade
     "<div class='btn-comp-al'>" +
     "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
     "</div>" +
