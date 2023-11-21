@@ -1,4 +1,5 @@
 1. Colocar um alert caso o produto não exista na api
+
 2. Verificar se o código está funcionando para todos os eans da api
 3. Debitar o total caso tire um card de produto
 4. Jogar as informações de produto em "Produtos Adicionados"
