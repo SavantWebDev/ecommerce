@@ -1,7 +1,7 @@
 var contadorCards = 0;
 var totalPreco = 0;
 
-function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
+function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois adiciono quantidade
   //var codigo = document.getElementById("codigo").value;
 
   // Validar se o código é não vazio
@@ -12,12 +12,53 @@ function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
 
   contadorCards++;
 
-  var precoU = parseFloat(preco.replace(",","."))
-  var quantidadeT = parseFloat(quantidade)
-  var ValorTotalCard = precoU * quantidadeT
+  if(!isLocalStorageData){
+    var precoU = parseFloat(String(preco).replace(",", "."))
+    var quantidadeT = parseFloat(quantidade)
+    //var ValorTotalCard = ValorTotalCard
+    var ValorTotalCard = precoU * quantidadeT
+    totalPreco = totalPreco + ValorTotalCard
+    //------------------------------
+    var novoCard = document.createElement("div");
+    novoCard.id = "card" + contadorCards;
+    novoCard.innerHTML =
+      "<div class='produto-single-store'>" +
+      "<br>" +
+      "<span id='nomeE' class='nome-produto-compra' >" + nome + "</span>" +
+      "<span id='codigoE'>Código: " + ean + "</span>" +
+      "<div class='dados-compra-single'>" +
+      "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
+      "<span id='precoE'>Valor Total: R$" + ValorTotalCard + "</span>" + // Aqui multiplico o preço pela quantidade
+      "<div class='btn-comp-al'>" +
+      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
+      "</div>" +
+      "</div>" +
+      "</div>";
+  
+    document.getElementById("cardsContainer").appendChild(novoCard);
+  } else {
+    var ValorTotalCard = parseFloat(String(preco).replace(",", "."));
+    var novoCard = document.createElement("div");
+    novoCard.id = "card" + contadorCards;
+    novoCard.innerHTML =
+      "<div class='produto-single-store'>" +
+      "<br>" +
+      "<span id='nomeE' class='nome-produto-compra' >" + nome + "</span>" +
+      "<span id='codigoE'>Código: " + ean + "</span>" +
+      "<div class='dados-compra-single'>" +
+      "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
+      "<span id='precoE'>Valor Total: R$" + ValorTotalCard.toFixed(2) + "</span>" +
+      "<div class='btn-comp-al'>" +
+      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
+      "</div>" +
+      "</div>" +
+      "</div>";
 
-  totalPreco = totalPreco + ValorTotalCard
+    document.getElementById("cardsContainer").appendChild(novoCard);
+  }
 
+  //var TTpreco = totalPreco
+  /* 
   var novoCard = document.createElement("div");
   novoCard.id = "card" + contadorCards;
   novoCard.innerHTML =
@@ -35,8 +76,9 @@ function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
     "</div>";
 
   document.getElementById("cardsContainer").appendChild(novoCard);
+  */
   document.getElementById("codigo").value = "";
-  
+
   salvarCardsNoLocalStorage();
 
   atualizarTotal(); // Chama a função para atualizar o total na tela
@@ -148,15 +190,19 @@ function salvarCardsNoLocalStorage() {
     var nome = card.querySelector('.nome-produto-compra').textContent;
     var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
     var quantidade = card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', '');
-    var ValorTotalCard = card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim();
+    var ValorTotalCard = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
 
     cardsArray.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
+
+    console.log("Teste:")
+    console.log(cardsArray)
   }
 
   // Salvar os cards e totalPreco no localStorage como uma string JSON
+
   var dadosParaSalvar = {
     cards: cardsArray,
-    totalPreco: totalPreco
+    ValorTotalCard: ValorTotalCard
   };
 
   localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
@@ -168,7 +214,7 @@ function carregarCardsDoLocalStorage() {
   // Carregar os cards do localStorage
   if (dadosArmazenados.cards) {
     dadosArmazenados.cards.forEach(function (cardData) {
-      gerarCard(cardData.nome, cardData.ean, '0', cardData.quantidade);
+      gerarCard(cardData.nome, cardData.ean, cardData.ValorTotalCard, cardData.quantidade, true);
     });
   }
 
