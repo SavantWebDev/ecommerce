@@ -36,7 +36,7 @@ function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
 
   document.getElementById("cardsContainer").appendChild(novoCard);
   document.getElementById("codigo").value = "";
-
+  
   salvarCardsNoLocalStorage();
 
   atualizarTotal(); // Chama a função para atualizar o total na tela
