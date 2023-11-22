@@ -11,9 +11,12 @@ function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
   }
 
   contadorCards++;
-  var precoU = parseFloat(preco)
+
+  var precoU = parseFloat(preco.replace(",","."))
   var quantidadeT = parseFloat(quantidade)
   var ValorTotalCard = precoU * quantidadeT
+
+  totalPreco = totalPreco + ValorTotalCard
 
   var novoCard = document.createElement("div");
   novoCard.id = "card" + contadorCards;
@@ -34,6 +37,8 @@ function gerarCard(nome, ean, preco, quantidade) { // depois adiciono quantidade
   document.getElementById("cardsContainer").appendChild(novoCard);
   document.getElementById("codigo").value = "";
 
+  salvarCardsNoLocalStorage();
+
   atualizarTotal(); // Chama a função para atualizar o total na tela
   //salvarCardsNoLocalStorage()
 }
@@ -42,20 +47,13 @@ function atualizarTotal() {
   document.getElementById("totalPreco").innerHTML = "Total: R$" + totalPreco.toFixed(2);
 }
 
-function excluirCard(cardID) {
+function excluirCard(cardID) { // Preciso remover o item da tela e o item do local storage
   var card = document.getElementById("card" + cardID);
   card.remove();
+  salvarCardsNoLocalStorage()
+  atualizarTotal()
+  //localStorage.removeItem(card)
 }
-
-function salvarCardsNoLocalStorage() {
-  var cardsContainer = document.getElementById('cardsContainer');
-  var cards = cardsContainer.getElementsByClassName('card');
-  var cardsArray = Array.from(cards).map(card => card.textContent);
-
-  // Salva os cards no localStorage como uma string JSON
-  localStorage.setItem('cards', JSON.stringify(cardsArray));
-}
-
 
 // Modal finalizar Compra
 function abrirModalfinalizar() {
@@ -88,6 +86,7 @@ function fecharModalcancelar() {
 }
 
 function cancelarCompra() {
+  localStorage.clear()
   // Recarregar a página
   location.reload();
 }
@@ -137,3 +136,48 @@ document.getElementById("parcelas").innerHTML =
   '<option value="quatroP">4x</option>' +
   '</select>' +
   '</div>';
+
+function salvarCardsNoLocalStorage() {
+  var cardsContainer = document.getElementById('cardsContainer');
+  var cards = cardsContainer.getElementsByClassName('produto-single-store');
+  var cardsArray = [];
+
+  // Mapear os cards para um array de objetos
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+    var nome = card.querySelector('.nome-produto-compra').textContent;
+    var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
+    var quantidade = card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', '');
+    var ValorTotalCard = card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim();
+
+    cardsArray.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
+  }
+
+  // Salvar os cards e totalPreco no localStorage como uma string JSON
+  var dadosParaSalvar = {
+    cards: cardsArray,
+    totalPreco: totalPreco
+  };
+
+  localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
+}
+
+function carregarCardsDoLocalStorage() {
+  var dadosArmazenados = JSON.parse(localStorage.getItem('dados')) || {};
+
+  // Carregar os cards do localStorage
+  if (dadosArmazenados.cards) {
+    dadosArmazenados.cards.forEach(function (cardData) {
+      gerarCard(cardData.nome, cardData.ean, '0', cardData.quantidade);
+    });
+  }
+
+  // Carregar totalPreco do localStorage
+  if (dadosArmazenados.totalPreco) {
+    totalPreco = dadosArmazenados.totalPreco;
+    atualizarTotal();
+  }
+}
+
+// Chamar a função para carregar os cards ao carregar a página
+carregarCardsDoLocalStorage();
