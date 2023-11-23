@@ -293,11 +293,26 @@
   font-family: "Poppins", sans-serif !important;
   border: 0;
   cursor: pointer;
-  background-color: rgb(212, 235, 11);
+  background-color: rgb(119, 235, 11);
   color: #fff;
   border-radius: 15px;
   margin-top: 2px;
 }
+.btn-excluir-voltar{
+  /*margin-left: 4%;*/
+  width: 48%;
+  height: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif !important;
+  border: 0;
+  cursor: pointer;
+  background-color: rgba(194, 58, 25, 0.616);
+  color: #fff;
+  border-radius: 15px;
+  margin-top: 2px;
+}
+
 .btn-excluir{
   /*margin-left: 4%;*/
   width: 55px;

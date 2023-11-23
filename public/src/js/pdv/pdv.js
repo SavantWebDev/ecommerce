@@ -170,7 +170,7 @@ document.getElementById("precoFin").innerHTML =
   '</div>';
 document.getElementById("formaPag").innerHTML =
   '<div class="modal-c">' +
-  '<label for="formPag">Forma de Pagamento:</label>' +
+  '<label for="formPag">Forma de Pagamento:   </label>' +
   '<select id="formpagmt" name="formas" style="border-width: 1px; border-radius: 5px;">' +
   '<option value="especie">Dinheiro Especie</option>' +
   '<option value="pix">PIX</option>' +
