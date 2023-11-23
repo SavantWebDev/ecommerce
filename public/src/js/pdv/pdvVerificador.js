@@ -12,7 +12,6 @@ function checarTinput() {
         const codigoA = calcseparador[2] ? calcseparador[2].substring(1) : Icodigo;
 
         // Cria um novo card com os valores
-
         if(quantidadeA == codigoA) {
             const quantidadeA = 1
             verificarExApi(quantidadeA, codigoA);
@@ -23,19 +22,6 @@ function checarTinput() {
         // Limpa o campo de entrada após criar o card
         codigo.value = "";
     }
-
-    /*
-    if (Icodigo.length >= tamanhoCaracteres) {
-        codigo.value = Icodigo.substring(0, tamanhoCaracteres);
-
-        verificarExApi(Icodigo)//, Ipreco, Iquantidade
-
-    } else {
-        if (Icodigo.length >= 13) {
-            alert('Teste')
-        }
-    }
-    */
 }
 
 // Verificador de Existência // Não pode ser um número que não exista e nenhum vazio

@@ -30,7 +30,7 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
       "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
       "<span id='precoE'>Valor Total: R$" + ValorTotalCard + "</span>" + // Aqui multiplico o preço pela quantidade
       "<div class='btn-comp-al'>" +
-      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
+      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'><span class='material-symbols-outlined'>delete</span></button>" +
       "</div>" +
       "</div>" +
       "</div>";
@@ -52,7 +52,7 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
       "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
       "<span id='precoE'>Valor Total: R$" + ValorTotalCard.toFixed(2) + "</span>" +
       "<div class='btn-comp-al'>" +
-      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
+      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'><span class='material-symbols-outlined'>delete</span></button>" +
       "</div>" +
       "</div>" +
       "</div>";
@@ -60,33 +60,13 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
     document.getElementById("cardsContainer").appendChild(novoCard);
     atualizarTotal();
   }
-
-  //var TTpreco = totalPreco
-  /* 
-  var novoCard = document.createElement("div");
-  novoCard.id = "card" + contadorCards;
-  novoCard.innerHTML =
-    "<div class='produto-single-store'>" +
-    "<br>" +
-    "<span id='nomeE' class='nome-produto-compra' >" + nome + "</span>" +
-    "<span id='codigoE'>Código: " + ean + "</span>" +
-    "<div class='dados-compra-single'>" +
-    "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
-    "<span id='precoE'>Valor Total: R$" + ValorTotalCard + "</span>" + // Aqui multiplico o preço pela quantidade
-    "<div class='btn-comp-al'>" +
-    "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'>Excluir</button>" +
-    "</div>" +
-    "</div>" +
-    "</div>";
-
-  document.getElementById("cardsContainer").appendChild(novoCard);
-  */
+  //
+  var primeiroFila = document.getElementById("cardsContainer").firstChild;
+  document.getElementById("cardsContainer").insertBefore(novoCard, primeiroFila);
+  atualizarTotal();
   document.getElementById("codigo").value = "";
-
   salvarCardsNoLocalStorage();
 
-  //atualizarTotal(); // Chama a função para atualizar o total na tela
-  //salvarCardsNoLocalStorage()
 }
 
 function atualizarTotal() {
@@ -141,36 +121,37 @@ function cancelarCompra() {
 }
 
 //Soma Preços // Modal
+// Apresentar Valor total assim que for bipado
 document.getElementById("somaPrecos").innerHTML =
   '<div class="info-total-descontos">' +
-  '<span id="totalPreco" class="total-produtos">Total: R$ 0.00</span>' + //////////////// Marcador
+  '<span id="totalPreco" class="total-produtos">Total: R$ 0.00</span>' + 
   '<span>Descontos:</span>' +
   '<span></span>' +
   '</div>';
 
-
+//Modal venda
 document.getElementById("precoTot").innerHTML =
   '<div class="modal-c">' +
   '<div>' +
-  '<label for="codigo">Preço Total:</label>' +
+  '<label for="codigo" class="label-modal-fin-venda">Preço Total:</label>' +
   '</div>' +
   '<div>' +
-  '<label id="precoFinalModal" > R$ ---,--</label>' +
+  '<label id="precoFinalModal" class="label-modal-fin-venda"> R$ ---,--</label>' +
   '</div>' +
   '</div>';
 document.getElementById("descontoTot").innerHTML =
   '<div class="modal-c">' +
-  '<label for="preco">Desconto:</label>' +
-  '<label> ---,-- %</label>' +
+  '<label for="preco"  class="label-modal-fin-venda">Desconto:</label>' +
+  '<label class="label-modal-fin-venda"> ---,-- %</label>' +
   '</div>';
 document.getElementById("precoFin").innerHTML =
   '<div class="modal-c">' +
-  '<label for="quantidade">Preço Final: </label>' +
-  '<label id="precoFinalTotal">R$ ---,--</label>' +
+  '<label for="quantidade" class="label-modal-fin-venda">Preço Final: </label>' +
+  '<label id="precoFinalTotal" class="label-modal-fin-venda">R$ ---,--</label>' +
   '</div>';
 document.getElementById("formaPag").innerHTML =
   '<div class="modal-c">' +
-  '<label for="formPag">Forma de Pagamento:   </label>' +
+  '<label for="formPag" class="label-modal-fin-venda">Forma de Pagamento:   </label>' +
   '<select id="formpagmt" name="formas" style="border-width: 1px; border-radius: 5px;">' +
   '<option value="especie">Dinheiro Espécie</option>' +
   '<option value="pix">PIX</option>' +
@@ -180,7 +161,7 @@ document.getElementById("formaPag").innerHTML =
   '</div>';
 document.getElementById("parcelas").innerHTML =
   '<div class="modal-c">' +
-  '<label for="parcPag">Quantidade de Parcelas:</label>' +
+  '<label for="parcPag" class="label-modal-fin-venda">Quantidade de Parcelas:</label>' +
   '<select id="parcPagt" name="parcelas" style="border-width: 1px; border-radius: 5px;">' +
   '<option value="umP">1x</option>' +
   '<option value="doisP">2x</option>' +
