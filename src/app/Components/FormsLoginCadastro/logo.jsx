@@ -12,7 +12,7 @@ export default function LogoForms({ titulo, subtitulo }) {
       />
       <div className="my-[40px]">
         <h2 className="text-[32px]">{titulo}</h2>
-        <p className="text-[#D0D0D0] text-[18px] text-center leading-[140%]">
+        <p className="text-[#000000] text-[18px] text-center leading-[140%] font-light">
           {subtitulo}
         </p>
       </div>

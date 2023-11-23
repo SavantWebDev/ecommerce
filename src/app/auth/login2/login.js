@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Input from "@/app/Components/InputComponent";
+import { login, loginVerify } from "@/app/api/api";
 import { CiMail } from "react-icons/ci";
 import { IoKeyOutline, IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
@@ -9,15 +11,13 @@ import ButtonForms from "@/app/Components/FormsLoginCadastro/buttonForms";
 import Link from "next/link";
 import LoginSocial from "@/app/Components/FormsLoginCadastro/loginsocial";
 import RedirectLoginCadastro from "@/app/Components/FormsLoginCadastro/redirectLoginCadastro";
-import { login, loginVerify } from "@/app/api/api";
-import { useRouter } from "next/navigation";
 
 export default function Loginauth() {
-  // const [nome, setNome] = useState("");
+  const [nome, setNome] = useState("");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  // const [senhaConfirma, setSenhaConfirma] = useState("");
+  const [senhaConfirma, setSenhaConfirma] = useState("");
   // Previne a ação padrão de submissão do formulário
   const [check, setChecker] = useState(false);
 
@@ -29,21 +29,38 @@ export default function Loginauth() {
     setChecker(e.target.checked);
     if (e.target.checked) {
       const checkLogin = document.getElementById("checkLogin");
-      
+
       localStorage.setItem("email", email);
       localStorage.setItem("senha", senha);
-      
     } else {
       localStorage.removeItem("email");
       localStorage.removeItem("senha");
     }
   }
 
+  
+  // async function handleSubmit(event){
+  //   event.preventDefault()
+  //   const result = await signIn('credentials', {
+  //     email,
+  //     senha,
+  //     redirect: false
+  //   })
+    
+
+  //   if(result?.error){
+  //     console.log(result)
+  //     return
+  //   }
+  //   router.replace('/')
+  // }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await login(email, senha, token);
+      const res = await login(email, senha);
       console.log(res);
       var token = res.token;
       console.log(token);
@@ -52,7 +69,6 @@ export default function Loginauth() {
       console.log(token);
       console.log(resVerify);
       router.push("/");
-      
     } catch (error) {
       alert(error.message);
       router.push("/auth/login");
@@ -74,10 +90,11 @@ export default function Loginauth() {
         <Input
           icone={<CiMail />}
           label="Digite seu Email:"
-          obrigatorio={true}
+          // obrigatorio={true}
           placeholder="Email"
           tipo="email"
-          valor={email}
+         nome="email"
+         valor={email}
           aoAlterado={(valor) => {
             setEmail(valor);
             console.log(valor);
@@ -86,11 +103,12 @@ export default function Loginauth() {
         <Input
           icone={<IoKeyOutline />}
           label="Senha"
-          obrigatorio={true}
+          // obrigatorio={true}
           placeholder="Digite sua senha"
           tipo="password"
           mostrarIcone={<IoEyeSharp />}
           esconderIcone={<FaEyeSlash />}
+          nome="senha"
           valor={senha}
           aoAlterado={(valor) => {
             setSenha(valor);

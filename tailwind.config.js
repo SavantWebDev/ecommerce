@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
+
 const {nextui} = require("@nextui-org/react");
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   mode: 'jit',
  
@@ -10,8 +12,16 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{jpg,png,svg}',
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+   
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     // spacing: {
     //   '1': '8px',
     //   '2': '12px',
@@ -21,7 +31,7 @@ module.exports = {
     //   '6': '48px',
     // },
     colors:{
-      'primary': '#ffcc00',
+      'primaria': '#ffcc00',
       'secondary': '',
       'neutral-dark': '',
       'neutral-light': '',
@@ -43,6 +53,7 @@ module.exports = {
     },
 
   },
-  // darkMode: "dark",
-  plugins: [],
+  
+  darkMode: "dark",
+  plugins: [nextui()],
 }
