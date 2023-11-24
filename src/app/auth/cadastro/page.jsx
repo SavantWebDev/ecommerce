@@ -3,7 +3,7 @@ import { useState } from "react";
 import Input from "../../Components/InputComponent/index";
 import { CiMail } from "react-icons/ci";
 import { IoKeyOutline, IoEyeSharp } from "react-icons/io5";
-
+import { FaEyeSlash } from "react-icons/fa";
 import LogoForms from "../../Components/FormsLoginCadastro/logo";
 import ButtonForms from "../../Components/FormsLoginCadastro/buttonForms";
 import Link from "next/link";
@@ -21,7 +21,8 @@ import {
 export default function CadastroAuth() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setsenha] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmasenha, setConfirmaSenha] = useState("");
   const [idade, setIdade] = useState("");
   const [Cpf, setCpf] = useState("");
   const [isNomeValid, setIsNomeValid] = useState();
@@ -32,12 +33,19 @@ export default function CadastroAuth() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // validaSenha(senha,confirmasenha)
     // !isNomeValid || !isEmailValid || !isSenhaValid || !isIdadeValid
-    if (!isNomeValid || !isEmailValid || !isIdadeValid || !isCpfValid) {
+    if (
+      !isNomeValid ||
+      !isEmailValid ||
+      !isSenhaValid ||
+      !isIdadeValid ||
+      !isCpfValid
+    ) {
       console.log("campos invalidos");
       console.log(isNomeValid);
       console.log(isEmailValid);
-      // console.log(isSenhaValid)
+      console.log(isSenhaValid);
       console.log(isIdadeValid);
       console.log(isCpfValid);
       return;
@@ -45,6 +53,60 @@ export default function CadastroAuth() {
       console.log("cadastro feito com sucesso");
     }
   };
+
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const aoEsconderSenha = () => {
+    setMostrarSenha(!mostrarSenha);
+  };
+
+  function inputValueNome(event) {
+    const valor = event.target.value;
+    setNome(valor);
+    setIsNomeValid(validaNome(valor));
+  }
+
+  function inputValueEmail(event) {
+    const valor = event.target.value;
+    setEmail(valor);
+    setIsEmailValid(validaEmail(valor));
+  }
+
+  function inputValueSenha(event) {
+    const valor = event.target.value;
+    setSenha(valor);
+    // setIsSenhaValid(validaEmail(valor));
+  }
+
+  function inputValueConfirmaSenha(event) {
+    const valor = event.target.value;
+    setConfirmaSenha(valor);
+    // setIsSenhaValid(validaEmail(valor));
+  }
+
+  function validaSenha(senha, confirmaSenha) {
+    if (senha === confirmaSenha) {
+      setIsSenhaValid(true);
+    } else {
+      setIsSenhaValid(false);
+    }
+  }
+
+  function inputValueIdade(event) {
+    const valor = event.target.value;
+    setIdade(valor);
+    setIsIdadeValid(validaIdade(valor));
+  }
+
+  function inputValueCpf(event) {
+    const valor = event.target.value;
+    setCpf(valor);
+    setIsCpfValid(validaCpf(valor));
+  }
+
+  //  const revelaNome = () => {
+  //   console.log(isNomeValid)
+  //  }
 
   return (
     <section className="flex w-full h-screen overflow-hidden">
@@ -61,97 +123,186 @@ export default function CadastroAuth() {
             onSubmit={handleSubmit}
             action=""
           >
-            <Input
-              icone={<CiMail />}
-              label="Nome e Sobrenome:"
-              name="nome"
-              obrigatorio={true}
-              placeholder="Digite seu nome e sobrenome"
-              aoAlterado={(valor) => {
-                setNome(valor);
-                setIsNomeValid(validaNome(valor));
-                console.log(valor);
-              }}
-            />
-            <Input
-              icone={<CiMail />}
-              label="Digite seu Email:"
-              name="email"
-              obrigatorio={true}
-              placeholder="Email"
-              tipo="email"
-              aoAlterado={(valor) => {
-                setEmail(valor);
-                setIsEmailValid(validaEmail(valor));
-                console.log(valor);
-              }}
-            />
-            <Input
-              icone={<IoKeyOutline />}
-              label="Senha"
-              name="senha"
-              obrigatorio={true}
-              placeholder="Digite sua senha:"
-              tipo="password"
-              aoAlterado={(valor) => {
-                setsenha(valor);
-                setIsSenhaValid(validaSenha(valor));
-                console.log(valor);
-              }}
-            />
-            <Input
-              icone={<IoKeyOutline />}
-              label="Confirmar senha:"
-              name="senha"
-              obrigatorio={true}
-              placeholder="Confirme sua senha"
-              tipo="password"
-              aoAlterado={(valor) => {
-                setIdade(valor);
-                setIsSenhaValid(validaSenha(valor));
-                console.log(valor);
-              }}
-            />
-            <Input
-              icone={<CiMail />}
-              label="Data de Nascimento:"
-              name="data"
-              tipo="date"
-              obrigatorio={true}
-              placeholder="Digite sua data de Nascimento"
-              aoAlterado={(valor) => {
-                setIdade(valor);
-                setIsIdadeValid(validaIdade(valor));
-                console.log(valor);
-              }}
-            />
-            <Input
-              icone={<CiMail />}
-              label="CPF:"
-              name="cpf"
-              tipo="number"
-              obrigatorio={true}
-              placeholder="Digite seu cpf"
-              aoAlterado={(valor) => {
-                setCpf(valor);
-                setIsCpfValid(validaCpf(valor));
-                console.log(valor);
-              }}
-            />
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <CiMail />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777]">
+                  Nome e Sobrenome:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueNome(evento);
+                    console.log(evento.target.value);
+                  }}
+                  type="text"
+                  name="nome"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  placeholder="Digite seu nome e sobrenome"
+                  required
+                />
+                {/* <span onClick={revelaNome}>aa</span> */}
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <CiMail />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777]">
+                  Whatsapp:
+                </label>
+                <input
+                  type="tel"
+                  name="whatsapp"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  placeholder="Digite seu numero do Whatsapp"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <CiMail />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777]">
+                  Email:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueEmail(evento);
+                    console.log(evento.target.value);
+                  }}
+                  type="email"
+                  name="email"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  placeholder="Digite seu email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <IoKeyOutline />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777]">
+                  Senha:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueSenha(evento);
+                    validaSenha(evento.target.value, confirmasenha);
+                    console.log(evento.target.value);
+                  }}
+                  type={mostrarSenha ? "text" : "password"}
+                  name="password"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  placeholder="Digite sua senha"
+                  required
+                />
+                <span className="absolute right-0" onClick={aoEsconderSenha}>
+                  {mostrarSenha ? <FaEyeSlash /> : <IoEyeSharp />}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <IoKeyOutline />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777]">
+                  Confirmar Senha:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueConfirmaSenha(evento);
+                    validaSenha(senha, evento.target.value);
+                    console.log(evento.target.value);
+                  }}
+                  // onBlur={() => validaSenha(senha, confirmasenha)}
+                  type={mostrarSenha ? "text" : "password"}
+                  name="password confirm"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  placeholder="Digite sua senha"
+                  required
+                />
+                <span className="absolute right-0" onClick={aoEsconderSenha}>
+                  {mostrarSenha ? <FaEyeSlash /> : <IoEyeSharp />}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <CiMail />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777] whitespace-nowrap">
+                  Data de Nascimento:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueIdade(evento);
+                    console.log(evento.target.value);
+                  }}
+                  type="date"
+                  name="data"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center w-full mx-auto gap-4 bg-[#FFF] fill-[#FFF] opacity-[0.8] py-0 px-3 border border-solid border-[#D9D9D9] rounded-xl">
+              <div className="text-[24px]">
+                <CiMail />
+              </div>
+              <div className="flex flex-col justify-center w-full py-2 relative">
+                <label className="text-[12px] w-40 opacity-[1] font-semibold text-[#797777] whitespace-nowrap">
+                  CPF:
+                </label>
+                <input
+                  onChange={(evento) => {
+                    inputValueCpf(evento);
+                    console.log(evento.target.value);
+                  }}
+                  type="number"
+                  name="cpf"
+                  className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
+                  focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
+                  required
+                  placeholder="Digite seu CPF"
+                  minLength="11"
+                  maxLength="14"
+                />
+              </div>
+            </div>
 
             <div className="w-full flex items-center my-[21px]">
               <div className="flex items-start gap-2">
                 <input
-                  className="w-[19px] h-[19px] border border-[#D9D9D9] rounded-[4px]"
+                  className="w-[19px] h-[19px] border border-[#000] rounded-[4px]"
                   type="checkbox"
                 />
                 <p className="text-[14px] text-left">
-                  Aceitar{" "}
+                  Aceitar
                   <Link
                     className="font-semibold border-b border-black"
                     href="#"
-                  >
-                    termos e condições de privacidade.
+                  > termos e condições de privacidade.
                   </Link>{" "}
                   Veja nossa{" "}
                   <Link
@@ -166,7 +317,9 @@ export default function CadastroAuth() {
             <ButtonForms>Cadastrar-se</ButtonForms>
           </form>
 
-          <LoginSocial />
+          <LoginSocial 
+          conect="ou cadastre-se com"
+          />
           <RedirectLoginCadastro
             fraseLink="Já possui conta?"
             link="Faça o Login"

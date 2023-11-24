@@ -1,6 +1,5 @@
 import { Urbanist } from "next/font/google";
 import "./globals.css";
-import Hydrate from "./Components/hydrate";
 
 const urbanist = Urbanist({
   weight: ["400", "600"],

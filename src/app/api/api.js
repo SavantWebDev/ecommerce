@@ -21,6 +21,7 @@ export const loginVerify = async (token) => {
   console.log(token);
   console.log("loginverify");
   const res = await fetch("https://api-n56x.onrender.com/v1/api/jwt-teste", {
+    cache: 'no-store',
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +31,6 @@ export const loginVerify = async (token) => {
     //  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM
   });
   const data = await res.json();
-
   return data;
 };
 

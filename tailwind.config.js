@@ -15,20 +15,28 @@ module.exports = {
    
   ],
   theme: {
-    screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-    },
+    // screens: {
+    //   'sm': '640px',
+    //   'md': '768px',
+    //   'lg': '1024px',
+    //   'xl': '1280px',
+    //   '2xl': '1536px',
+    // },
     // spacing: {
-    //   '1': '8px',
-    //   '2': '12px',
-    //   '3': '16px',
-    //   '4': '24px',
-    //   '5': '32px',
-    //   '6': '48px',
+    //   '1': '0.25rem',
+    //   '2': '0.5rem',
+    //   '3': '0.75rem',
+    //   '4': '1rem',
+    //   '5': '1.25rem',
+    //   '6': '1.5rem',
+    //   '7': '1.75rem',
+    //   '8': '2rem',
+    //   '9': '2.25rem',
+    //   '10': '2.5rem',
+    //   '11': '2.75rem',
+    //   '12': '3rem',
+    //   '13': '3.25rem',
+    //   '14': '3.5rem',
     // },
     colors:{
       'primaria': '#ffcc00',
@@ -37,6 +45,7 @@ module.exports = {
       'neutral-light': '',
       'suport-dark': '',
       'suport-light': '',
+
     
     },
     extend: {
@@ -55,5 +64,7 @@ module.exports = {
   },
   
   darkMode: "dark",
-  plugins: [nextui()],
+  plugins: [
+    nextui()
+  ],
 }

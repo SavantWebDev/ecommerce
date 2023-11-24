@@ -71,7 +71,7 @@ export default function Loginauth() {
 
   return (
     <section className="flex w-full h-screen overflow-hidden">
-      <div className="w-[40%] h-auto bg-login bg-no-repeat bg-cover"></div>
+      <div className="bg-login  bg-no-repeat bg-cover w-[40%] h-auto "></div>
 
       <div className="w-[60%] h-screendv bg-primaria overflow-auto">
         <div className="flex w-full h-screendv flex-col items-center justify-center mx-auto py-10">
@@ -118,7 +118,7 @@ export default function Loginauth() {
                   id="checkLogin"
                   checked={check}
                   onChange={checkVerify}
-                  className="w-[19px] h-[19px] border border-[#D9D9D9] rounded-[4px] "
+                  className="w-[19px] h-[19px] border border-[#000] rounded-[4px] "
                   type="checkbox"
                 />
                 <p className="text-[14px]">lembrar-se de mim</p>
@@ -133,7 +133,9 @@ export default function Loginauth() {
             <ButtonForms>Continuar</ButtonForms>
           </form>
 
-          <LoginSocial />
+          <LoginSocial 
+          conect="ou continue com"
+          />
           <RedirectLoginCadastro
             fraseLink="Não tem conta?"
             link="Cadastre-se"

@@ -7,7 +7,7 @@ import closeAviso from "../../../../public/images/assets/close-aviso.svg";
 export default function AvisoConsumo() {
   return (
     <section className="flex w-full h-screen overflow-hidden">
-      <div className="w-[40%] relative h-auto bg-login bg-no-repeat bg-cover">
+      <div className="bg-login bg-no-repeat bg-cover w-[40%] relative h-auto ">
         <Image
           width={94}
           height={94}

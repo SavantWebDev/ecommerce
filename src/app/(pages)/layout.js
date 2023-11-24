@@ -1,7 +1,6 @@
 import Header from "../Components/Header/header";
 import { Providers } from "../providers";
 
-
 export default function LayoutPages({ children }) {
   return (
     <Providers>
