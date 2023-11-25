@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Input from "../../Components/InputComponent/index";
+
 import { CiMail } from "react-icons/ci";
 import { IoKeyOutline, IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
@@ -109,11 +109,11 @@ export default function CadastroAuth() {
   //  }
 
   return (
-    <section className="flex w-full h-screen overflow-hidden">
-      <div className="w-[40%] h-auto bg-login bg-no-repeat bg-cover"></div>
+    <section className="flex w-full h-screendv overflow-hidden">
+      <div className="w-[40%] h-auto bg-login bg-no-repeat bg-cover max-lg:hidden"></div>
 
-      <div className="w-[60%] h-screendv bg-primaria overflow-auto">
-        <div className="flex w-full h-auto flex-col items-center justify-center mx-auto py-10">
+      <div className="w-[60%] h-screendv bg-primaria overflow-auto py-10 max-lg:w-full max-sm:px-5">
+        <div className="flex max-w-[463px] w-full h-auto flex-col items-center justify-center mx-auto">
           <LogoForms
             titulo="Bem vindo de volta"
             subtitulo="Coloque suas credenciais para acessar o sistema"

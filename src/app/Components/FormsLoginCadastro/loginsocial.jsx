@@ -3,10 +3,10 @@ import Image from 'next/image'
 export default function LoginSocial({conect}) {
   return (
     <div className="w-full flex flex-col justify-center my-[29px] items-center">
-      <div className="flex items-center justify-between gap-2">
-        <span className=" w-[161px] h-[1px] flex-shrink-0 bg-[#000]"></span>
-        <p className="text-[#826904]">{conect}</p>
-        <span className=" w-[161px] h-[1px] flex-shrink-0 bg-[#000]"></span>
+      <div className="flex w-full items-center justify-between gap-2">
+        <span className=" w-1/3 h-[1px] flex-shrink-0 bg-[#000]"></span>
+        <p className=" w-1/3  text-[#826904] text-center">{conect}</p>
+        <span className=" w-1/3 h-[1px] flex-shrink-0 bg-[#000]"></span>
       </div>
 
       <div className='mt-[30px]'>

@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Input from "../../Components/InputComponent/index";
 import { CiMail } from "react-icons/ci";
 import { IoKeyOutline, IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
@@ -11,6 +10,7 @@ import LoginSocial from "../../Components/FormsLoginCadastro/loginsocial";
 import RedirectLoginCadastro from "../../Components/FormsLoginCadastro/redirectLoginCadastro";
 import { login, loginVerify } from "../../api/api";
 import { useRouter } from "next/navigation";
+import Input from "../../Components/InputComponent";
 
 export default function Loginauth() {
   // const [nome, setNome] = useState("");
@@ -70,14 +70,14 @@ export default function Loginauth() {
   }; // Exibe os valores dos inputs no console
 
   return (
-    <section className="flex w-full h-screen overflow-hidden">
-      <div className="bg-login  bg-no-repeat bg-cover w-[40%] h-auto "></div>
+    <section className="flex w-full h-screendv overflow-hidden">
+      <div className="bg-login  bg-no-repeat bg-cover bg-center w-[40%] h-auto max-lg:hidden "></div>
 
-      <div className="w-[60%] h-screendv bg-primaria overflow-auto">
-        <div className="flex w-full h-screendv flex-col items-center justify-center mx-auto py-10">
+      <div className="w-[60%] h-screendv px-8 bg-primaria overflow-auto max-lg:w-full max-sm:px-5 max-sm:py-10">
+        <div className="flex max-w-[463px] w-full h-screendv flex-col items-center justify-center mx-auto max-sm:h-auto">
           <LogoForms
             titulo="Bem vindo de volta"
-            subtitulo="Coloque suas credenciais para acessar o sistema"
+            subtitulo="Coloque suas credenciais para acessar o sistema"s
           />
           <form
             id="formsLogin"
@@ -112,8 +112,8 @@ export default function Loginauth() {
               }}
             />
 
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="w-full flex items-center justify-between py-1">
+              <div className="flex items-center gap-2 w-1/2">
                 <input
                   id="checkLogin"
                   checked={check}
@@ -123,12 +123,14 @@ export default function Loginauth() {
                 />
                 <p className="text-[14px]">lembrar-se de mim</p>
               </div>
+              <div className="w-1/2 flex justify-end">
               <Link
                 href=""
-                className="text-primaria border-b border-solid text-[14px]"
+                className="text-[#000] border-b border-solid text-[14px]"
               >
                 Esqueceu a senha?
               </Link>
+              </div>
             </div>
             <ButtonForms>Continuar</ButtonForms>
           </form>

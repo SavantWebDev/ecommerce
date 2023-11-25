@@ -6,8 +6,8 @@ import mais18 from "../../../../public/images/assets/18.svg";
 import closeAviso from "../../../../public/images/assets/close-aviso.svg";
 export default function AvisoConsumo() {
   return (
-    <section className="flex w-full h-screen overflow-hidden">
-      <div className="bg-login bg-no-repeat bg-cover w-[40%] relative h-auto ">
+    <section className="flex w-full h-screendv overflow-hidden max-sm:flex-col max-sm:h-full">
+      <div className="bg-login bg-no-repeat bg-cover bg-center w-[40%] relative h-auto max-md:hidden">
         <Image
           width={94}
           height={94}
@@ -17,8 +17,9 @@ export default function AvisoConsumo() {
         />
       </div>
 
-      <div className="w-[60%] h-screendv bg-primaria overflow-auto">
-        <div className="flex px-16 gap-5 pb-32 h-screendv flex-col items-start justify-end">
+      <div className="w-[60%] h-screendv bg-primaria overflow-auto max-sm:w-full max-sm:text-center">
+        <div className="flex px-16 gap-5 pb-32 h-screendv flex-col items-start justify-end max-sm:items-center max-sm:justify-center max-sm:pb-0 max-sm:px-5">
+          <Link href="/home">
           <Image
             src={Logo2}
             width={183.73}
@@ -26,12 +27,10 @@ export default function AvisoConsumo() {
             className=""
             alt="Imagem logo"
           />
+          </Link>
           <div className="flex flex-col gap-5">
-            <h1 className="text-[48px]  w-full text-[#1A1A1A] leading-tight">Você possui 18 anos ou mais?</h1>
-            <p className="text-[18px] font-medium max-w-[593px] w-full leading-[140%]">
-              Nós apoiamos o consumo responsável.
-              A venda de bebidas alcoólicas é proibida para menores de 18 anos.
-            </p>
+            <h1 className="text-[48px] max-w-[593px] w-full text-[#1A1A1A] leading-tight">Nós apoiamos o consumo responsável.</h1>
+            <p className="text-[18px] font-medium max-w-[593px] w-full leading-[140%]">Você possui mais de 18 anos?</p>
           </div>
           <div className="mt-[10px] flex items-center gap-5">
             <Link

@@ -8,6 +8,8 @@ import ImageLogo from "../../../../public/images/logo.svg";
 import { User } from "@nextui-org/react";
 import { checkToken } from "../../api/api";
 import { useRouter } from "next/navigation";
+import Logo2 from "../../../../public/images/logo2.svg";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 export default function Header() {
   const router = useRouter();
@@ -30,13 +32,13 @@ export default function Header() {
 
   return (
     <header className="w-full flex flex-col items-center justify-between">
-      <div className="bg-primary text-center  w-full py-1">
+      <div className="bg-primaria text-center  w-full py-1">
         <span className="font-normal">20% de desconto em todo o site</span>
       </div>
       <nav className="flex items-center w-full justify-between px-8 py-1">
         <ul className="flex gap-10 items-center">
           <Image
-            src={ImageLogo}
+            src={Logo2}
             width={100}
             height={100}
             alt="Logo"
@@ -87,6 +89,10 @@ export default function Header() {
               </Link>
             </div>
           )}
+          <MdOutlineShoppingCart
+          size={30}
+          className="cursor-pointer"
+          />
         </div>
       </nav>
     </header>
