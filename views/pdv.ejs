@@ -4,7 +4,6 @@
     <%- include('./partials/header.ejs') %>
     <link rel="stylesheet" href="/src/css/pdv/pdvProdutos.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>PDV</title>
   </head>
 
@@ -23,7 +22,24 @@
             <div class="alinhamento-ad-compra-1">
               <div class="campo-produto">
                 <label for="codigo">Código:</label>
-                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" maxlength="" required><br><br>
+                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" required><br><br>
+              </div>
+  
+              <div class="campo-produto">
+                <label for="nome">Preço:</label>
+                <input type="text" id="preco" class="edit-input" name="nome" placeholder="R$ ##,##" required><br><br>
+              </div>
+            </div>
+
+            <div class="alinhamento-ad-compra-2">
+              <div class="campo-produto">
+                <label for="nome">Quantidade:</label>
+                <input type="text" id="quantidade" class="edit-input" name="nome" placeholder="##" required><br><br>
+              </div>
+  
+              <div class="campo-produto">
+                <label for="nome">Desconto*:</label>
+                <input type="text" id="desconto" class="edit-input" name="nome" placeholder="##" disabled><br><br>
               </div>
             </div>
           </div>
@@ -33,14 +49,45 @@
           <div class="vizualizador-prod">
             <div class="vizualizar-img">
               <!--<img src="/public/src/image/LOGO ICEBERG BEBIDAS 1.jpg" aria-placeholder="teste">-->
+              <!--
+              <div class="teste-desenho">
+              </div>
+              -->
             </div>
             <div id="vizualizaProd"></div>
+          </div>
+
+          <!-- Modal Editar-->
+          <div id="overlay"></div>
+          <div id="modal" class="modal-p">
+              <h2>Editar Dados De Compra</h2>
+
+              <div class="modal-c">
+                <label for="editCodigo">Código:</label>
+                <input type="text" id="codigoModal">
+              </div>
+
+              <div class="modal-c">
+                <label for="editPreco">Preço:</label>
+                <input type="text" id="precoModal">  
+              </div>
+
+              <div class="modal-c">
+                <label for="editQuantidade">Quantidade:</label>
+                <input type="text" id="quantidadeModal">
+              </div>
+
+              <div class="modal-c al-btn-modal">
+                <button class="btn-excluir" onclick="fecharModal()">Sair</button>
+                <button class="btn-editar" onclick="salvarEdicao()">Salvar</button>
+              </div>
+
           </div>
 
           <!--Modal Finalizar Compra-->
           <div id="overlay2"></div>
           <div id="modalfinalizar" class="modal-p">
-            <h2 class="font-finalizar-venda">Finalizar Venda</h2>
+            <h2>Finalizar Venda</h2>
 
             <div id="finalizarVendaid"></div>
 
@@ -55,7 +102,7 @@
             <div id="parcelas"></div>
 
             <div class="modal-c">
-              <button class="btn-excluir-voltar" onclick="fecharModalfinalizar()">Voltar</button>
+              <button class="btn-excluir" onclick="fecharModalfinalizar()">Voltar</button>
               <button class="btn-editar" onclick="">Emitir Nota</button>
             </div>
           </div>
@@ -66,12 +113,12 @@
               <h2>Cancelar Venda</h2>
 
               <div class="modal-c">
-                <label for="codigo" class="label-modal-fin-venda">Deseja cancelar a compra ?</label>
+                <label for="codigo">Deseja cancelar a compra ?</label>
               </div>
 
               <div class="modal-c">
-                <button class="btn-excluir-voltar" onclick="fecharModalcancelar()">Voltar</button>
-                <button class="btn-editar" onclick="cancelarCompra()">Cancelar</button>
+                <button class="btn-voltar" onclick="fecharModalcancelar()">Voltar</button>
+                <button class="btn-cancelar" onclick="cancelarCompra()">Cancelar Compra</button>
               </div>
 
           </div>
@@ -104,38 +151,9 @@
             onclick="abrirModalcancelar()"
           />
         </section>
-        <!--Emitir Boleto-->
-        <!--
-        <div class="print">
-          <h1>Recibo - <span id="recibo_emitente"></span></h1>
-          <p>Recebemos de <span id="recibo_nome"></span></p>
-          Valor R$ <h2 id="recibo_valor">0,00</h2>
-          <p>Data <span id="recibo_data"></span></p>
-          <br /> <br />
-          <div class="assinatura">Assinatura</div>
-        </div>
-        -->
       </section>
     </main>
     <%- include('./partials/scripts.ejs') %>
-    <script src="/src/js/pdv/pdv.js"></script>
-    <script src="/src/js/pdv/pdvVerificador.js"></script>
-    <script src="/public/src/js/pdv/pdvNotaF.js"></script>
-    <script>
-      /*
-      const ean = document.getElementById('codigo').value;
-      
-      fetch(`https://api-n56x.onrender.com/v1/api/produto?ean=${ean}`)
-      .then(response => response.json())  
-      .then(data =>{
-        console.log(data.ean)
-      })  // os dados estão vindo aqui,
-      .catch(error => console.error('Erro:', error));
-      /*
-      if(ean!=null){
-      }
-      */
-
-    </script>
+    <script src="/src/js/pdv.js"></script>
   </body>
 </html>

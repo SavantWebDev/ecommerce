@@ -55,8 +55,6 @@
 
 .quantidade-single-compra {
 }
-
-
 .quantidade-single-compra select {
   padding: 10px;
   border-radius: 5px;
@@ -78,7 +76,7 @@
 
 .pdv-finalizar h2 {
   font-weight: 600;
-  font-size: 3.3rem;
+  font-size: 1.3rem;
   text-align: center !important;
 }
 
@@ -287,43 +285,24 @@
 
 .btn-editar{
   width: 48%;
-  height: 50px;
-  font-size: 1.2rem;
-  font-weight: 600;
+  height: 25px;
+  font-size: 14px;
   font-family: "Poppins", sans-serif !important;
   border: 0;
   cursor: pointer;
-  background-color: rgb(119, 235, 11);
-  color: #fff;
+  background-color: rgb(212, 235, 11);
   border-radius: 15px;
   margin-top: 2px;
 }
-.btn-excluir-voltar{
-  /*margin-left: 4%;*/
-  width: 48%;
-  height: 50px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  font-family: "Poppins", sans-serif !important;
-  border: 0;
-  cursor: pointer;
-  background-color: rgba(194, 58, 25, 0.616);
-  color: #fff;
-  border-radius: 15px;
-  margin-top: 2px;
-}
-
 .btn-excluir{
   /*margin-left: 4%;*/
   width: 55px;
   height: 25px;
   font-size: 14px;
   font-family: "Poppins", sans-serif !important;
-  /*font-weight: bold;*/
   border: 0;
   cursor: pointer;
-  color: #fff;
-  background-color: rgba(234, 62, 19, 0.786);
+  background-color: rgba(194, 58, 25, 0.616);
   border-radius: 15px;
   margin-top: 2px;
 }
@@ -364,7 +343,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  border-radius: 15px;
 }
 
 #overlay2 {
@@ -379,7 +357,6 @@
 }
 
 #modalfinalizar {
-  width: 800px;
   display: none;
   position: fixed;
   top: 50%;
@@ -388,10 +365,8 @@
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 15px;
   z-index: 3; /* Mais alto que o overlay */
 }
-
 
 #overlay3 {
   display: none;
@@ -413,12 +388,7 @@
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 15px;
   z-index: 3; /* Mais alto que o overlay */
-}
-
-#modalcancelar h2{
-  font-size: 2.2rem;
 }
 
 select {
@@ -426,21 +396,11 @@ select {
   font-family: "Poppins", sans-serif;
 }
 
-label {
-  font-weight: bold;
-  font-size: 2.2rem;
-}
-
 .edit-input{
-  height: 2.2rem;
+  height: 22px;
   border-radius: 5px;
   border-width: 1px;
   transition: border-width 0.3s;
-  font-size: 2.2rem;
-}
-
-#codigo{
-  font-size: 2.2rem;
 }
 
 .btn-voltar{
@@ -472,29 +432,14 @@ label {
   font-family: "Poppins", sans-serif;
   color: rgb(0, 0, 138);
 }
-
+label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
 .fn-h2 {
   font-weight: bold;
   font-size: 1.3rem;
 }
 .fonte-nome {
   font-size: 40px;
-}
-
-select {
-  font-size: 1.6rem;
-  font-weight: bold;
-}
-
-.label-modal-fin-venda {
-  font-weight: bold;
-  font-size: 1.6rem;
-}
-
-.modal-p h2{
-  font-size: 20.2;
-}
-
-#modalfinalizar h2 {
-  font-size: 2.2rem;
 }

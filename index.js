@@ -16,8 +16,6 @@ const knex = require('./Database/connection')
 
 const produtoControllers = require('./controller/produtoControllers')
 const usersControllers = require('./controller/usersControllers')
-const perdasControllers = require('./controller/perdasControllers')
-const apiController = require('./controller/api')
 
 app.use(session({
     secret: process.env.SECRET,
@@ -39,8 +37,6 @@ app.use(cors())
 
 app.use('/', produtoControllers)
 app.use('/', usersControllers)
-app.use('/', perdasControllers)
-app.use('/', apiController)
 
 app.get('/login', (req, res) => {
     var error = req.flash('error')
