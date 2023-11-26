@@ -47,7 +47,7 @@ function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
                         '<h2 class="nome-ad-prod"><b>Quantidade: ' + quantidadeA + '</b></h2>' +
                         '<br>' +
                         '<br>' +
-                        '<h2 class="nome-ad-prod"><b>Descrição: ' + 'data.descricao' + '</b></h2>' +
+                        '<h2 class="nome-ad-prod"><b>Descrição: ' + data.descricao + '</b></h2>' +
                         '</div>' +
                         '</div>';
                 } else {
