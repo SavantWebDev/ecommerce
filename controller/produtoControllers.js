@@ -95,9 +95,6 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   var { ean, nomeproduto, descricao, qnt, valor, categoria } = req.body;
   var foto = req.file;
 
-  console.log("===========================");
-  console.log(foto);
-
   if (foto != undefined) {
     foto = foto.path.replace("public", "");
   } else {
@@ -135,7 +132,7 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   } else {
     await knex
       .raw(
-        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto}', '${descricao}', ${qnt}, '${foto}', '${categoria}') `
+        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto.toUpperCase()}', '${descricao}', ${qnt}, '${foto}', '${categoria}') `
       )
       .then(() => {
         console.log("Inserido");
@@ -305,5 +302,44 @@ router.get("/del-product", auth, async (req, res) => {
     res.redirect("/estoque");
   }
 });
+
+/* LÓGICA DE DELETAR VÁRIOS PRODUTOS ESPECÍFICOS DE UMA SÓ VEZ */
+router.post('/teste-deletar', async (req, res) => {
+
+  var itens = req.body
+  console.log('acessado')
+  console.log(itens['itens'].length)
+
+  var query = 'DELETE FROM estoque '
+
+  for (var i = 0; i < itens['itens'].length; i++) {
+    if (i == 0) {
+      var where = 'WHERE nomeproduto = ' + `'${itens['itens'][i]}'`
+    } else {
+      var where = ' OR nomeproduto = ' + `'${itens['itens'][i]}'`
+    }
+    query = query + where
+  }
+
+  console.log(query)
+
+  try {
+    await knex.raw(query)
+      .then(result => {
+        console.log(result)
+        res.send('deletado com sucesso')
+      })
+      .catch(e => {
+        console.log(e)
+        res.send('erro ao deletar')
+      })
+  }
+  catch (e) {
+    console.log(e)
+  }
+
+})
+
+/* FIM DA LÓGICA DE DELETAR VÁRIOS PRODUTOS ESPECÍFICOS */
 
 module.exports = router;
