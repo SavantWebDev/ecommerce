@@ -12,7 +12,7 @@ function checarTinput() {
         const codigoA = calcseparador[2] ? calcseparador[2].substring(1) : Icodigo;
 
         // Cria um novo card com os valores
-        if(quantidadeA == codigoA) {
+        if (quantidadeA == codigoA) {
             const quantidadeA = 1
             verificarExApi(quantidadeA, codigoA);
         } else {
@@ -27,7 +27,7 @@ function checarTinput() {
 // Verificador de Existência // Não pode ser um número que não exista e nenhum vazio
 function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
     if (codigoA && codigoA.trim() !== '') {
-        fetch(`https://api-n56x.onrender.com/v1/api/produto?ean=${codigoA}`)
+        fetch(`https://api-n56x.onrender.com/v1/api/produtos/${codigoA}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
