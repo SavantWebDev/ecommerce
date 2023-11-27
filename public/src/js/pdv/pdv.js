@@ -225,7 +225,7 @@ function emitirNota() {
   if(itens) {
     const dados = JSON.parse(itens)
     /*console.log(`dados: ${dados}`)*/
-    const linkAPI = ''
+    const linkAPI = 'https://api-n56x.onrender.com/v1/api/Produtos' // Caminho inverso do retorno de informações ao vender o produto
     const configOp = {
       method: 'POST',
       headers: {
