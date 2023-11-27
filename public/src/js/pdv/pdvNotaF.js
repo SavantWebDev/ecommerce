@@ -1,3 +1,5 @@
+/*
+
 function gerarRecibo(){
     document.getElementById('recibo_emitente').innerHTML = document.getElementById('eminente').value;
     document.getElementById('recibo_nome').innerHTML = document.getElementById('nome').value;
@@ -10,3 +12,4 @@ function dataAtual(){
     let data = new Date();
     return data.getDate() + "/" + (data.getMonth() + 1) + "/" + data.getFullYear();
 }
+*/

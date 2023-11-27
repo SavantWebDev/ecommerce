@@ -24,6 +24,11 @@ function checarTinput() {
     }
 }
 
+function vizualizarImg(Urlimagem) {
+    document.getElementById("vizualizaImgProd").innerHTML = 
+    '<img src="' + Urlimagem + '" alt="Imagem do Produto" class="form-img-prod">'
+}
+
 // Verificador de Existência // Não pode ser um número que não exista e nenhum vazio
 function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
     if (codigoA && codigoA.trim() !== '') {
@@ -35,7 +40,8 @@ function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
                 if (codigoA.value != data.ean) {
                     // Gera o card de vendas geral
                     gerarCard(data.nomeproduto, data.ean, data.valor, quantidadeA);
-
+                    // Vizualizador de Imagem
+                    vizualizarImg(data.image)
                     // Gera o vizualizador do último produto passado
                     document.getElementById("vizualizaProd").innerHTML =
                         '<div id="displayValues" class="al-f-dados"></div>' +
@@ -47,14 +53,14 @@ function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
                         '<h2 class="nome-ad-prod"><b>Quantidade: ' + quantidadeA + '</b></h2>' +
                         '<br>' +
                         '<br>' +
-                        '<h2 class="nome-ad-prod"><b>Descrição: ' + 'data.descricao' + '</b></h2>' +
+                        '<h2 class="nome-ad-prod"><b>Descrição: ' + data.descricao + '</b></h2>' +
                         '</div>' +
                         '</div>';
                 } else {
                     // Produto não encontrado, exibe um alerta personalizado
                     // alert('Produto com código ' + codigoA + ' não encontrado na API.');
                     console.log('tttttttttttttttttt')
-                    alert('Teste');
+                    alert('Insira um produto válido!');
                 }
             })
             .catch(error => console.error('Erro:', error));

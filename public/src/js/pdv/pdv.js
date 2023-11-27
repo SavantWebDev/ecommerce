@@ -218,3 +218,35 @@ function carregarCardsDoLocalStorage() {
 
 // Chamar a função para carregar os cards ao carregar a página
 carregarCardsDoLocalStorage();
+
+function emitirNota() {
+  const itens = localStorage.getItem('dados')
+  console.log(itens)
+  if(itens) {
+    const dados = JSON.parse(itens)
+    /*console.log(`dados: ${dados}`)*/
+    const linkAPI = ''
+    const configOp = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dados),
+    };
+    fetch(linkAPI, configOp)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Erro no envio de dados')
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log(`Dados enviados com sucesso ${data}`)
+      })
+      .catch(erro => {
+        console.log(`Erro ao enviar os dados ${erro}`)
+      })
+  } else {
+    console.log('Deu erro nos dados, eles não tão no localstorage')
+  }
+}

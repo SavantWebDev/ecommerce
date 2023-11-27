@@ -31,7 +31,8 @@
           
           <!--Parte Imgs Produto-->
           <div class="vizualizador-prod">
-            <div class="vizualizar-img">
+            <div id="vizualizaImgProd" class="vizualizar-img">
+              
               <!--<img src="/public/src/image/LOGO ICEBERG BEBIDAS 1.jpg" aria-placeholder="teste">-->
             </div>
             <div id="vizualizaProd"></div>
@@ -56,7 +57,7 @@
 
             <div class="modal-c">
               <button class="btn-excluir-voltar" onclick="fecharModalfinalizar()">Voltar</button>
-              <button class="btn-editar" onclick="">Emitir Nota</button>
+              <button class="btn-editar" onclick="emitirNota()">Emitir Nota</button>
             </div>
           </div>
 
@@ -120,7 +121,10 @@
     <%- include('./partials/scripts.ejs') %>
     <script src="/src/js/pdv/pdv.js"></script>
     <script src="/src/js/pdv/pdvVerificador.js"></script>
+    <!--
     <script src="/public/src/js/pdv/pdvNotaF.js"></script>
+    <script src="/public/src/js/pdv/pdvRetornoD.js"></script>
+    -->
     <script>
       /*
       const ean = document.getElementById('codigo').value;
