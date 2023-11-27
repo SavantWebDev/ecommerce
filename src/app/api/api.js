@@ -46,7 +46,7 @@ export const checkToken = async () => {
       console.log(pegaToken);
       const username = pegaToken.username;
       if (pegaToken == "Token Inválido" || pegaToken == "Acesso Negado") {
-        console.log("invalido====");
+        // console.log("invalido====");
         return false;
       } else {
         return username;

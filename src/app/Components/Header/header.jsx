@@ -28,7 +28,7 @@ export default function Header() {
     }
     fetchData();
   }, []);
-  console.log(checkToken);
+  // console.log(checkToken);
 
   return (
     <header className="w-full flex flex-col items-center justify-between">
