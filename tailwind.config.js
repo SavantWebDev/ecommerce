@@ -1,26 +1,25 @@
-
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  mode: 'jit',
- 
+  mode: "jit",
+
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/Components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{jpg,png,svg}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/Components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{jpg,png,svg}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-   
   ],
   theme: {
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
+      min: "480px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1586px",
     },
     // spacing: {
     //   '1': '0.25rem',
@@ -35,42 +34,47 @@ module.exports = {
     //   '10': '2.5rem',
     //   '11': '2.75rem',
     //   '12': '3rem',
-    //   '19': '3.25rem',
+    //   '13': '3.25rem',
     //   '14': '3.5rem',
-    //   '15': '10.7rem',
     // },
-    colors:{
-      'primaria': '#ffcc00',
-      'secondary': '',
-      'neutral-dark': '#202020',
-      'neutral-light': '',
-      'suport-dark': '',
-      'suport-light': '',
-      'cor-preto': '#000000',
-      'cinza': '#969696',
-      'amarelo-mostarda': '#584808',
-      'branco': '#FFF',
-      'verde': '#009B48',
+    colors: {
+      primaria: "#ffcc00",
+      secondary: "",
+      "neutral-dark": "#202020",
+      "neutral-light": "",
+      "suport-dark": "",
+      "suport-light": "",
+      "cor-preto": "#000000",
+      cinza: "#969696",
+      "amarelo-mostarda": "#584808",
+      branco: "#FFF",
+      verde: "#009B48",
     },
     extend: {
       fontFamily: {
-        primary: ['var(--font-urbanist)'] 
+        primary: ["var(--font-urbanist)"],
       },
-      backgroundImage:{
+      backgroundImage: {
         login: "url('/images/login.svg')",
         teste: "url('/images/Banner-Categoria.jpg')",
-        banner : "url('/images/Banner-categoria.svg')"
+        banner: "url('/images/Banner-categoria.svg')",
       },
-      height:{
-        'screendv': '100dvh'
-      }
-      
+      height: {
+        screendv: "100dvh",
+      },
     },
-
+    variants: {
+      backgroundColor: [
+        "responsive",
+        "hover",
+        "focus",
+        "active",
+        "group-hover",
+      ],
+      transform: ["responsive", "hover", "focus", "active", "group-hover"],
+    },
   },
-  
+
   darkMode: "dark",
-  plugins: [
-    nextui()
-  ],
-}
+  plugins: [nextui()],
+};

@@ -16,7 +16,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <body className={`${urbanist.variable} font-primary`}>{children}</body>
+      <link rel="icon" href="/images/logo2.svg" sizes="any" />
+      <body className={`${urbanist.variable} font-primary`}>
+        {children}
+
+        </body>
     </html>
   );
 }

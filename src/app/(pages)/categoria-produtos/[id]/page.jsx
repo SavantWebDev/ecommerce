@@ -222,7 +222,7 @@ export default function Page({params}) {
           {/* <Pagvaipegar /> */}
         </div>
       </section>
-      <Newsletter />
+     
     </section>
   );
 }

@@ -17,20 +17,24 @@ export default function AvisoConsumo() {
         />
       </div>
 
-      <div className="w-[60%] h-screendv bg-primaria overflow-auto max-sm:w-full max-sm:text-center">
-        <div className="flex px-16 gap-5 pb-32 h-screendv flex-col items-start justify-end max-sm:items-center max-sm:justify-center max-sm:pb-0 max-sm:px-5">
+      <div className=" bg-primaria w-[60%] h-screendv  overflow-auto max-md:w-full max-md:text-center max-sm:px-5">
+        <div className=" flex px-16 gap-5 pb-32 h-screendv flex-col items-start justify-end max-md:items-center max-md:justify-center max-md:pb-0 max-sm:px-5">
           <Link href="/home">
-          <Image
-            src={Logo2}
-            width={183.73}
-            height={131}
-            className=""
-            alt="Imagem logo"
-          />
+            <Image
+              src={Logo2}
+              width={183.73}
+              height={131}
+              className=""
+              alt="Imagem logo"
+            />
           </Link>
           <div className="flex flex-col gap-5">
-            <h1 className="text-[48px] max-w-[593px] w-full text-[#1A1A1A] leading-tight">Nós apoiamos o consumo responsável.</h1>
-            <p className="text-[18px] font-medium max-w-[593px] w-full leading-[140%]">Você possui mais de 18 anos?</p>
+            <h1 className="text-[48px] max-w-[593px] w-full text-[#1A1A1A] leading-tight">
+              Nós apoiamos o consumo responsável.
+            </h1>
+            <p className="text-[18px] font-medium max-w-[593px] w-full leading-[140%]">
+              Você possui mais de 18 anos?
+            </p>
           </div>
           <div className="mt-[10px] flex items-center gap-5">
             <Link
@@ -47,6 +51,15 @@ export default function AvisoConsumo() {
               Não
               <Image width={24} height={24} alt="close" src={closeAviso} />
             </Link>
+          </div>
+          <div className=" w-full flex justify-center pb-3">
+            <Image
+              width={94}
+              height={94}
+              alt="mais 18"
+              src={mais18}
+              className=" md:hidden"
+            />
           </div>
         </div>
       </div>

@@ -5,12 +5,12 @@ import newimg from "/public/images/newsletter.png";
 const Newsletter = () => {
   return (
     <div className="bg-neutral-dark flex justify-evenly items-center">
-      <Image className="pt-[41px]" width={401} height={388} src={newimg} />
-      <div className="text-branco w-[479px]">
-        <h4 className="text-[36px] font-semibold leading-[normal]">
+      <Image className="pt-[41px] hidden lg:block" alt="newleter icon" width={401} height={388} src={newimg} />
+      <div className="text-branco w-[479px] py-5 px-5 lg:py-0">
+        <h4 className="text-[20px] lg:text-[36px] font-semibold leading-[normal]">
           Entre em nossa Newsletter
         </h4>
-        <p className="text-[20px] font-medium leading-[normal] pt-[11px] pb-[38px]">
+        <p className="text-[14px] lg:text-[20px] font-medium leading-normal pt-[11px] pb-[38px]">
           receba nossas ofertas no seu WhatsApp e E-mail e fique antenado no
           menor preço de Teresina
         </p>
