@@ -1,0 +1,64 @@
+{
+  "dados": [
+    {
+      "cards": [
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        }
+      ],
+      "ValorTotalCard": 20,
+      "id": 1
+    },
+    {
+      "cards": [
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "10",
+          "ValorTotalCard": 200
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "3",
+          "ValorTotalCard": 60
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        },
+        {
+          "nome": "ZÉ DA MANGA",
+          "ean": "2345678901234",
+          "quantidade": "1",
+          "ValorTotalCard": 20
+        }
+      ],
+      "ValorTotalCard": 20,
+      "id": 2
+    }
+  ]
+}

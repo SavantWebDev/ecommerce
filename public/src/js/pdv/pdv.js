@@ -218,13 +218,13 @@ function carregarCardsDoLocalStorage() {
 
 // Chamar a função para carregar os cards ao carregar a página
 carregarCardsDoLocalStorage();
-
+/*
 function emitirNota() {
   const itens = localStorage.getItem('dados')
   console.log(itens)
   if(itens) {
     const dados = JSON.parse(itens)
-    /*console.log(`dados: ${dados}`)*/
+    //console.log(`dados: ${dados}`)
     const linkAPI = 'https://api-n56x.onrender.com/v1/api/Produtos' // Caminho inverso do retorno de informações ao vender o produto
     const configOp = {
       method: 'POST',
@@ -234,6 +234,44 @@ function emitirNota() {
       body: JSON.stringify(dados),
     };
     fetch(linkAPI, configOp)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Erro no envio de dados')
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log(`Dados enviados com sucesso ${data}`)
+      })
+      .catch(erro => {
+        console.log(`Erro ao enviar os dados ${erro}`)
+      })
+  } else {
+    console.log('Deu erro nos dados, eles não tão no localstorage')
+  }
+}
+*/
+
+//Teste Retorno de dados local para um db básico em json:
+
+function emitirNota() {
+  const itens = localStorage.getItem('dados')
+  console.log(itens)
+  if(itens) {
+    const dados = JSON.parse(itens)
+    //console.log(`dados: ${dados}`)
+    const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+    const configOp = {
+      method: 'POST',
+      body: JSON.stringify(dados),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      
+      //body: JSON.stringify(dados),
+    };
+    console.log("AHHHHHH ", configOp)
+    fetch(linkAPI + '/dados', configOp)
       .then(res => {
         if (!res.ok) {
           throw new Error('Erro no envio de dados')
