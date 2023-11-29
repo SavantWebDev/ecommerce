@@ -1,0 +1,105 @@
+<!-- sidebar.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/componentes/menu-l-bar.css">
+    <link rel="stylesheet" href="/src/css/all.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <!--<h2>Sidebar</h2>-->
+        
+        <ul class="lista-menu-l">
+
+            <li><p>APIs</p></li>
+
+            <li><a href="./main.html" target="_top">Introdução</a></li>
+            <!--<li><a href="#">Página 2</a></li>-->
+            <li><hr></li>
+            <li>
+                <details>
+                    <summary>Site</summary>
+                    <ul class="lista-menu-l-seletor">
+                        <li><a href="./site-Post.html" target="_top">Site Post</a></li>
+                        <li><a href="./site-Get.html" target="_top">Site Get</a></li>
+                        <li><a href="./site-Put.html" target="_top">Site Put</a></li>
+                        <li><a href="./site-Delete.html" target="_top">Site Delete</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary>Estoque</summary>
+                    <ul class="">
+                        <li><a href="#">Página 5</a></li>
+                        <li><a href="#">Página 6</a></li>
+                        <li><a href="#">Página 7</a></li>
+                        <li><a href="#">Página 8</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary>Relatórios</summary>
+                    <ul class="">
+                        <li><a href="#">Página 9</a></li>
+                        <li><a href="#">Página 10</a></li>
+                        <li><a href="#">Página 11</a></li>
+                        <li><a href="#">Página 12</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary>Pdv</summary>
+                    <ul class="">
+                        <li><a href="#">Página 13</a></li>
+                        <li><a href="#">Página 14</a></li>
+                        <li><a href="#">Página 15</a></li>
+                        <li><a href="#">Página 16</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary>Relatório de Perdas</summary>
+                    <ul class="">
+                        <li><a href="#">Página 13</a></li>
+                        <li><a href="#">Página 14</a></li>
+                        <li><a href="#">Página 15</a></li>
+                        <li><a href="#">Página 16</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+
+    </div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var detailsElements = document.querySelectorAll('details');
+    
+        detailsElements.forEach(function (details) {
+          details.addEventListener('toggle', function (event) {
+            if (details.open) {
+              // Se o detalhe está sendo aberto, fecha todos os outros elementos <details>
+              detailsElements.forEach(function (otherDetails) {
+                if (otherDetails !== details) {
+                  otherDetails.removeAttribute('open');
+                }
+              });
+            } else {
+              // Se o detalhe está sendo fechado, evita que o evento seja propagado
+              event.preventDefault();
+            }
+          });
+        });
+      });
+  </script>
+</html>
