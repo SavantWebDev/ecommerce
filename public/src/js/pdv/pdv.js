@@ -114,10 +114,56 @@ function fecharModalcancelar() {
   modal.style.display = 'none';
 }
 
-function cancelarCompra() {
-  localStorage.clear()
-  // Recarregar a página
-  location.reload();
+function mensagemFFinaliza() {
+  const overlay = document.getElementById('overlay-final');
+  const mensagemElemento = document.getElementById('mensagem');
+  overlay.style.display = 'block';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+  }, 5000);
+}
+
+function mensagemCCancela() {
+  const overlay2 = document.getElementById('overlay-final-2');
+  const mensagemElemento = document.getElementById('mensagem-2');
+  overlay2.style.display = 'block';
+  setTimeout(() => {
+    overlay2.style.display = 'none';
+  }, 5000);
+}
+
+function cancelarCompra(finaliza) {
+  if(finaliza){
+    //localStorage.clear() // Depois dar uma olhada para adicionar um remove item
+    //var dados = localStorage.getItem("dados")
+    localStorage.removeItem("dados")
+    /*
+    if(dados) {
+      dados = JSON.parse(dados)
+      for (var i = 0; i< dados.length; i++){
+        delete dados[i]
+      }
+      localStorage.setItem("dados", JSON.stringify(dados))
+    }
+    */
+    // Mensagem
+    mensagemFFinaliza()
+    // Recarregar a página
+    //location.reload()
+    //alert("Nota Emitida!")
+  } else {
+    //localStorage.clear()
+    localStorage.removeItem("dados")
+    // Recarregar a página
+    //alert("Compra Cancelada!")
+    mensagemCCancela()
+    fecharModalcancelar()
+    //location.reload()
+  }
+  limparTodosOsCards()
+  //location.reload()
+  //window.location.href = './views/pdv'
+  //alert(".")
 }
 
 //Soma Preços // Modal
@@ -218,6 +264,32 @@ function carregarCardsDoLocalStorage() {
 
 // Chamar a função para carregar os cards ao carregar a página
 carregarCardsDoLocalStorage();
+
+function limparTodosOsCards() {
+  var cardsContainer = document.getElementById("cardsContainer");
+  var vizualizadorw = document.getElementById("vizualizaProd")
+  var vizualizaimg = document.getElementById("vizualizaImgProd")
+
+  // Remover todos os cards
+  while (cardsContainer.firstChild) {
+    cardsContainer.removeChild(cardsContainer.firstChild);
+  }
+
+  while (vizualizadorw.firstChild) {
+    vizualizadorw.removeChild(vizualizadorw.firstChild)
+  }
+
+  while(vizualizaimg.firstChild) {
+    vizualizaimg.removeChild(vizualizaimg.firstChild)
+  }
+
+  // Atualizar o total
+  totalPreco = 0;
+  atualizarTotal();
+
+  // Salvar o estado atual no localStorage
+  salvarCardsNoLocalStorage();
+}
 /*
 function emitirNota() {
   const itens = localStorage.getItem('dados')
@@ -261,6 +333,7 @@ function emitirNota() {
     const dados = JSON.parse(itens)
     //console.log(`dados: ${dados}`)
     const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+    //const linkAPI = 'https://api-n56x.onrender.com/v1/api'
     const configOp = {
       method: 'POST',
       body: JSON.stringify(dados),
@@ -271,7 +344,7 @@ function emitirNota() {
       //body: JSON.stringify(dados),
     };
     console.log("AHHHHHH ", configOp)
-    fetch(linkAPI + '/dados', configOp)
+    fetch(linkAPI + '/dados', configOp) // "/dados"
       .then(res => {
         if (!res.ok) {
           throw new Error('Erro no envio de dados')
@@ -287,4 +360,7 @@ function emitirNota() {
   } else {
     console.log('Deu erro nos dados, eles não tão no localstorage')
   }
+  fecharModalfinalizar()
+  cancelarCompra(true)
+  
 }
