@@ -10,6 +10,22 @@ const apiURL = '/v1/api'
 
 const auth = require('../middleware/jwt')
 
+router.get(apiURL + '/produtos', async (req, res) => {
+
+    var firstArray = await knex.raw(
+        `SELECT * FROM estoque LIMIT 8 OFFSET 0`
+    )
+
+    var secondArray = await knex.raw(
+        `SELECT * FROM estoque LIMIT 8 OFFSET 8`
+    )
+
+    res.status(200).json({
+        firstProduct: firstArray.rows,
+        secondProduct: secondArray.rows
+    })
+})
+
 //Procurar produto específico pelo código de barras
 router.get(apiURL + '/produtos/:ean', async (req, res) => {
 
@@ -154,6 +170,18 @@ router.get(apiURL + '/categorias', async (req, res) => {
     }
 
 
+})
+
+router.post(apiURL + '/sell-product', async (req, res) => {
+    var { product, valorTotal } = req.body
+
+    console.log(product, valorTotal)
+
+    for (var i = 0; product.length > i; i++) {
+        console.log(product[i].ean)
+    }
+
+    res.status(200).json({ itensEnviados: [{ "product": product, "valorTotal": valorTotal }] })
 })
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
