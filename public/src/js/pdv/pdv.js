@@ -332,8 +332,8 @@ function emitirNota() {
   if(itens) {
     const dados = JSON.parse(itens)
     //console.log(`dados: ${dados}`)
-    const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-    //const linkAPI = 'https://api-n56x.onrender.com/v1/api'
+    //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+    const linkAPI = 'https://api-n56x.onrender.com/v1/api'
     const configOp = {
       method: 'POST',
       body: JSON.stringify(dados),
@@ -344,7 +344,7 @@ function emitirNota() {
       //body: JSON.stringify(dados),
     };
     console.log("AHHHHHH ", configOp)
-    fetch(linkAPI + '/dados', configOp) // "/dados"
+    fetch(linkAPI + '/sell-product', configOp) // "/dados"
       .then(res => {
         if (!res.ok) {
           throw new Error('Erro no envio de dados')
