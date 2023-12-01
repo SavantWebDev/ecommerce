@@ -215,7 +215,7 @@ document.getElementById("parcelas").innerHTML =
   '<option value="quatroP">4x</option>' +
   '</select>' +
   '</div>';
-
+/*
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
   var cards = cardsContainer.getElementsByClassName('produto-single-store');
@@ -244,7 +244,38 @@ function salvarCardsNoLocalStorage() {
 
   localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
 }
+*/
 
+function salvarCardsNoLocalStorage() {
+  var cardsContainer = document.getElementById('cardsContainer');
+  var cards = cardsContainer.getElementsByClassName('produto-single-store');
+  var productsArray = [];
+
+  // Mapear os cards para um array de objetos
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+    var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
+    var quantidade = parseInt(card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', ''));
+    var preco = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
+    // Se eu quiser passar o nome basta adicionar o nome aqui
+    productsArray.push({ ean: ean, qnt: quantidade, valor: preco.toFixed(2) });
+  }
+
+  // Calcular o valor total
+  var valorTotal = totalPreco.toFixed(2);
+
+  // Criar o objeto final
+  var dadosParaSalvar = {
+    product: productsArray,
+    valorTotal: valorTotal
+  };
+
+  // Salvar os dados no localStorage
+  localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
+}
+
+
+/////////////////////////////////////
 function carregarCardsDoLocalStorage() {
   var dadosArmazenados = JSON.parse(localStorage.getItem('dados')) || {};
 
@@ -327,40 +358,44 @@ function emitirNota() {
 //Teste Retorno de dados local para um db básico em json:
 
 function emitirNota() {
-  const itens = localStorage.getItem('dados')
-  console.log(itens)
-  if(itens) {
-    const dados = JSON.parse(itens)
-    //console.log(`dados: ${dados}`)
-    //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-    const linkAPI = 'https://api-n56x.onrender.com/v1/api'
-    const configOp = {
-      method: 'POST',
-      body: JSON.stringify(dados),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      
-      //body: JSON.stringify(dados),
-    };
-    console.log("AHHHHHH ", configOp)
-    fetch(linkAPI + '/sell-product', configOp) // "/dados"
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erro no envio de dados')
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(`Dados enviados com sucesso ${data}`)
-      })
-      .catch(erro => {
-        console.log(`Erro ao enviar os dados ${erro}`)
-      })
-  } else {
-    console.log('Deu erro nos dados, eles não tão no localstorage')
+  try{
+    const itens = localStorage.getItem('dados')
+    console.log(itens)
+    if(itens) {
+      const dados = JSON.parse(itens)
+      //console.log(`dados: ${dados}`)
+      const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+      //const linkAPI = 'https://api-n56x.onrender.com/v1/api/produtos'
+      const configOp = {
+        method: 'POST',
+        body: JSON.stringify(dados),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        
+        //body: JSON.stringify(dados),
+      };
+      console.log("AHHHHHH ", configOp)
+      fetch(linkAPI + '/dados', configOp) // "/dados"
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Erro no envio de dados')
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log(`Dados enviados com sucesso ${data}`)
+        })
+        .catch(erro => {
+          console.log(`Erro ao enviar os dados ${erro}`)
+        })
+    } else {
+      console.log('Deu erro nos dados, eles não tão no localstorage')
+    }
+    fecharModalfinalizar()
+    cancelarCompra(true)
+  } catch(error) {
+    console.log(`Erro no envio ao servidor: ${error}`)
   }
-  fecharModalfinalizar()
-  cancelarCompra(true)
   
 }

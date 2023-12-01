@@ -520,10 +520,16 @@ select {
   box-sizing: border-box;
   z-index: 1000;
 
+  border: 5px solid black;
   border-radius: 15px;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: bold;
 
+}
+
+#overlay-final img{
+  z-index: 1000;
+  width: 400px;
 }
 
 #overlay-final-2 {
@@ -542,7 +548,7 @@ select {
   z-index: 1000;
 
   border-radius: 15px;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: bold;
 
 }
