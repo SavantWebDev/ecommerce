@@ -146,6 +146,7 @@ function cancelarCompra(finaliza) {
       localStorage.setItem("dados", JSON.stringify(dados))
     }
     */
+    //delete dados[i]
     // Mensagem
     mensagemFFinaliza()
     // Recarregar a página
@@ -219,7 +220,7 @@ document.getElementById("parcelas").innerHTML =
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
   var cards = cardsContainer.getElementsByClassName('produto-single-store');
-  var cardsArray = [];
+  var products = [];
 
   // Mapear os cards para um array de objetos
   for (var i = 0; i < cards.length; i++) {
@@ -229,17 +230,18 @@ function salvarCardsNoLocalStorage() {
     var quantidade = card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', '');
     var ValorTotalCard = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
 
-    cardsArray.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
+    products.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
 
     console.log("Teste:")
-    console.log(cardsArray)
+    console.log(products)
   }
 
   // Salvar os cards e totalPreco no localStorage como uma string JSON
 
   var dadosParaSalvar = {
-    cards: cardsArray,
-    ValorTotalCard: ValorTotalCard
+    products,
+    //ValorTotalCard: ValorTotalCard
+    valor
   };
 
   localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
@@ -249,7 +251,7 @@ function salvarCardsNoLocalStorage() {
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
   var cards = cardsContainer.getElementsByClassName('produto-single-store');
-  var productsArray = [];
+  var product = [];
 
   // Mapear os cards para um array de objetos
   for (var i = 0; i < cards.length; i++) {
@@ -258,7 +260,7 @@ function salvarCardsNoLocalStorage() {
     var quantidade = parseInt(card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', ''));
     var preco = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
     // Se eu quiser passar o nome basta adicionar o nome aqui
-    productsArray.push({ ean: ean, qnt: quantidade, valor: preco.toFixed(2) });
+    product.push({ ean: ean, qnt: quantidade, valor: preco.toFixed(2) });
   }
 
   // Calcular o valor total
@@ -266,8 +268,8 @@ function salvarCardsNoLocalStorage() {
 
   // Criar o objeto final
   var dadosParaSalvar = {
-    product: productsArray,
-    valorTotal: valorTotal
+    product,
+    valorTotal,
   };
 
   // Salvar os dados no localStorage
@@ -363,20 +365,21 @@ function emitirNota() {
     console.log(itens)
     if(itens) {
       const dados = JSON.parse(itens)
+      //delete dados.id
       //console.log(`dados: ${dados}`)
-      const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-      //const linkAPI = 'https://api-n56x.onrender.com/v1/api/produtos'
+      //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+      const linkAPI = 'https://api-n56x.onrender.com/v1/api'
       const configOp = {
         method: 'POST',
-        body: JSON.stringify(dados),
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(dados),
         
         //body: JSON.stringify(dados),
       };
       console.log("AHHHHHH ", configOp)
-      fetch(linkAPI + '/dados', configOp) // "/dados"
+      fetch(linkAPI + '/sell-product', configOp) // "/dados"
         .then(res => {
           if (!res.ok) {
             throw new Error('Erro no envio de dados')

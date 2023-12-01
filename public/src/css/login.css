@@ -75,3 +75,22 @@ header {
   font-weight: bold;
   cursor: pointer;
 }
+
+.img-2 {
+  display: none;
+  width: 350px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 900px) {
+  header {
+    display: none;
+  }
+  .login {
+    width: 100%;
+  }
+  .img-2 {
+    display: block;
+  }
+}
