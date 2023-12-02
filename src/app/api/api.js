@@ -75,3 +75,20 @@ export const checkToken = async () => {
     }
   }
 };
+
+export const cadastro = async (nome ,email, senha, idade, cpf, notificacoes, numero) => {
+  const response = await fetch("https://api-n56x.onrender.com/v1/api/cadastro", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nome:nome ,email:email, senha:senha, nascimento:idade, cpf:cpf, notificacao:notificacoes ,celular:numero, }),
+  });
+
+  console.log(response)
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("Erro ao enviar a mensagem.");
+  }
+};

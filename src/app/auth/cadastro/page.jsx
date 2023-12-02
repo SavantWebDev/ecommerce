@@ -17,6 +17,7 @@ import {
   validaNome,
   validaSenha,
 } from "./Validacoes";
+import { cadastro } from "../../api/api";
 
 export default function CadastroAuth() {
   const [nome, setNome] = useState("");
@@ -25,11 +26,15 @@ export default function CadastroAuth() {
   const [confirmasenha, setConfirmaSenha] = useState("");
   const [idade, setIdade] = useState("");
   const [Cpf, setCpf] = useState("");
+  const [notificacoes, setNotificacoes] = useState("");
+  const [numero, setNumero] = useState("");
   const [isNomeValid, setIsNomeValid] = useState();
   const [isEmailValid, setIsEmailValid] = useState();
   const [isSenhaValid, setIsSenhaValid] = useState();
   const [isIdadeValid, setIsIdadeValid] = useState();
   const [isCpfValid, setIsCpfValid] = useState();
+  const [isNotificacoesValid, setIsNotificacoesValid] = useState();
+  const [isNumeroValid, setIsNumeroValid] = useState();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,9 +43,11 @@ export default function CadastroAuth() {
     if (
       !isNomeValid ||
       !isEmailValid ||
+      !isNumeroValid ||
       !isSenhaValid ||
       !isIdadeValid ||
-      !isCpfValid
+      !isCpfValid ||
+      !isNotificacoesValid
     ) {
       console.log("campos invalidos");
       console.log(isNomeValid);
@@ -48,9 +55,17 @@ export default function CadastroAuth() {
       console.log(isSenhaValid);
       console.log(isIdadeValid);
       console.log(isCpfValid);
+      console.log(isNotificacoesValid);
       return;
     } else {
-      console.log("cadastro feito com sucesso");
+      console.log("nome: "+ nome)
+      console.log("email: "+email)
+      console.log("senha :"+senha)
+      console.log("idade:"+idade)
+      console.log("Cpf :"+Cpf)
+      console.log("notificacoes:"+notificacoes)
+      console.log("numero:"+numero)
+      cadastro(nome, email, senha, idade, Cpf, notificacoes, numero);
     }
   };
 
@@ -102,6 +117,18 @@ export default function CadastroAuth() {
     const valor = event.target.value;
     setCpf(valor);
     setIsCpfValid(validaCpf(valor));
+  }
+
+  function inputNotificacoes(event) {
+    const valor = event.target.checked
+    setNotificacoes(valor);
+    setIsNotificacoesValid(valor);
+  }
+
+  function inputNumero(event) {
+    const valor = event.target.value
+    setNumero(valor);
+    setIsNumeroValid(valor);
   }
 
   //  const revelaNome = () => {
@@ -156,6 +183,10 @@ export default function CadastroAuth() {
                   Whatsapp:
                 </label>
                 <input
+                onChange={(evento) => {
+                  inputNumero(evento);
+                  console.log(evento.target.value);
+                }}
                   type="tel"
                   name="whatsapp"
                   className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
@@ -291,7 +322,7 @@ export default function CadastroAuth() {
               </div>
             </div>
 
-            <div className="w-full flex items-center my-[21px]">
+            <div className="w-full flex items-center mt-[21px]">
               <div className="flex items-start gap-2">
                 <input
                   className="w-[19px] h-[19px] border border-[#000] rounded-[4px]"
@@ -314,6 +345,22 @@ export default function CadastroAuth() {
                 </p>
               </div>
             </div>
+            <div className="w-full flex items-center mb-[21px] mt-3">
+              <div className="flex items-start gap-2">
+                <input
+                  className="w-[19px] h-[19px] border border-[#000] rounded-[4px]"
+                  type="checkbox"
+                  onClick={(evento) => {
+                    inputNotificacoes(evento);
+                    console.log(evento.target.checked);
+                  }}
+                />
+                <p className="text-[14px] text-left">
+                Aceito receber promoções e ações de publicidade
+                </p>
+              </div>
+            </div>
+            
             <ButtonForms>Cadastrar-se</ButtonForms>
           </form>
 
