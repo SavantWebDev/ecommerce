@@ -552,3 +552,11 @@ select {
   font-weight: bold;
 
 }
+
+/**/
+
+#cpfInput {
+  font-size: 25.6px;
+  font-weight: bold;
+  width: 200px;
+}

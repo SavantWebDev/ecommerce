@@ -141,6 +141,7 @@
   background-color: #c8bcbc;
   overflow-x: hidden;
   padding-top: 60px;
+  /*padding-left: 100px;*/
   transition: 0.5s;
   z-index: 1000; /* Adicionado z-index para garantir que esteja acima de outros elementos */
 
@@ -167,7 +168,13 @@
   position: absolute;
   top: 0;
   right: 20px;
-  font-size: 20px;
+
+  margin-top: 18px;
+  margin-right: 12px;
+
+  padding-top: 10px;
+
+  font-size: 25px;
   background: none;
   border: none;
   color: #818181;
@@ -175,15 +182,28 @@
 }
 
 .close-btn:hover {
-  color: #f1f1f1;
+  /*color: #f1f1f1;*/
+  background-color: var(--verde-escuro);
+  border-radius: 10px;
 }
+/*
 .sidebar span{
   color: black;
+}*/
+.sidebar a{
+  /*background-color: red;*/
+  width: 30px;
+  border-radius: 15px;
 }
-.sidebar a .link-menu{
-  background-color: red;
+/*
+span #btnMenumobile {
+  width: 500px;
 }
 
+#btnMenuMobile:hover {
+  background-color: red;
+}
+*/
 @media (max-width: 1300px) {
   header {
     display: none;

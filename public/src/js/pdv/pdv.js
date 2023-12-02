@@ -216,6 +216,11 @@ document.getElementById("parcelas").innerHTML =
   '<option value="quatroP">4x</option>' +
   '</select>' +
   '</div>';
+document.getElementById("cpfnota").innerHTML = 
+  '<div class="modal-c">' +
+  '<label for="parcPag" class="label-modal-fin-venda">Cpf na Nota?</label>' +
+  '<input type="text" id="cpfInput" maxlength="11" placeholder="CPF (opcional)" style="border-width: 1px; border-radius: 5px; font: 25.6px">' +
+  '</div>';
 /*
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
@@ -259,17 +264,38 @@ function salvarCardsNoLocalStorage() {
     var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
     var quantidade = parseInt(card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', ''));
     var preco = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
+    var precoUnitario = (preco/quantidade).toFixed(2)
     // Se eu quiser passar o nome basta adicionar o nome aqui
-    product.push({ ean: ean, qnt: quantidade, valor: preco.toFixed(2) });
+    product.push({ ean: ean, qnt: quantidade,precounitario: precoUnitario, valor: preco.toFixed(2) });
   }
 
   // Calcular o valor total
   var valorTotal = totalPreco.toFixed(2);
-
+  /*
+  var cpfDigitado = parseInt(document.getElementById('cpfInput').value)
+  console.log(cpfDigitado)
+  */
+  /*
+  let cpfDigitado = null;
+  document.getElementById('cpfInput').addEventListener('input', function() {
+    let cpfDigitado = parseInt(this.value);
+    console.log(cpfDigitado);
+  });
+  */
+  let cpfDigitado = null;
+  document.getElementById('cpfInput').addEventListener('change', function() {
+    let cpfDigitado = this.value;
+    if (!isNaN(cpfDigitado)) {
+      cpfDigitado = parseInt(cpfDigitado);
+    } else {
+      cpfDigitado = null;
+    }
+  });
   // Criar o objeto final
   var dadosParaSalvar = {
     product,
     valorTotal,
+    cpf: cpfDigitado
   };
 
   // Salvar os dados no localStorage
@@ -357,6 +383,9 @@ function emitirNota() {
 }
 */
 
+/**/
+
+/**/
 //Teste Retorno de dados local para um db básico em json:
 
 function emitirNota() {
@@ -387,7 +416,7 @@ function emitirNota() {
           return res.json();
         })
         .then(data => {
-          console.log(`Dados enviados com sucesso ${data}`)
+          console.log(data)
         })
         .catch(erro => {
           console.log(`Erro ao enviar os dados ${erro}`)
