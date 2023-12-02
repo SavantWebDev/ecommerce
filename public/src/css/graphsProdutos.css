@@ -53,27 +53,32 @@
   height: 400px;
 }
 
-@media (max-width: 860px) {
-  .img-estivador .img-control-inventory {
+@media (min-width: 320px) and (max-width: 860px){
+  .img-control-inventory {
     display: none;
   }
-
-  .chart {
-    width: 50%;
-  }
-
-  .graph-single {
-    width: 50%;
-  }
-
-  section {
-    display: flex;
-    justify-content: column;
-  }
-
-  .container-graphs-produtos div {
+  
+  .container-graphs-produtos{
     display: flex;
     justify-content: column;
     align-items: center;
+    /*flex-wrap: wrap;*/
   }
+
+  .chart {
+    display: none;
+  }
+  
+  .graph-single {
+    width: 110%;
+    /*width: 50%;
+    /*padding-bottom: 30px;*/
+  }
+
+  .produtos{
+    /*width: 100%;*/
+    overflow-y: auto;
+    min-height: 500px;
+  }
+  
 }
