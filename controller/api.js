@@ -119,7 +119,7 @@ router.post(apiURL + '/login', async (req, res) => {
 })
 
 router.post(apiURL + '/cadastrar', async (req, res) => {
-    var { email, senha, celular, nascimento, cpf, notificacao } = req.body
+    var { email, senha, celular, nascimento, cpf, notificacao, nome } = req.body
 
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE email = '${email}' OR cpf = '${cpf}'`)
     //console.log(exist.rows)
@@ -135,7 +135,7 @@ router.post(apiURL + '/cadastrar', async (req, res) => {
                 var salt = bcrypt.genSaltSync(10)
                 var hash = bcrypt.hashSync(senha, salt)
                 await knex.raw(`
-                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpf}', '${celular}', '${nascimento}', '${notificacao}')
+                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpf}', '${celular}', '${nascimento}', '${nome}', '${notificacao}')
                 `)
                     .then(() => {
                         res.status(200).json({ msg: "Sucesso" })
@@ -173,15 +173,17 @@ router.get(apiURL + '/categorias', async (req, res) => {
 })
 
 router.post(apiURL + '/sell-product', async (req, res) => {
-    var { product, valorTotal } = req.body
+    var { product, valorTotal, cpf } = req.body
 
     console.log(product, valorTotal)
-
+    var qnt = 0;
     for (var i = 0; product.length > i; i++) {
-        console.log(product[i].ean)
+        qnt += parseFloat((product[i].valor).replace(',', '.'))
     }
 
-    res.status(200).json({ itensEnviados: [{ "product": product, "valorTotal": valorTotal }] })
+    console.log(qnt.toString().replace('.', ','))
+
+    res.status(200).json({ itensEnviados: [{ "product": product, "valorTotal": valorTotal, "cpf": cpf }] })
 })
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
