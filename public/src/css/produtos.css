@@ -179,3 +179,10 @@ table.dataTable tfoot td {
   color: #6d6d6d;
   top: 33%;
 }
+/*
+@media (min-width: 20px) and (max-width: 860px) {
+  .dataTables_wrapper .dataTables_filter {
+    flex-wrap: wrap;
+  }
+}
+*/

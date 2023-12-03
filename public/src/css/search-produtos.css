@@ -134,7 +134,7 @@
 /* Teste */
 .sidebar {
   height: 100%;
-  width: 0;
+  width: 0px;
   position: fixed;
   top: 0;
   left: 0;
@@ -149,6 +149,8 @@
   margin-top: 16px;
   margin-left: 0px;
   margin-bottom: 16px;
+
+  align-items: center;
 }
 
 .sidebar a {
@@ -168,7 +170,7 @@
 .close-btn {
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 45px;
 
   margin-top: 18px;
   /*margin-right: 12px;*/
@@ -187,24 +189,13 @@
   background-color: var(--verde-escuro);
   border-radius: 10px;
 }
-/*
-.sidebar span{
-  color: black;
-}*/
-.sidebar a{
-  /*background-color: red;*/
-  width: 30px;
+
+.sidebar a{  /*Animação Ao apertar nos botões*/
+  width: 95px;
   border-radius: 15px;
 }
-/*
-span #btnMenumobile {
-  width: 500px;
-}
 
-#btnMenuMobile:hover {
-  background-color: red;
-}
-*/
+
 @media (max-width: 1300px) {
   header {
     display: none;
@@ -216,5 +207,6 @@ span #btnMenumobile {
   #btnMenuMobile {
     display: block;
     cursor: pointer;
+    width: 500px;
   }
 }
