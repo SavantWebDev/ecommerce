@@ -560,3 +560,19 @@ select {
   font-weight: bold;
   width: 200px;
 }
+
+@media (min-width: 20px) and (max-width: 840px){
+  .pdv-produtos {
+    flex-wrap: wrap;
+  }
+  .pdv-dados-produtos{
+    width: 100%;
+  }
+  .pdv-finalizar{
+    width: 100%;
+  }
+  #codigo{
+    margin-top: 20px;
+    font-size: 1.3rem;
+  }
+}

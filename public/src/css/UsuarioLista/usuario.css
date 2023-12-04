@@ -414,3 +414,11 @@ table tbody tr:nth-child(even) {
   border-radius: 5px;
   font-weight: 700;
 }
+
+@media (min-width: 20px) and (max-width: 860px){
+  #tabela_wrapper {
+    /*width: 100%;*/
+    overflow-y: auto;
+    min-height: 500px;
+  }
+}
