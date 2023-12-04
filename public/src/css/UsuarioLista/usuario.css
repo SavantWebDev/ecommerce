@@ -421,4 +421,7 @@ table tbody tr:nth-child(even) {
     overflow-y: auto;
     min-height: 500px;
   }
+  .container__main {
+    padding: 0.2rem;
+  }
 }
