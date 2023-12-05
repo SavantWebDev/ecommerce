@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 
-async function token(req, res, next){
+async function token(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    if(!token){
-        return res.status(401).json({msg: 'Acesso Negado'})
+    if (!token) {
+        return res.status(401).json({ msg: 'Acesso Negado' })
     }
 
-    try{
+    try {
         const secret = process.env.SECRET
         jwt.verify(token, secret)
         var decodificado = jwt.decode(token)
@@ -16,8 +16,8 @@ async function token(req, res, next){
         req.session.email = decodificado.email
         next()
     }
-    catch(error){
-        res.status(400).json({msg: 'Token Inválido!'})
+    catch (error) {
+        res.status(400).json({ msg: 'Token Inválido!' })
     }
 }
 

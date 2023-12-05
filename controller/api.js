@@ -8,16 +8,30 @@ const moment = require('moment')
 const jwt = require('jsonwebtoken')
 const apiURL = '/v1/api'
 
+const verifyJWT = require('../middleware/jwt')
+
 const auth = require('../middleware/jwt')
 
 router.get(apiURL + '/produtos', async (req, res) => {
 
     var firstArray = await knex.raw(
-        `SELECT * FROM estoque LIMIT 8 OFFSET 0`
+        `SELECT ean, valor, nomeproduto, descricao, qnt, idcategoria,
+        CASE
+            WHEN image = '/src/image/imagemImagem.png'
+            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+            ELSE replace(image, '/uploads', 'https://api-n56x.onrender.com/uploads')
+        END as image,
+        id FROM estoque LIMIT 8 OFFSET 0`
     )
 
     var secondArray = await knex.raw(
-        `SELECT * FROM estoque LIMIT 8 OFFSET 8`
+        `SELECT ean, valor, nomeproduto, descricao, qnt, idcategoria,
+        CASE
+            WHEN image = '/src/image/imagemImagem.png'
+            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+            ELSE replace(image, '/uploads', 'https://api-n56x.onrender.com/uploads')
+        END as image,
+        id FROM estoque LIMIT 8 OFFSET 8`
     )
 
     res.status(200).json({
@@ -188,6 +202,31 @@ router.post(apiURL + '/sell-product', async (req, res) => {
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
     res.status(200).json({ email: req.session.email, username: req.session.user })
+})
+
+router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
+    await knex.raw(`
+        SELECT * FROM tb_clientes WHERE email = '${req.session.email}' AND username = '${req.session.user}'
+    `)
+        .then(resultQuery => {
+            res.json({
+                usuario:
+                {
+                    email: resultQuery.rows[0].email,
+                    cpf: resultQuery.rows[0].cpf,
+                    celular: resultQuery.rows[0].celular,
+                    nascimento: resultQuery.rows[0].nascimento,
+                    username: resultQuery.rows[0].username
+                },
+                endereco: {},
+                ultimosPedidos: [],
+
+            })
+        })
+        .catch(e => {
+            console.log(e)
+            res.status(400).json(e)
+        })
 })
 
 router.post(apiURL + '/card', auth, async (req, res) => {
