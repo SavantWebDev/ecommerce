@@ -261,12 +261,13 @@ function salvarCardsNoLocalStorage() {
   // Mapear os cards para um array de objetos
   for (var i = 0; i < cards.length; i++) {
     var card = cards[i];
+    var nome = card.querySelector('.nome-produto-compra').textContent;
     var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
     var quantidade = parseInt(card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', ''));
     var preco = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
     var precoUnitario = (preco/quantidade).toFixed(2)
     // Se eu quiser passar o nome basta adicionar o nome aqui
-    product.push({ ean: ean, qnt: quantidade,precounitario: precoUnitario, valor: preco.toFixed(2) });
+    product.push({nome:nome, ean: ean, qnt: quantidade,precounitario: precoUnitario, valor: preco.toFixed(2) });
   }
 
   // Calcular o valor total
@@ -308,9 +309,9 @@ function carregarCardsDoLocalStorage() {
   var dadosArmazenados = JSON.parse(localStorage.getItem('dados')) || {};
 
   // Carregar os cards do localStorage
-  if (dadosArmazenados.cards) {
-    dadosArmazenados.cards.forEach(function (cardData) {
-      gerarCard(cardData.nome, cardData.ean, cardData.ValorTotalCard, cardData.quantidade, true);
+  if (dadosArmazenados.product) {
+    dadosArmazenados.product.forEach(function (cardData) {
+      gerarCard(cardData.nome, cardData.ean, cardData.valor, cardData.qnt, true);
     });
   }
 
@@ -394,6 +395,11 @@ function emitirNota() {
     console.log(itens)
     if(itens) {
       const dados = JSON.parse(itens)
+      if (dados.product) {
+        dados.product.forEach(function (item) {
+          delete item.nome
+        })
+      }
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
