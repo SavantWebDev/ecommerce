@@ -35,7 +35,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
     )
 
     firstArray.rows.forEach(first => {
-        first.descricao = first.descricao.replaceAll('\r\n', '<br>') || first.descricao.replace('\r\n', '<br>')
+        first.descricao = first.descricao.replace('\r\n', '<br>')
     })
 
     //console.log(firstArray.rows[0]['descricao'].includes('\r\n'))
