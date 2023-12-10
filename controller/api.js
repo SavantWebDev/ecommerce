@@ -34,7 +34,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
         id FROM estoque LIMIT 8 OFFSET 8`
     )
 
-    firstArray.rows.map(first => {
+    firstArray.rows.forEach(first => {
         first.descricao = first.descricao.replaceAll('\r\n', '<br>') || first.descricao.replace('\r\n', '<br>')
     })
 
