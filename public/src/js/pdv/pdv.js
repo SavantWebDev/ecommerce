@@ -1,3 +1,5 @@
+//import "../../../../views/pdv.ejs"
+
 var contadorCards = 0;
 var totalPreco = 0;
 
@@ -83,9 +85,22 @@ function excluirCard(cardID) { // Preciso remover o item da tela e o item do loc
   location.reload();
   //localStorage.removeItem(card)
 }
+// Fazer o input ficar sempre selecionado
+var time = false
+function focar() {
+  var codigoEleF = document.getElementById("codigo")
+  if(time === false){
+    codigoEleF.focus()
+  }
+}
+console.log(time)
+setInterval(focar,500)
+
 
 // Modal finalizar Compra
 function abrirModalfinalizar() {
+  //console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+  time = true
   var overlay = document.getElementById('overlay2');
   var modal = document.getElementById('modalfinalizar');
   overlay.style.display = 'block';
@@ -93,6 +108,7 @@ function abrirModalfinalizar() {
 }
 
 function fecharModalfinalizar() {
+  time = false
   var overlay = document.getElementById('overlay2');
   var modal = document.getElementById('modalfinalizar');
   overlay.style.display = 'none';
@@ -283,23 +299,33 @@ function salvarCardsNoLocalStorage() {
     console.log(cpfDigitado);
   });
   */
-  let cpfDigitado = null;
-  document.getElementById('cpfInput').addEventListener('change', function() {
+  //let cpfDigitado = null;
+  //var cpfDigitado = document.getElementById('cpfInput')
+  let cpfDigitado;
+
+  document.getElementById('cpfInput').addEventListener('input', function() {
     let cpfDigitado = this.value;
     if (!isNaN(cpfDigitado)) {
       cpfDigitado = parseInt(cpfDigitado);
-    } else {
-      cpfDigitado = null;
+      console.log("O cpf digitado foi: ", cpfDigitado)
     }
+    
+    console.log("O cpf é: ", cpfDigitado)
+    // Criar o objeto final
+    var dadosParaSalvar = {
+      product,
+      valorTotal,
+      cpf: cpfDigitado
+    };
+  
+    // Salvar os dados no localStorage
+    localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
   });
-  // Criar o objeto final
   var dadosParaSalvar = {
     product,
     valorTotal,
     cpf: cpfDigitado
   };
-
-  // Salvar os dados no localStorage
   localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
 }
 
@@ -391,6 +417,8 @@ function emitirNota() {
 
 function emitirNota() {
   try{
+    var inputCpf = document.getElementById('cpfInput');
+    inputCpf.value = '';
     const itens = localStorage.getItem('dados')
     console.log(itens)
     if(itens) {
@@ -403,7 +431,7 @@ function emitirNota() {
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-      const linkAPI = 'https://api-n56x.onrender.com/v1/api'
+      const linkAPI = 'http://45.188.156.17:5464/v1/api'
       const configOp = {
         method: 'POST',
         headers: {
