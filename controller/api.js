@@ -37,9 +37,9 @@ router.get(apiURL + '/produtos', async (req, res) => {
     firstArray.rows.forEach(first => {
         var descricao = first.descricao
         //first.descricao = first.descricao.split('\r\n')
-        var verify = descricao.includes('\r\n')
+        var regex = /[\r\n]/g
 
-        verify ? first.descricao = descricao.replaceAll('\r\n', '<br>') : first.descricao = descricao
+        first.descricao = descricao.replace(regex, '<br>')
     })
 
     res.status(200).json({
