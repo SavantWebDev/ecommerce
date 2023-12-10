@@ -34,6 +34,13 @@ router.get(apiURL + '/produtos', async (req, res) => {
         id FROM estoque LIMIT 8 OFFSET 8`
     )
 
+    firstArray.rows.map(first => {
+        first.descricao = first.descricao.replaceAll('\r\n', '<br>')
+    })
+
+    //console.log(firstArray.rows[0]['descricao'].includes('\r\n'))
+    console.log('-----')
+
     res.status(200).json({
         firstProduct: firstArray.rows,
         secondProduct: secondArray.rows
@@ -149,7 +156,6 @@ router.post(apiURL + '/cadastrar', async (req, res) => {
 
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE email = '${email}' OR cpf = '${cpf}'`)
     console.log(exist.rows[0])
-    //console.log(exist.rows)
     var idade = moment().subtract(18, 'years').format('YYYY')
     if (!(nascimento.split('-')[0] <= idade)) {
         return res.status(400).json({ msg: "Idade Inválida!" })
