@@ -19,7 +19,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-            ELSE replace(image, '/uploads', 'https://api-n56x.onrender.com/uploads')
+            ELSE replace(image, 'uploads', 'https://api-n56x.onrender.com/uploads')
         END as image,
         id FROM estoque LIMIT 8 OFFSET 0`
     )
@@ -29,7 +29,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-            ELSE replace(image, '/uploads', 'https://api-n56x.onrender.com/uploads')
+            ELSE replace(image, 'uploads', 'https://api-n56x.onrender.com/uploads')
         END as image,
         id FROM estoque LIMIT 8 OFFSET 8`
     )
@@ -135,7 +135,20 @@ router.post(apiURL + '/login', async (req, res) => {
 router.post(apiURL + '/cadastrar', async (req, res) => {
     var { email, senha, celular, nascimento, cpf, notificacao, nome } = req.body
 
+    if (!cpf.includes('-') || !cpf.includes('.')) {
+        console.log(cpf)
+        var primeiroDigito = cpf.substring(0, 3)
+        var segundoDigito = cpf.substring(3, 6)
+        var terceiroDigito = cpf.substring(6, 9)
+        console.log(primeiroDigito)
+        console.log(segundoDigito)
+        var cpfCompleto = primeiroDigito + '.' + segundoDigito + '.' + terceiroDigito + '-' + cpf.substring(9, 11)
+    } else {
+        var cpfCompleto = cpf
+    }
+
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE email = '${email}' OR cpf = '${cpf}'`)
+    console.log(exist.rows[0])
     //console.log(exist.rows)
     var idade = moment().subtract(18, 'years').format('YYYY')
     if (!(nascimento.split('-')[0] <= idade)) {
@@ -149,7 +162,7 @@ router.post(apiURL + '/cadastrar', async (req, res) => {
                 var salt = bcrypt.genSaltSync(10)
                 var hash = bcrypt.hashSync(senha, salt)
                 await knex.raw(`
-                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpf}', '${celular}', '${nascimento}', '${nome}', '${notificacao}')
+                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpfCompleto}', '${celular}', '${nascimento}', '${nome}', '${notificacao}')
                 `)
                     .then(() => {
                         res.status(200).json({ msg: "Sucesso" })
@@ -186,16 +199,47 @@ router.get(apiURL + '/categorias', async (req, res) => {
 
 })
 
-router.post(apiURL + '/sell-product', async (req, res) => {
+router.post(apiURL + '/sell-product', auth, async (req, res) => {
     var { product, valorTotal, cpf } = req.body
 
-    console.log(product, valorTotal)
-    var qnt = 0;
-    for (var i = 0; product.length > i; i++) {
-        qnt += parseFloat((product[i].valor).replace(',', '.'))
+    console.log(product, valorTotal, cpf)
+    var valorTotal = 0
+
+    if (cpf != undefined) {
+        var idcliente = await knex.raw(`
+            SELECT idcliente FROM tb_clientes WHERE cpf = '${cpf}'
+        `)
+
+        if (idcliente.rows[0] == undefined || idcliente.rows[0] == '' || idcliente.rows[0].length == 0) {
+            idcliente.rows[0] = "0b982466-96b2-40c9-bb83-7f0243ace5e1"
+        }
     }
 
-    console.log(qnt.toString().replace('.', ','))
+    for (var i = 0; product.length > i; i++) {
+        var valorTotalProduto = 0;
+        valorTotalProduto += parseFloat((product[i].precounitario).replace(',', '.')) * product[i].qnt
+        valorTotal += valorTotalProduto
+
+        valorTotalProduto = valorTotalProduto.toString().replace('.', ',')
+
+        console.log('Produto Passado: ' + product[i].ean)
+        console.log('CPF: ' + cpf)
+        console.log('Quantidade: ' + product[i].qnt)
+        console.log('Valor: ' + product[i].valor)
+        console.log('Valor Total Produto: ' + valorTotalProduto)
+        console.log('-------------------------------------')
+        //console.log(moment().format('YYYY-MM-DD'))
+        await knex.raw(
+            `INSERT INTO tb_vendas 
+            VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}')`
+        ).then(() => {
+            console.log('Produto vendido com sucesso.')
+        }).catch(e => console.log(e))
+
+        /* if (i == product.length - 1) {
+            console.log('Valor Total: ' + valorTotal)
+        } */
+    }
 
     res.status(200).json({ itensEnviados: [{ "product": product, "valorTotal": valorTotal, "cpf": cpf }] })
 })
@@ -208,7 +252,15 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
     await knex.raw(`
         SELECT * FROM tb_clientes WHERE email = '${req.session.email}' AND username = '${req.session.user}'
     `)
-        .then(resultQuery => {
+        .then(async resultQuery => {
+            console.log(resultQuery.rows[0]['idcliente'])
+            var pedidos = await knex.raw(`
+                SELECT eanproduto, qntvendido, datavenda FROM tb_vendas tv INNER JOIN tb_clientes tc
+                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
+                ORDER BY datavenda DESC
+                LIMIT 20
+            `)
+
             res.json({
                 usuario:
                 {
@@ -219,8 +271,8 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                     username: resultQuery.rows[0].username
                 },
                 endereco: {},
-                ultimosPedidos: [],
-
+                ultimosPedidos: pedidos.rows,
+                totalPedidos: pedidos.rows.length
             })
         })
         .catch(e => {
@@ -232,7 +284,8 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
 router.post(apiURL + '/card', auth, async (req, res) => {
     var { ean, qnt } = req.body
 
-
+    console.log(ean)
+    console.log(qnt)
 })
 
 module.exports = router
