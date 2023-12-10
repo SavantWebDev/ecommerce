@@ -39,7 +39,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
         //first.descricao = first.descricao.split('\r\n')
         var regex = /[\r\n]/g
 
-        first.descricao = descricao.replace(regex, '"<br/>"')
+        first.descricao = descricao.replace(regex, '<br/>')
     })
 
     res.status(200).json({
