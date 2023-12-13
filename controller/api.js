@@ -59,7 +59,7 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
 	            WHEN e.image = '/src/image/imagemImagem.png'
                 THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                 ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
-			END, descricao, valor, nomecategoria
+			END as image, descricao, valor, nomecategoria
         FROM estoque e
 		INNER JOIN tb_categorias tc
 		ON e.idcategoria = tc.idcategoria
@@ -73,7 +73,7 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
                             WHEN e.image = '/src/image/imagemImagem.png'
                             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                             ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
-                        END, descricao, valor, nomecategoria
+                        END as image, descricao, valor, nomecategoria
                     FROM estoque e
                     INNER JOIN tb_categorias tc
                     ON e.idcategoria = tc.idcategoria
@@ -111,7 +111,7 @@ router.get(apiURL + '/search', async (req, res) => {
 	            WHEN e.image = '/src/image/imagemImagem.png'
                 THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                 ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
-			    END,
+			    END as image,
             CASE
                 WHEN descricao = '' THEN 'Sem Descrição'
                 ELSE descricao
