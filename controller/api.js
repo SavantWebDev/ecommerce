@@ -86,7 +86,11 @@ router.get(apiURL + '/search', async (req, res) => {
     var pg = limit * (page - 1)
 
     await knex.raw(`
-            SELECT ean, nomeproduto, e.image,
+            SELECT ean, nomeproduto, CASE 
+	            WHEN e.image = '/src/image/imagemImagem.png'
+                THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+                ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+			    END,
             CASE
                 WHEN descricao = '' THEN 'Sem Descrição'
                 ELSE descricao
