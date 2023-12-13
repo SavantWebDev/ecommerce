@@ -54,7 +54,12 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
     var { ean, qnt } = req.params;
     console.log(ean)
     await knex.raw(`
-        SELECT ean, nomeproduto, e.image, descricao, valor, nomecategoria
+        SELECT ean, nomeproduto, 
+            CASE 
+	            WHEN e.image = '/src/image/imagemImagem.png'
+                THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+                ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+			END,, descricao, valor, nomecategoria
         FROM estoque e
 		INNER JOIN tb_categorias tc
 		ON e.idcategoria = tc.idcategoria
@@ -107,7 +112,7 @@ router.get(apiURL + '/search', async (req, res) => {
                 console.log(response)
                 res.json({ error: "Without Page" })
             } else {
-                res.json({ produtos: response.rows, page: pg + 1, totalpaginas: parseInt(totalpaginas.rows[0].totalpaginas) })
+                res.json({ produtos: response.rows, page: parseInt(page), totalpaginas: parseInt(totalpaginas.rows[0].totalpaginas) })
             }
         })
         .catch(e => {
