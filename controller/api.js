@@ -51,7 +51,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
 //Procurar produto específico pelo código de barras
 router.get(apiURL + '/produtos/:ean', async (req, res) => {
 
-    var { ean } = req.params;
+    var { ean, qnt } = req.params;
     console.log(ean)
     await knex.raw(`
         SELECT ean, nomeproduto, image, descricao, valor, nomecategoria
@@ -86,7 +86,7 @@ router.get(apiURL + '/search', async (req, res) => {
     var pg = limit * (page - 1)
 
     await knex.raw(`
-            SELECT ean, nomeproduto, image,
+            SELECT ean, nomeproduto, e.image,
             CASE
                 WHEN descricao = '' THEN 'Sem Descrição'
                 ELSE descricao
@@ -236,12 +236,26 @@ router.post(apiURL + '/sell-product', auth, async (req, res) => {
         console.log('Valor Total Produto: ' + valorTotalProduto)
         console.log('-------------------------------------')
         //console.log(moment().format('YYYY-MM-DD'))
-        await knex.raw(
-            `INSERT INTO tb_vendas 
-            VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}')`
-        ).then(() => {
-            console.log('Produto vendido com sucesso.')
-        }).catch(e => console.log(e))
+
+        var verifyEstoque = await knex.raw(
+            `SELECT * FROM estoque WHERE ean = '${product[i].ean}' AND qnt >= ${product[i].qnt}`
+        )
+
+        if (verifyEstoque.rows[0] != undefined) {
+            var quantidade = verifyEstoque.rows[0].qnt - product[i].qnt
+            console.log(quantidade)
+            await knex.raw(`
+                UPDATE estoque SET qnt = ${quantidade} WHERE ean = '${product[i].ean}'
+            `)
+            await knex.raw(
+                `INSERT INTO tb_vendas 
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}')`
+            ).then(() => {
+                console.log('Produto vendido com sucesso.')
+            }).catch(e => console.log(e))
+        } else {
+            return res.json({ ean: product[i].ean, msg: "Produto não cadastrado ou sem quantidade o suficiente para venda." })
+        }
 
         /* if (i == product.length - 1) {
             console.log('Valor Total: ' + valorTotal)
@@ -288,11 +302,25 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
         })
 })
 
-router.post(apiURL + '/card', auth, async (req, res) => {
-    var { ean, qnt } = req.body
+router.post(apiURL + '/card', async (req, res) => {
+    var { product, user } = req.body
 
-    console.log(ean)
-    console.log(qnt)
+    console.log(product)
+    console.log(user)
+
+    for (var i = 0; product.length > i; i++) {
+        var prod = await knex.raw(`
+            SELECT * FROM tb_carrinho WHERE eanproduto = '${product[i].ean}'
+        `)
+
+        if (prod.rows[0] == undefined) {
+            await knex.raw(`
+                INSERT INTO tb_carrinho VALUES ('${product[í].ean}', ${prod[i].qnt}, '${user}')
+            `)
+        } else {
+            console.log('Existe Produto')
+        }
+    }
 })
 
 module.exports = router
