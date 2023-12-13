@@ -54,7 +54,7 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
     var { ean, qnt } = req.params;
     console.log(ean)
     await knex.raw(`
-        SELECT ean, nomeproduto, image, descricao, valor, nomecategoria
+        SELECT ean, nomeproduto, e.image, descricao, valor, nomecategoria
         FROM estoque e
 		INNER JOIN tb_categorias tc
 		ON e.idcategoria = tc.idcategoria
@@ -107,7 +107,7 @@ router.get(apiURL + '/search', async (req, res) => {
                 console.log(response)
                 res.json({ error: "Without Page" })
             } else {
-                res.json(response.rows)
+                res.json({ produtos: response.rows, page: pg + 1, totalpaginas: parseInt(totalpaginas.rows[0].totalpaginas) })
             }
         })
         .catch(e => {
