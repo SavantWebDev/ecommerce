@@ -65,9 +65,25 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
 		ON e.idcategoria = tc.idcategoria
         WHERE ean = '${ean}'
     `)
-        .then(result => {
+        .then(async result => {
             if (result.rows[0] != undefined) {
-                res.status(200).json(result.rows[0])
+                var semelhantes = await knex.raw(`
+                    SELECT ean, nomeproduto,
+                        CASE 
+                            WHEN e.image = '/src/image/imagemImagem.png'
+                            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+                            ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                        END, descricao, valor, nomecategoria
+                    FROM estoque e
+                    INNER JOIN tb_categorias tc
+                    ON e.idcategoria = tc.idcategoria
+                    WHERE nomecategoria = '${result.rows[0]['nomecategoria']}'
+                    AND ean != '${result.rows[0]['ean']}'
+                    ORDER BY random()
+                    LIMIT 4
+                `)
+
+                res.status(200).json({ produtoConsultado: result.rows[0], produtosSemelhantes: semelhantes.rows })
             } else {
                 res.status(404).json({ error: 'Not Found' })
             }
