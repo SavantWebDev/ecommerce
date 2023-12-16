@@ -348,4 +348,19 @@ router.post(apiURL + '/card', async (req, res) => {
     }
 })
 
+router.get(apiURL + '/banners', async (req, res) => {
+
+    await knex.raw(`
+        SELECT * FROM tb_banners
+    `)
+        .then(result => {
+            console.log(result)
+            res.status({ result: result.rows })
+        })
+        .catch(e => {
+            res.status(400).json({ error: "Ocorreu um Erro", nomeErro: e })
+        })
+
+})
+
 module.exports = router
