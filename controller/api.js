@@ -355,7 +355,7 @@ router.get(apiURL + '/banners', async (req, res) => {
     `)
         .then(result => {
             console.log(result)
-            res.status({ result: result.rows })
+            res.json({ result: result.rows })
         })
         .catch(e => {
             res.status(400).json({ error: "Ocorreu um Erro", nomeErro: e })
