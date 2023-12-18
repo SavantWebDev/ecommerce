@@ -73,6 +73,16 @@ router.get("/estoque", auth, async (req, res) => {
         `
       )
 
+      var rankvendidos = await knex.raw(`
+        SELECT nomeproduto, 
+        SUM(qntvendido) as qntvendido 
+        FROM tb_vendas tv
+        INNER JOIN estoque e
+        ON tv.eanproduto = e.ean
+        GROUP BY nomeproduto 
+        ORDER BY qntvendido DESC LIMIT 6
+      `)
+
       res.render("index", {
         products: result.rows,
         error: error,
@@ -85,7 +95,8 @@ router.get("/estoque", auth, async (req, res) => {
         username: req.session.user,
         funcao: req.session.funcao,
         categorias: categorias.rows,
-        qntCategoria: qntCategoria.rows
+        qntCategoria: qntCategoria.rows,
+        rankVendidos: rankvendidos.rows
       });
     })
     .catch((err) => console.log(err));

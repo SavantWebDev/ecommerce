@@ -38,7 +38,7 @@ $(document).ready(function () {
   }
   adcElemento();
 
-  const btn = document.getElementById("addEdit");
+  const btn = document.getElementById("btnAddForm");
 
   const removerModal = {
     success: function () {

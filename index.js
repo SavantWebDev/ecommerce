@@ -19,6 +19,8 @@ const usersControllers = require('./controller/usersControllers')
 const perdasControllers = require('./controller/perdasControllers')
 const apiController = require('./controller/api')
 
+const axios = require('axios')
+
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -84,6 +86,16 @@ app.get('/logout', (req, res) => {
     req.session.user = undefined
     res.redirect('/login')
 })
+
+setInterval(async () => {
+    await axios.get('https://api-n56x.onrender.com/', {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(async resp => {
+        console.log('ping systenparking.onrender.com')
+    }).catch((e) => { console.log(e) })
+}, 45000)
 
 app.listen(PORT, () => {
     console.log('Servidor rodando na porta: ' + PORT)

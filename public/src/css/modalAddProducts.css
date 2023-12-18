@@ -8,11 +8,29 @@
   left: 0;
 }
 
+.container-prod-add {
+  display: inline-block;
+  align-items: left;
+  width: 50%;
+  gap: 10px;
+  height: 500px;
+  padding: 0 10px;
+  overflow: auto !important;
+}
+
+.inputsForms {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .forms-Addproduct {
   position: relative;
   display: flex;
-  flex-direction: column;
-  max-width: 550px;
+  justify-content: center;
+  align-items: start;
+  max-width: 950px;
   width: 100%;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 4, 0.4);
@@ -22,7 +40,8 @@
   transform: translate(-50%, -50%);
   z-index: 1;
   background-color: #fff;
-  padding: 30px;
+  padding: 70px 30px;
+  gap: 5%;
 }
 
 .forms-Addproduct input,
@@ -48,9 +67,12 @@
   font-size: 0.9rem;
 }
 
-#closeBtn {
+#closeBtn,
+#closeEdit {
   position: absolute;
-  right: 2%;
+  top: 0 !important;
+  right: 2px !important;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -77,6 +99,7 @@
   font-weight: bold;
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
+  padding: 10px;
 }
 
 #btnAddForm:hover {
@@ -197,6 +220,8 @@
 /* 
 Inpút file */
 .label {
+  width: 40%;
+
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -212,14 +237,15 @@ Inpút file */
 
 .personal-figure {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 300px;
+  height: 300px;
+  padding: 0 10px;
 }
 
 .personal-avatar {
   cursor: pointer;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   border-radius: 5px;
   border: 2px solid transparent;

@@ -1,4 +1,4 @@
-.container-edit-product {
+/* .container-edit-product {
   display: none;
   position: absolute;
   width: 100%;
@@ -16,6 +16,7 @@
   height: 100%;
   z-index: 0;
 }
+
 .form-edit {
   position: relative;
   display: flex;
@@ -73,6 +74,7 @@
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
 }
+
 #addEdit:hover {
   background-color: #000000;
   transition: all 0.5s;
@@ -83,4 +85,4 @@
   border: 1px solid #ccc;
 
   padding: 10px;
-}
+} */
