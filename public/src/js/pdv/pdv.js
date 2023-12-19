@@ -347,6 +347,7 @@ function emitirNota() {
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
       const linkAPI = 'https://api-n56x.onrender.com/v1/api'
+      console.log('Dados'+ JSON.stringify(dados))
       const configOp = {
         method: 'POST',
         headers: {
@@ -361,8 +362,9 @@ function emitirNota() {
       fetch(linkAPI + '/sell-product', configOp) // "/dados"
         .then(res => {
           console.log(res)
+          
           if (!res.ok) {
-            throw new Error('Erro no envio de dados')
+            throw new Error('Erro no envio de dados!!!!')
           }
           return res.json();
         })
