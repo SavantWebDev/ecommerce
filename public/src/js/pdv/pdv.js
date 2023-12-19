@@ -154,15 +154,6 @@ function cancelarCompra(finaliza) {
     //localStorage.clear() // Depois dar uma olhada para adicionar um remove item
     //var dados = localStorage.getItem("dados")
     localStorage.removeItem("dados")
-    /*
-    if(dados) {
-      dados = JSON.parse(dados)
-      for (var i = 0; i< dados.length; i++){
-        delete dados[i]
-      }
-      localStorage.setItem("dados", JSON.stringify(dados))
-    }
-    */
     //delete dados[i]
     // Mensagem
     mensagemFFinaliza()
@@ -238,37 +229,6 @@ document.getElementById("cpfnota").innerHTML =
   '<label for="parcPag" class="label-modal-fin-venda">Cpf na Nota?</label>' +
   '<input type="text" id="cpfInput" maxlength="11" placeholder="CPF (opcional)" style="border-width: 1px; border-radius: 5px; font: 25.6px">' +
   '</div>';
-/*
-function salvarCardsNoLocalStorage() {
-  var cardsContainer = document.getElementById('cardsContainer');
-  var cards = cardsContainer.getElementsByClassName('produto-single-store');
-  var products = [];
-
-  // Mapear os cards para um array de objetos
-  for (var i = 0; i < cards.length; i++) {
-    var card = cards[i];
-    var nome = card.querySelector('.nome-produto-compra').textContent;
-    var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
-    var quantidade = card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', '');
-    var ValorTotalCard = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
-
-    products.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
-
-    console.log("Teste:")
-    console.log(products)
-  }
-
-  // Salvar os cards e totalPreco no localStorage como uma string JSON
-
-  var dadosParaSalvar = {
-    products,
-    //ValorTotalCard: ValorTotalCard
-    valor
-  };
-
-  localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
-}
-*/
 
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
@@ -289,19 +249,7 @@ function salvarCardsNoLocalStorage() {
 
   // Calcular o valor total
   var valorTotal = totalPreco.toFixed(2);
-  /*
-  var cpfDigitado = parseInt(document.getElementById('cpfInput').value)
-  console.log(cpfDigitado)
-  */
-  /*
-  let cpfDigitado = null;
-  document.getElementById('cpfInput').addEventListener('input', function() {
-    let cpfDigitado = parseInt(this.value);
-    console.log(cpfDigitado);
-  });
-  */
-  //let cpfDigitado = null;
-  //var cpfDigitado = document.getElementById('cpfInput')
+
   let cpfDigitado;
 
   document.getElementById('cpfInput').addEventListener('input', function() {
@@ -322,6 +270,7 @@ function salvarCardsNoLocalStorage() {
     // Salvar os dados no localStorage
     localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
   });
+  
   var dadosParaSalvar = {
     product,
     valorTotal,
@@ -377,41 +326,6 @@ function limparTodosOsCards() {
   // Salvar o estado atual no localStorage
   salvarCardsNoLocalStorage();
 }
-/*
-function emitirNota() {
-  const itens = localStorage.getItem('dados')
-  console.log(itens)
-  if(itens) {
-    const dados = JSON.parse(itens)
-    //console.log(`dados: ${dados}`)
-    const linkAPI = 'https://api-n56x.onrender.com/v1/api/Produtos' // Caminho inverso do retorno de informações ao vender o produto
-    const configOp = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dados),
-    };
-    fetch(linkAPI, configOp)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erro no envio de dados')
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(`Dados enviados com sucesso ${data}`)
-      })
-      .catch(erro => {
-        console.log(`Erro ao enviar os dados ${erro}`)
-      })
-  } else {
-    console.log('Deu erro nos dados, eles não tão no localstorage')
-  }
-}
-*/
-
-/**/
 
 /**/
 //Teste Retorno de dados local para um db básico em json:
@@ -437,12 +351,13 @@ function emitirNota() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          //'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxvcHBlc0B0ZXN0ZS5jb20iLCJ1c2VybmFtZSI6IkxvcHBlcyIsImlhdCI6MTcwMjk5OTQxOSwiZXhwIjoxNzAzMDg1ODE5fQ.NZlOCZTcTyGFsteYN5aDSnh_H3VIt0d73fWYH64OM50',
         },
         body: JSON.stringify(dados),
         
         //body: JSON.stringify(dados),
       };
-      console.log("AHHHHHH ", configOp)
+      console.log("Dados a caminho:  ", configOp)
       fetch(linkAPI + '/sell-product', configOp) // "/dados"
         .then(res => {
           if (!res.ok) {
