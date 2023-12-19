@@ -20,6 +20,7 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
     //var ValorTotalCard = ValorTotalCard
     var ValorTotalCard = precoU * quantidadeT
     totalPreco = totalPreco + ValorTotalCard
+    
     //------------------------------
     var novoCard = document.createElement("div");
     novoCard.id = "card" + contadorCards;
@@ -431,7 +432,7 @@ function emitirNota() {
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-      const linkAPI = 'http://45.188.156.17:5464/v1/api'
+      const linkAPI = 'https://api-n56x.onrender.com/v1/api'
       const configOp = {
         method: 'POST',
         headers: {

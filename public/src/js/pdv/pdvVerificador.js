@@ -35,25 +35,27 @@ function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
         fetch(`https://api-n56x.onrender.com/v1/api/produtos/${codigoA}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                
+                console.log(data.produtoConsultado.ean);
+                console.log(codigoA)
 
-                if (codigoA.value != data.ean) {
+                if (codigoA.toString() === data.produtoConsultado.ean) {
                     // Gera o card de vendas geral
-                    gerarCard(data.nomeproduto, data.ean, data.valor, quantidadeA);
+                    gerarCard(data.produtoConsultado.nomeproduto, data.produtoConsultado.ean, data.produtoConsultado.valor, quantidadeA);
                     // Vizualizador de Imagem
-                    vizualizarImg(data.image)
+                    vizualizarImg(data.produtoConsultado.image)
                     // Gera o vizualizador do último produto passado
                     document.getElementById("vizualizaProd").innerHTML =
                         '<div id="displayValues" class="al-f-dados"></div>' +
                         '<div class="vizualizar-dados">' +
                         '<div class="al-f-dados">' +
-                        '<h1 class="nome-ad-prod font-nome"><b> ' + data.nomeproduto + '</b></h1>' +
-                        '<h2 class="nome-ad-prod"><b>Código: ' + data.ean + '</b></h2>' +
-                        '<h2 class="nome-ad-prod"><b>Preço: ' + data.valor + '</b></h2>' +
+                        '<h1 class="nome-ad-prod font-nome"><b> ' + data.produtoConsultado.nomeproduto + '</b></h1>' +
+                        '<h2 class="nome-ad-prod"><b>Código: ' + data.produtoConsultado.ean + '</b></h2>' +
+                        '<h2 class="nome-ad-prod"><b>Preço: ' + data.produtoConsultado.valor + '</b></h2>' +
                         '<h2 class="nome-ad-prod"><b>Quantidade: ' + quantidadeA + '</b></h2>' +
                         '<br>' +
                         '<br>' +
-                        '<h2 class="nome-ad-prod"><b>Descrição: ' + data.descricao + '</b></h2>' +
+                        '<h2 class="nome-ad-prod"><b>Descrição: ' + data.produtoConsultado.descricao + '</b></h2>' +
                         '</div>' +
                         '</div>';
                 } else {
