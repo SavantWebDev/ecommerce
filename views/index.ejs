@@ -158,37 +158,57 @@
                 <div class="container-prod-add">
                   <h2 style="position: absolute; top: 30px; right: 150px;" class="text-cadastro-produtos">Editar Produto
                   </h2>
-                  <label for="">EAN:</label>
-                  <input type="number" id="eanEdit"
-                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    maxlength="13" name="ean" required />
-                  <label for="nome">Nome do Produto:</label>
-                  <input type="text" id="nomeEdit" name="nomeproduto" required />
 
-                  <label for="descricao">Descrição: (Optional)</label>
-                  <textarea id="descricaoEdit" name="descricao"></textarea>
+                  <div class="inputsForms">
+                    <label for="">EAN:</label>
+                    <input type="number" id="eanEdit"
+                      oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                      maxlength="13" name="ean" required />
+                  </div>
 
-                  <label for="preco">Valor: (R$)</label>
-                  <input type="text" id="precoEdit" name="valor" onkeypress="$(this).mask('#.##0,00', {reverse: true})"
-                    step="0.01" required />
-                  <label for="preco">Valor Pix: (R$)</label>
-                  <input type="text" id="valorpix" name="valorpix"
-                    onkeypress="$(this).mask('#.##0,00', {reverse: true})" step="0.01" required />
-                  <label for="preco">Valor Prazo: (R$)</label>
-                  <input type="text" id="valorPrazo" name="valorprazo"
-                    onkeypress="$(this).mask('#.##0,00', {reverse: true})" step="0.01" required />
+                  <div class="inputsForms">
+                    <label for="nome">Nome do Produto:</label>
+                    <input type="text" id="nomeEdit" name="nomeproduto" required />
+                  </div>
 
-                  <label for="quantidade">Quantidade:</label>
-                  <input type="number" id="quantidadeEdit" name="qnt" required />
+                  <div class="inputsForms">
+                    <label for="descricao">Descrição: (Optional)</label>
+                    <textarea id="descricaoEdit" name="descricao"></textarea>
+                  </div>
 
-                  <label for="categoria">Categoria: </label>
-                  <select name="categoria" id="categorias">
-                    <% categorias.forEach(function (categoria){ %>
-                      <option value="<%= categoria.idcategoria %>">
-                        <%= categoria.nomecategoria %>
-                      </option>
-                      <% }) %>
-                  </select>
+                  <div class="inputsForms" style="flex-direction: row;">
+                    <div style="flex-direction: column; gap: 10px;">
+                      <label for="preco">Valor: (R$)</label>
+                      <input style="width: 100px;" type="text" id="precoEdit" name="valor"
+                        onkeypress="$(this).mask('#.##0,00', {reverse: true})" step="0.01" required />
+                    </div>
+                    <div style="flex-direction: column; gap: 10px;">
+                      <label for="preco">Valor Pix: (R$)</label>
+                      <input style="width: 100px;" type="text" id="valorpix" name="valorpix"
+                        onkeypress="$(this).mask('#.##0,00', {reverse: true})" step="0.01" required />
+                    </div>
+                    <div style="flex-direction: column; gap: 10px;">
+                      <label for="preco">Valor Prazo: (R$)</label>
+                      <input style="width: 100px;" type="text" id="valorPrazo" name="valorprazo"
+                        onkeypress="$(this).mask('#.##0,00', {reverse: true})" step="0.01" required />
+                    </div>
+                  </div>
+
+                  <div class="inputsForms">
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" id="quantidadeEdit" name="qnt" required />
+                  </div>
+
+                  <div class="inputsForms">
+                    <label for="categoria">Categoria: </label>
+                    <select name="categoria" id="categorias">
+                      <% categorias.forEach(function (categoria){ %>
+                        <option value="<%= categoria.idcategoria %>">
+                          <%= categoria.nomecategoria %>
+                        </option>
+                        <% }) %>
+                    </select>
+                  </div>
                   <!-- <label for="categoria">Tipo: </label>
                   <select name="categoria" id="">
                     <% categorias.forEach(function (categoria){ %>
