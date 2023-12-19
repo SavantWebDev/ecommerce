@@ -351,7 +351,7 @@ function emitirNota() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          //'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxvcHBlc0B0ZXN0ZS5jb20iLCJ1c2VybmFtZSI6IkxvcHBlcyIsImlhdCI6MTcwMjk5OTQxOSwiZXhwIjoxNzAzMDg1ODE5fQ.NZlOCZTcTyGFsteYN5aDSnh_H3VIt0d73fWYH64OM50',
+          'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxvcHBlc0B0ZXN0ZS5jb20iLCJ1c2VybmFtZSI6IkxvcHBlcyIsImlhdCI6MTcwMjk5OTQxOSwiZXhwIjoxNzAzMDg1ODE5fQ.NZlOCZTcTyGFsteYN5aDSnh_H3VIt0d73fWYH64OM50',
         },
         body: JSON.stringify(dados),
         
@@ -360,6 +360,7 @@ function emitirNota() {
       console.log("Dados a caminho:  ", configOp)
       fetch(linkAPI + '/sell-product', configOp) // "/dados"
         .then(res => {
+          console.log(res)
           if (!res.ok) {
             throw new Error('Erro no envio de dados')
           }
