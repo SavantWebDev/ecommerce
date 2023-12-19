@@ -382,5 +382,4 @@ function emitirNota() {
   } catch(error) {
     console.log(`Erro no envio ao servidor: ${error}`)
   }
-  
 }
