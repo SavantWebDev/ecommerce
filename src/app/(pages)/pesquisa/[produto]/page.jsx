@@ -2,40 +2,38 @@
 import React from "react";
 import { FaListUl } from "react-icons/fa";
 import { LuLayoutGrid } from "react-icons/lu";
-import Cards from "../../../Components/CardsProdutos";
-import Newsletter from "../../../Components/Newsletter";
 import { Pagination } from "@nextui-org/react";
-import Paginacao from "../../../Components/Pagination/index";
-import { getCategoryProduct } from "../../../api/apiEcommerce";
 import { useState, useEffect } from "react";
+import Cards from "../../../Components/CardsProdutos";
+import Pagi from "../../../Components/Pagination";
+import { buscaProduto, getCategoryProduct } from "../../../api/apiEcommerce";
+import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
-  console.log("===================");
-  if (params.id.includes("%20")) {
-    // console.log(params.id.split("%20"))
-    var parametro = params.id.split("%20")[0] + " " + params.id.split("%20")[1];
-  }
+  console.log(params);
+ 
   const [produtos, setProdutos] = useState([]);
-  console.log(params.id)
-  console.log(params.page)
+  // console.log(params.id)
+  // console.log(params.page)
   useEffect(() => {
-    async function fetchCategoriasProdutos() {
-      const resultado = await getCategoryProduct(params.id);
+    async function fetchBuscaProdutos() {
+      const resultado = await buscaProduto(params.produto);
       console.log(resultado);
-      setProdutos(resultado);
+      setProdutos(resultado.produtos);
     }
 
-    fetchCategoriasProdutos();
+    fetchBuscaProdutos();
   }, []);
   console.log(produtos);
   return (
     <section className="max-w-[1416px] w-full h-full mx-auto px-5 pt-10">
-      <div className="bg-teste bg-cover bg-no-repeat bg-center min-h-[253px] h-full max-w-full w-[1519px] rounded-[15px] "></div>
+      {/* <div className="bg-teste bg-cover bg-no-repeat bg-center min-h-[253px] h-full max-w-full w-[1519px] rounded-[15px] "></div> */}
       {/* <Image className='max-w-full w-[1519px] h-[253px]' src={banner2} alt=''/> */}
       {/* Header pagina */}
+      
       <div className="flex justify-between sm:max-2xl:flex-row items-center sm:max-2xl:items-center text-cor-preto mt-[50px] mb:max-mn:flex-col mb:max-mn:items-start mb:max-mn:gap-3">
         <h3 className="mn:max-2xl:text-[24px] text-[24px] font-semibold leading-[normal]">
-          {params.id.includes("%20") ? parametro : params.id}
+        Buscando por <span className="text-amarelo-claro">“{params.produto}”</span>
         </h3>
         <div
           className="flex items-center w-auto gap-[2.75rem] mb:max-mn:w-full sm:justify-between sm:w-auto mn:justify-between 
@@ -57,6 +55,7 @@ export default function Page({ params }) {
           </p>
         </div>
       </div>
+      {!produtos? <div className="flex flex-col justify-center items-center mb-[20%] mt-[20%] text-2xl font-bold"><h1>Lamentamos, nenhum produto encontrado com esse critério de pesquisa.</h1><p>Tente novamente com outro termo para busca...</p></div>: <div>
 
       {/* cards produtos */}
       <section className="mt-[30px]">
@@ -252,9 +251,10 @@ export default function Page({ params }) {
           /> */}
         </div>
         <div className="flex justify-center pt-[80px] pb-[120px] items-center">
-          <Paginacao />
+          <Pagi />
         </div>
       </section>
+      </div>}
     </section>
   );
 }

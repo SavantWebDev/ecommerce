@@ -25,7 +25,7 @@ export default function Categorias() {
     <section className="max-w-[1416px] w-full h-full py-[120px] px-5 mx-auto">
       <div className="w-full h-full grid grid-cols-1 gap-5 xl:gap-10 auto-rows-fr sm:grid-cols-2 xl:grid-cols-3">
       {categorias.map((categoria) => {
-        return <CardCategorias categoria={categoria} />
+        return <CardCategorias categoria={categoria} cor="#626262"  corPadrao='bg-[rgba(255,_255,_255,_0.78)] group-hover:bg-[#fff]'/>
       }     
       )}
         {/* <CardCategorias

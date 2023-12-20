@@ -61,3 +61,30 @@ p {
 } */
 
 /* Fim Estilização de fonte, escala e peso */
+
+/* .swiper {
+  @apply !static;
+}
+.swiper-button-next, .swiper-button-prev {
+  @apply bg-amarelo-medio-g !w-[52px] !h-[52px] !rounded-[50%]
+}
+
+.swiper-button-next::after {
+  @apply text-branco !text-xl
+}
+
+.swiper-button-prev::after {
+  @apply text-branco !text-xl
+}
+
+.swiper-button-next {
+  @apply !absolute mb:!top-[130px] !right-[-5px] mn:!right-[-14px] sm:!right-[-18px] md:!right-[-28px] lg:!right-[-40px] xl:!right-[-52px] 2xl:!right-[-58px]
+}
+
+.swiper-button-prev {
+  @apply !absolute !top-[140px] !left-[-55px] !z-[99] !hidden;
+} */
+
+/* .swiper-wrapper {
+  @apply pl-[4rem] !pr-[10rem]
+} */

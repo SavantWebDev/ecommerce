@@ -39,6 +39,12 @@ export function validaCpf(valor) {
 }
 }
 
+//Valida Telefone
+export function validarNumeroCelular(numero) {
+  const regex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+  return regex.test(numero);
+}
+
 function validaNumerosRepitidos(cpf) {
     const numeroRepitidos = [
         '00000000000',

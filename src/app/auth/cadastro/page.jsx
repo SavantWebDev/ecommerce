@@ -9,6 +9,8 @@ import ButtonForms from "../../Components/FormsLoginCadastro/buttonForms";
 import Link from "next/link";
 import LoginSocial from "../../Components/FormsLoginCadastro/loginsocial";
 import RedirectLoginCadastro from "../../Components/FormsLoginCadastro/redirectLoginCadastro";
+import valido from "../../../../public/images/assets/verificado.svg";
+import erro from "../../../../public/images/assets/erro.svg";
 
 import {
   validaCpf,
@@ -18,6 +20,8 @@ import {
   validaSenha,
 } from "./Validacoes";
 import { cadastro } from "../../api/api";
+import Image from "next/image";
+import { MaskCpf, MaskTelefone } from "./Mascaras";
 
 export default function CadastroAuth() {
   const [nome, setNome] = useState("");
@@ -58,13 +62,13 @@ export default function CadastroAuth() {
       console.log(isNotificacoesValid);
       return;
     } else {
-      console.log("nome: "+ nome)
-      console.log("email: "+email)
-      console.log("senha :"+senha)
-      console.log("idade:"+idade)
-      console.log("Cpf :"+Cpf)
-      console.log("notificacoes:"+notificacoes)
-      console.log("numero:"+numero)
+      console.log("nome: " + nome);
+      console.log("email: " + email);
+      console.log("senha :" + senha);
+      console.log("idade:" + idade);
+      console.log("Cpf :" + Cpf);
+      console.log("notificacoes:" + notificacoes);
+      console.log("numero:" + numero);
       cadastro(nome, email, senha, idade, Cpf, notificacoes, numero);
     }
   };
@@ -115,19 +119,21 @@ export default function CadastroAuth() {
 
   function inputValueCpf(event) {
     const valor = event.target.value;
-    setCpf(valor);
+    // valor = valor.replace(/\D/g, "");
+    console.log(MaskCpf(valor));
+    setCpf(MaskCpf(valor));
     setIsCpfValid(validaCpf(valor));
   }
 
   function inputNotificacoes(event) {
-    const valor = event.target.checked
+    const valor = event.target.checked;
     setNotificacoes(valor);
     setIsNotificacoesValid(valor);
   }
 
   function inputNumero(event) {
-    const valor = event.target.value
-    setNumero(valor);
+    const valor = event.target.value;
+    setNumero(MaskTelefone(valor));
     setIsNumeroValid(valor);
   }
 
@@ -170,7 +176,17 @@ export default function CadastroAuth() {
                   placeholder="Digite seu nome e sobrenome"
                   required
                 />
-                {/* <span onClick={revelaNome}>aa</span> */}
+                <span className="absolute right-0">
+                  {isNomeValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isNomeValid === false ? (
+                    <Image
+                      className="text-[54px]"
+                      src={erro}
+                      alt="Ícone de erro"
+                    />
+                  ) : null}
+                </span>
               </div>
             </div>
 
@@ -183,15 +199,17 @@ export default function CadastroAuth() {
                   Whatsapp:
                 </label>
                 <input
-                onChange={(evento) => {
-                  inputNumero(evento);
-                  console.log(evento.target.value);
-                }}
+                value={numero}
+                  onChange={(evento) => {
+                    inputNumero(evento);
+                    console.log(evento.target.value);
+                  }}
                   type="tel"
                   name="whatsapp"
                   className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
                   focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
                   placeholder="Digite seu numero do Whatsapp"
+                  maxLength={15}
                   required
                 />
               </div>
@@ -217,6 +235,13 @@ export default function CadastroAuth() {
                   placeholder="Digite seu email"
                   required
                 />
+                <span className="absolute right-0">
+                  {isEmailValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isEmailValid === false ? (
+                    <Image src={erro} alt="Ícone de erro" />
+                  ) : null}
+                </span>
               </div>
             </div>
 
@@ -243,6 +268,13 @@ export default function CadastroAuth() {
                 />
                 <span className="absolute right-0" onClick={aoEsconderSenha}>
                   {mostrarSenha ? <FaEyeSlash /> : <IoEyeSharp />}
+                </span>
+                <span className="absolute right-6">
+                  {isSenhaValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isSenhaValid === false ? (
+                    <Image src={erro} alt="Ícone de erro" />
+                  ) : null}
                 </span>
               </div>
             </div>
@@ -272,6 +304,13 @@ export default function CadastroAuth() {
                 <span className="absolute right-0" onClick={aoEsconderSenha}>
                   {mostrarSenha ? <FaEyeSlash /> : <IoEyeSharp />}
                 </span>
+                <span className="absolute right-6">
+                  {isSenhaValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isSenhaValid === false ? (
+                    <Image src={erro} alt="Ícone de erro" />
+                  ) : null}
+                </span>
               </div>
             </div>
 
@@ -294,6 +333,13 @@ export default function CadastroAuth() {
                   focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
                   required
                 />
+                <span className="absolute right-6 top-[30px] flex justify-center items-center">
+                  {isIdadeValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isIdadeValid === false ? (
+                    <Image src={erro} alt="Ícone de erro" />
+                  ) : null}
+                </span>
               </div>
             </div>
 
@@ -306,11 +352,12 @@ export default function CadastroAuth() {
                   CPF:
                 </label>
                 <input
+                  value={Cpf}
                   onChange={(evento) => {
                     inputValueCpf(evento);
                     console.log(evento.target.value);
                   }}
-                  type="number"
+                  type="text"
                   name="cpf"
                   className="text-[16px] bg-[#FFF] text-[#000000] border-none py-1 w-full font-semibold
                   focus:shadow-none focus:outline-none placeholder:text-[14px] placeholder:font-normal"
@@ -319,6 +366,13 @@ export default function CadastroAuth() {
                   minLength="11"
                   maxLength="14"
                 />
+                <span className="absolute right-6 top-[30px]">
+                  {isCpfValid === true ? (
+                    <Image src={valido} alt="Ícone de sucesso" />
+                  ) : isCpfValid === false ? (
+                    <Image src={erro} alt="Ícone de erro" />
+                  ) : null}
+                </span>
               </div>
             </div>
 
@@ -333,7 +387,9 @@ export default function CadastroAuth() {
                   <Link
                     className="font-semibold border-b border-black"
                     href="#"
-                  > termos e condições de privacidade.
+                  >
+                    {" "}
+                    termos e condições de privacidade.
                   </Link>{" "}
                   Veja nossa{" "}
                   <Link
@@ -356,17 +412,15 @@ export default function CadastroAuth() {
                   }}
                 />
                 <p className="text-[14px] text-left">
-                Aceito receber promoções e ações de publicidade
+                  Aceito receber promoções e ações de publicidade
                 </p>
               </div>
             </div>
-            
+
             <ButtonForms>Cadastrar-se</ButtonForms>
           </form>
 
-          <LoginSocial 
-          conect="ou cadastre-se com"
-          />
+          <LoginSocial conect="ou cadastre-se com" />
           <RedirectLoginCadastro
             fraseLink="Já possui conta?"
             link="Faça o Login"

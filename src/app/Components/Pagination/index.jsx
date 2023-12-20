@@ -70,7 +70,7 @@ export default function Pagi() {
       radius="full"
       renderItem={renderItem}
       variant="light"
-      onChange={setCurrentPage}
+      onChange={(e) => {console.log(e)}}
     />
   );
 }
