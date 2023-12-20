@@ -357,7 +357,7 @@ router.get(apiURL + '/banners', async (req, res) => {
                 WHEN imagem = '/src/image/imagemImagem.png'
                     THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                     ELSE replace(imagem, 'uploads', 'https://api-n56x.onrender.com/uploads')
-                END
+                END as image
         FROM tb_banners
     `)
         .then(result => {

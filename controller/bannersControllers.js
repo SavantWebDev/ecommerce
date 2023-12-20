@@ -39,9 +39,11 @@ router.post('/banners', auth, upload.single('foto'), async (req, res) => {
     `)
         .then(result => {
             console.log(result)
+            res.redirect('/banners')
         })
         .catch(e => {
             console.log(e)
+            res.redirect('/banners')
         })
 
 })
