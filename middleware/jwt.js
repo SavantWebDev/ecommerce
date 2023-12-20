@@ -14,6 +14,7 @@ async function token(req, res, next) {
         var decodificado = jwt.decode(token)
         req.session.user = decodificado.username
         req.session.email = decodificado.email
+        req.session.uuid = decodificado.id
         next()
     }
     catch (error) {

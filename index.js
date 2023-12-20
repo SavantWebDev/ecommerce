@@ -17,6 +17,7 @@ const knex = require('./Database/connection')
 const produtoControllers = require('./controller/produtoControllers')
 const usersControllers = require('./controller/usersControllers')
 const perdasControllers = require('./controller/perdasControllers')
+const bannersControllers = require('./controller/bannersControllers')
 const apiController = require('./controller/api')
 
 const axios = require('axios')
@@ -42,6 +43,7 @@ app.use(cors())
 app.use('/', produtoControllers)
 app.use('/', usersControllers)
 app.use('/', perdasControllers)
+app.use('/', bannersControllers)
 app.use('/', apiController)
 
 app.get('/login', (req, res) => {
@@ -87,7 +89,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-setInterval(async () => {
+/* setInterval(async () => {
     await axios.get('https://api-n56x.onrender.com/', {
         headers: {
             "Content-Type": "application/json"
@@ -95,7 +97,7 @@ setInterval(async () => {
     }).then(async resp => {
         console.log('ping systenparking.onrender.com')
     }).catch((e) => { console.log(e) })
-}, 45000)
+}, 45000) */
 
 app.listen(PORT, () => {
     console.log('Servidor rodando na porta: ' + PORT)

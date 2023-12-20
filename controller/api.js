@@ -149,7 +149,8 @@ router.post(apiURL + '/login', async (req, res) => {
             const token = jwt.sign(
                 {
                     email: conf[0].email,
-                    username: conf[0].username
+                    username: conf[0].username,
+                    id: conf[0].idcliente
                 },
                 process.env.SECRET,
                 {
@@ -291,7 +292,7 @@ router.post(apiURL + '/sell-product', auth, async (req, res) => {
 })
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
-    res.status(200).json({ email: req.session.email, username: req.session.user })
+    res.status(200).json({ email: req.session.email, username: req.session.user, id: req.session.uuid })
 })
 
 router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
@@ -351,7 +352,13 @@ router.post(apiURL + '/card', async (req, res) => {
 router.get(apiURL + '/banners', async (req, res) => {
 
     await knex.raw(`
-        SELECT * FROM tb_banners
+        SELECT titulo, descricao, botao,
+            CASE
+                WHEN imagem = '/src/image/imagemImagem.png'
+                    THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+                    ELSE replace(imagem, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                END
+        FROM tb_banners
     `)
         .then(result => {
             console.log(result)
