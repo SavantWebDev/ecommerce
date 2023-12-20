@@ -232,7 +232,7 @@ router.get(apiURL + '/categorias', async (req, res) => {
 
 })
 
-router.post(apiURL + '/sell-product', auth, async (req, res) => {
+router.post(apiURL + '/sell-product', async (req, res) => {
     var { product, valorTotal, cpf } = req.body
 
     console.log(product, valorTotal, cpf)
