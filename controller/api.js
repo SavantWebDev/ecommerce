@@ -292,7 +292,19 @@ router.post(apiURL + '/sell-product', async (req, res) => {
 })
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
-    res.status(200).json({ email: req.session.email, username: req.session.user, id: req.session.uuid })
+
+    var carrinho = await knex.raw(`
+        SELECT tcr.qnt, nomeproduto, valor, e.image, nomecategoria FROM tb_carrinho tcr
+        INNER JOIN estoque e
+        ON tcr.eanproduto = e.ean
+        INNER JOIN tb_categorias tcg
+        ON tcg.idcategoria = e.idcategoria
+        WHERE tcr.uuiduser = '${req.session.uuid}' 
+    `)
+
+    console.log(carrinho.rows)
+
+    res.status(200).json({ email: req.session.email, username: req.session.user, id: req.session.uuid, carrinho: carrinho.rows })
 })
 
 router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
