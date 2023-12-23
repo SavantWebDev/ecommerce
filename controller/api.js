@@ -340,25 +340,46 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
         })
 })
 
-router.post(apiURL + '/card', async (req, res) => {
-    var { product, user } = req.body
+router.post(apiURL + '/card', auth, async (req, res) => {
+    var { product } = req.body
 
     console.log(product)
-    console.log(user)
+    console.log(req.session.uuid)
 
-    for (var i = 0; product.length > i; i++) {
+    product.map(async produto => {
         var prod = await knex.raw(`
-            SELECT * FROM tb_carrinho WHERE eanproduto = '${product[i].ean}'
+            SELECT eanproduto, qnt FROM tb_carrinho WHERE eanproduto = '${produto['ean']}' AND uuiduser = '${req.session.uuid}'
         `)
+
+        console.log('-----------------')
+        console.log(prod.rows[0])
 
         if (prod.rows[0] == undefined) {
             await knex.raw(`
-                INSERT INTO tb_carrinho VALUES ('${product[í].ean}', ${prod[i].qnt}, '${user}')
+                INSERT INTO tb_carrinho VALUES ('${produto['ean']}', ${produto['qnt']}, '${req.session.uuid}')
             `)
+                .then(() => {
+                    console.log("inserido")
+                    res.status(201).json({ msg: "Success" })
+                })
+                .catch(e => {
+                    console.log(e)
+                    res.status(401).json({ msg: "Error" })
+                })
         } else {
-            console.log('Existe Produto')
+            var somaqnt = prod.rows[0].qnt + produto.qnt
+            await knex.raw(`
+                UPDATE tb_carrinho SET qnt = ${somaqnt} WHERE uuiduser = '${req.session.uuid}' AND eanproduto = '${produto['ean']}'
+            `)
+                .then(() => {
+                    res.json({ msg: "Success" })
+                })
+                .catch(e => {
+                    res.json({ msg: "Error", result: e })
+                })
         }
-    }
+    })
+
 })
 
 router.get(apiURL + '/banners', async (req, res) => {
