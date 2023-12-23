@@ -51,7 +51,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
 //Procurar produto específico pelo código de barras
 router.get(apiURL + '/produtos/:ean', async (req, res) => {
 
-    var { ean, qnt } = req.params;
+    var { ean } = req.params;
     console.log(ean)
     await knex.raw(`
         SELECT ean, nomeproduto, 
@@ -340,7 +340,7 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
         })
 })
 
-router.post(apiURL + '/card', auth, async (req, res) => {
+router.put(apiURL + '/card', auth, async (req, res) => {
     var { product } = req.body
 
     console.log(product)
@@ -380,6 +380,29 @@ router.post(apiURL + '/card', auth, async (req, res) => {
         }
     })
 
+})
+
+router.delete(apiURL + '/card/delprod/:ean', auth, async (req, res) => {
+    var { ean } = req.params
+
+    try {
+        await knex.raw(`
+            DELETE FROM tb_carrinho WHERE eanproduto = '${ean}' AND uuiduser = '${req.session.uuid}'
+        `)
+            .then(result => {
+                console.log(result)
+                res.json({ msg: 'Success' })
+            })
+            .catch(e => {
+                console.log(e)
+                console.log('error')
+                res.json({ msg: 'Error' })
+            })
+    } catch (e) {
+        console.log("Deu erro")
+        console.log(e)
+        res.json({ msg: 'Error' })
+    }
 })
 
 router.get(apiURL + '/banners', async (req, res) => {
