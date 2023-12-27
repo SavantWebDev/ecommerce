@@ -294,7 +294,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
 router.get(apiURL + '/usuario', auth, async (req, res) => {
 
     var carrinho = await knex.raw(`
-        SELECT tcr.qnt, nomeproduto, valor, e.image, nomecategoria FROM tb_carrinho tcr
+        SELECT eanproduto, tcr.qnt, nomeproduto, valor, e.image, nomecategoria FROM tb_carrinho tcr
         INNER JOIN estoque e
         ON tcr.eanproduto = e.ean
         INNER JOIN tb_categorias tcg
@@ -386,18 +386,26 @@ router.delete(apiURL + '/card/delprod/:ean', auth, async (req, res) => {
     var { ean } = req.params
 
     try {
-        await knex.raw(`
-            DELETE FROM tb_carrinho WHERE eanproduto = '${ean}' AND uuiduser = '${req.session.uuid}'
-        `)
-            .then(result => {
-                console.log(result)
-                res.json({ msg: 'Success' })
-            })
-            .catch(e => {
-                console.log(e)
-                console.log('error')
-                res.json({ msg: 'Error' })
-            })
+        var sql = `SELECT * FROM tb_carrinho WHERE eanproduto = '${ean}' AND uuiduser = '${req.session.uuid}'`
+
+        var exist = await knex.raw(sql)
+
+        if (exist.rows[0] != undefined) {
+            await knex.raw(`
+                DELETE FROM tb_carrinho WHERE eanproduto = '${ean}' AND uuiduser = '${req.session.uuid}'
+            `)
+                .then(result => {
+                    console.log(result)
+                    res.json({ msg: 'Success' })
+                })
+                .catch(e => {
+                    console.log(e)
+                    console.log('error')
+                    res.json({ msg: 'Error' })
+                })
+        } else {
+            res.status(400).json({ msg: "Product Not Found" })
+        }
     } catch (e) {
         console.log("Deu erro")
         console.log(e)
