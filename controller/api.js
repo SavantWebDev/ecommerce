@@ -263,6 +263,16 @@ router.post(apiURL + '/sell-product', async (req, res) => {
         console.log('-------------------------------------')
         //console.log(moment().format('YYYY-MM-DD'))
 
+        function gerarNPedido() {
+            var stringAleatoria = ''
+            var caracteres = '0123456789';
+            for (var i = 0; i < 20; i++) {
+                stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+
+            return '#' + stringAleatoria
+        }
+
         var verifyEstoque = await knex.raw(
             `SELECT * FROM estoque WHERE ean = '${product[i].ean}' AND qnt >= ${product[i].qnt}`
         )
@@ -275,7 +285,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}', '${gerarNPedido()}')`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
