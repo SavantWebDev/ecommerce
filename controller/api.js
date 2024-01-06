@@ -321,12 +321,27 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
     `)
         .then(async resultQuery => {
             console.log(resultQuery.rows[0]['idcliente'])
-            var pedidos = await knex.raw(`
+            /* var pedidos = await knex.raw(`
                 SELECT eanproduto, qntvendido, datavenda FROM tb_vendas tv INNER JOIN tb_clientes tc
                 ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
                 ORDER BY datavenda DESC
                 LIMIT 20
+            `) */
+
+            /* var npedido = await knex.raw(`
+                SELECT numeropedido FROM tb_vendas tv INNER JOIN tb_clientes tc
+                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
+                GROUP BY numeropedido
+            `) */
+
+            var pedidos = await knex.raw(`
+                SELECT numeropedido, eanproduto,datavenda, valor FROM tb_vendas tv INNER JOIN tb_clientes tc
+                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
+				GROUP BY numeropedido, eanproduto, datavenda, valor
+				ORDER BY datavenda DESC
+                LIMIT 20
             `)
+
 
             res.json({
                 usuario:
@@ -375,7 +390,14 @@ router.put(apiURL + '/card', auth, async (req, res) => {
                     res.status(401).json({ msg: "Error" })
                 })
         } else {
-            var somaqnt = prod.rows[0].qnt + produto.qnt
+            if (produto.qnt.toString().includes('-')) {
+                console.log(produto.qnt)
+                var somaqnt = prod.rows[0].qnt - parseInt(produto.qnt.toString().replace('-', ''))
+            } else {
+                var somaqnt = prod.rows[0].qnt + produto.qnt
+            }
+
+
             await knex.raw(`
                 UPDATE tb_carrinho SET qnt = ${somaqnt} WHERE uuiduser = '${req.session.uuid}' AND eanproduto = '${produto['ean']}'
             `)
