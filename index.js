@@ -89,7 +89,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-/* setInterval(async () => {
+setInterval(async () => {
     await axios.get('https://api-n56x.onrender.com/', {
         headers: {
             "Content-Type": "application/json"
@@ -97,7 +97,7 @@ app.get('/logout', (req, res) => {
     }).then(async resp => {
         console.log('ping systenparking.onrender.com')
     }).catch((e) => { console.log(e) })
-}, 45000) */
+}, 45000)
 
 app.listen(PORT, () => {
     console.log('Servidor rodando na porta: ' + PORT)
