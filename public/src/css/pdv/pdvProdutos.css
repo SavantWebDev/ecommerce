@@ -208,10 +208,15 @@
 }
 .vizualizar-img{
   width: 30%;
-  height: 300px;
-  background-color: #9db2bf48;
+  height: 250px;
+  /*background-color: #9db2bf48;*/
   border-radius: 15px;
 }
+
+.form-img-prod{
+  width: 100%;
+}
+
 .vizualizar-dados {
   width: 100%;
   height: 300px;
@@ -497,4 +502,77 @@ select {
 
 #modalfinalizar h2 {
   font-size: 2.2rem;
+}
+
+/*Mensagem final*/
+#overlay-final {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: rgb(91, 207, 24);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+
+  border: 5px solid black;
+  border-radius: 15px;
+  font-size: 40px;
+  font-weight: bold;
+
+}
+
+#overlay-final img{
+  z-index: 1000;
+  width: 400px;
+}
+
+#overlay-final-2 {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: rgb(207, 24, 24);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+
+  border-radius: 15px;
+  font-size: 40px;
+  font-weight: bold;
+
+}
+
+/**/
+
+#cpfInput {
+  font-size: 25.6px;
+  font-weight: bold;
+  width: 200px;
+}
+
+@media (min-width: 20px) and (max-width: 840px){
+  .pdv-produtos {
+    flex-wrap: wrap;
+  }
+  .pdv-dados-produtos{
+    width: 100%;
+  }
+  .pdv-finalizar{
+    width: 100%;
+  }
+  #codigo{
+    margin-top: 20px;
+    font-size: 1.3rem;
+  }
 }

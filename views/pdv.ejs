@@ -23,7 +23,7 @@
             <div class="alinhamento-ad-compra-1">
               <div class="campo-produto">
                 <label for="codigo">Código:</label>
-                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" maxlength="" required><br><br>
+                <input type="text" id="codigo" class="edit-input" name="nome" oninput="checarTinput()" placeholder="############" maxlength="" autofocus required><br><br>
               </div>
             </div>
           </div>
@@ -31,7 +31,8 @@
           
           <!--Parte Imgs Produto-->
           <div class="vizualizador-prod">
-            <div class="vizualizar-img">
+            <div id="vizualizaImgProd" class="vizualizar-img">
+              
               <!--<img src="/public/src/image/LOGO ICEBERG BEBIDAS 1.jpg" aria-placeholder="teste">-->
             </div>
             <div id="vizualizaProd"></div>
@@ -54,9 +55,11 @@
 
             <div id="parcelas"></div>
 
+            <div id="cpfnota"></div>
+
             <div class="modal-c">
               <button class="btn-excluir-voltar" onclick="fecharModalfinalizar()">Voltar</button>
-              <button class="btn-editar" onclick="">Emitir Nota</button>
+              <button class="btn-editar" onclick="emitirNota()">Emitir Nota</button>
             </div>
           </div>
 
@@ -104,6 +107,15 @@
             onclick="abrirModalcancelar()"
           />
         </section>
+        <!--Modal Final-Final mensagem que aparece ao finalizar o processo de compra-->
+        <div id="overlay-final">
+          <p id="mensagem">Obrigado Pela Compra! <br> Tenha um Bom dia! <br></p>
+          <img src="/src/image/LOGO ICEBERG BEBIDAS 1.jpg" alt="">
+        </div>
+
+        <div id="overlay-final-2">
+          <p id="mensagem-2">Compra Cancelada, tenha um Bom dia!</p>
+        </div>
         <!--Emitir Boleto-->
         <!--
         <div class="print">
@@ -120,7 +132,10 @@
     <%- include('./partials/scripts.ejs') %>
     <script src="/src/js/pdv/pdv.js"></script>
     <script src="/src/js/pdv/pdvVerificador.js"></script>
+    <!--
     <script src="/public/src/js/pdv/pdvNotaF.js"></script>
+    <script src="/public/src/js/pdv/pdvRetornoD.js"></script>
+    -->
     <script>
       /*
       const ean = document.getElementById('codigo').value;

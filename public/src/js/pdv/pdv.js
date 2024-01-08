@@ -1,3 +1,5 @@
+//import "../../../../views/pdv.ejs"
+
 var contadorCards = 0;
 var totalPreco = 0;
 
@@ -12,12 +14,13 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
 
   contadorCards++;
 
-  if(!isLocalStorageData){
+  if (!isLocalStorageData) {
     var precoU = parseFloat(String(preco).replace(",", "."))
     var quantidadeT = parseFloat(quantidade)
     //var ValorTotalCard = ValorTotalCard
     var ValorTotalCard = precoU * quantidadeT
     totalPreco = totalPreco + ValorTotalCard
+
     //------------------------------
     var novoCard = document.createElement("div");
     novoCard.id = "card" + contadorCards;
@@ -34,10 +37,10 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
       "</div>" +
       "</div>" +
       "</div>";
-  
+
     document.getElementById("cardsContainer").appendChild(novoCard);
     atualizarTotal();
-  } 
+  }
   else {
     var ValorTotalCard = parseFloat(String(preco).replace(",", "."));
     var novoCard = document.createElement("div");
@@ -83,9 +86,22 @@ function excluirCard(cardID) { // Preciso remover o item da tela e o item do loc
   location.reload();
   //localStorage.removeItem(card)
 }
+// Fazer o input ficar sempre selecionado
+var time = false
+function focar() {
+  var codigoEleF = document.getElementById("codigo")
+  if (time === false) {
+    codigoEleF.focus()
+  }
+}
+console.log(time)
+setInterval(focar, 500)
+
 
 // Modal finalizar Compra
 function abrirModalfinalizar() {
+  //console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+  time = true
   var overlay = document.getElementById('overlay2');
   var modal = document.getElementById('modalfinalizar');
   overlay.style.display = 'block';
@@ -93,6 +109,7 @@ function abrirModalfinalizar() {
 }
 
 function fecharModalfinalizar() {
+  time = false
   var overlay = document.getElementById('overlay2');
   var modal = document.getElementById('modalfinalizar');
   overlay.style.display = 'none';
@@ -114,17 +131,55 @@ function fecharModalcancelar() {
   modal.style.display = 'none';
 }
 
-function cancelarCompra() {
-  localStorage.clear()
-  // Recarregar a página
-  location.reload();
+function mensagemFFinaliza() {
+  const overlay = document.getElementById('overlay-final');
+  const mensagemElemento = document.getElementById('mensagem');
+  overlay.style.display = 'block';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+  }, 5000);
+}
+
+function mensagemCCancela() {
+  const overlay2 = document.getElementById('overlay-final-2');
+  const mensagemElemento = document.getElementById('mensagem-2');
+  overlay2.style.display = 'block';
+  setTimeout(() => {
+    overlay2.style.display = 'none';
+  }, 5000);
+}
+
+function cancelarCompra(finaliza) {
+  if (finaliza) {
+    //localStorage.clear() // Depois dar uma olhada para adicionar um remove item
+    //var dados = localStorage.getItem("dados")
+    localStorage.removeItem("dados")
+    //delete dados[i]
+    // Mensagem
+    mensagemFFinaliza()
+    // Recarregar a página
+    //location.reload()
+    //alert("Nota Emitida!")
+  } else {
+    //localStorage.clear()
+    localStorage.removeItem("dados")
+    // Recarregar a página
+    //alert("Compra Cancelada!")
+    mensagemCCancela()
+    fecharModalcancelar()
+    //location.reload()
+  }
+  limparTodosOsCards()
+  //location.reload()
+  //window.location.href = './views/pdv'
+  //alert(".")
 }
 
 //Soma Preços // Modal
 // Apresentar Valor total assim que for bipado
 document.getElementById("somaPrecos").innerHTML =
   '<div class="info-total-descontos">' +
-  '<span id="totalPreco" class="total-produtos">Total: R$ 0.00</span>' + 
+  '<span id="totalPreco" class="total-produtos">Total: R$ 0.00</span>' +
   '<span>Descontos:</span>' +
   '<span></span>' +
   '</div>';
@@ -169,43 +224,70 @@ document.getElementById("parcelas").innerHTML =
   '<option value="quatroP">4x</option>' +
   '</select>' +
   '</div>';
+document.getElementById("cpfnota").innerHTML =
+  '<div class="modal-c">' +
+  '<label for="parcPag" class="label-modal-fin-venda">Cpf na Nota?</label>' +
+  '<input type="text" id="cpfInput" maxlength="11" placeholder="CPF (opcional)" style="border-width: 1px; border-radius: 5px; font: 25.6px">' +
+  '</div>';
 
 function salvarCardsNoLocalStorage() {
   var cardsContainer = document.getElementById('cardsContainer');
   var cards = cardsContainer.getElementsByClassName('produto-single-store');
-  var cardsArray = [];
+  var product = [];
 
   // Mapear os cards para um array de objetos
   for (var i = 0; i < cards.length; i++) {
     var card = cards[i];
     var nome = card.querySelector('.nome-produto-compra').textContent;
     var ean = card.querySelector('#codigoE').textContent.replace('Código: ', '');
-    var quantidade = card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', '');
-    var ValorTotalCard = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
-
-    cardsArray.push({ nome: nome, ean: ean, quantidade: quantidade, ValorTotalCard: ValorTotalCard });
-
-    console.log("Teste:")
-    console.log(cardsArray)
+    var quantidade = parseInt(card.querySelector('#quantidadeE').textContent.replace('Quantidade: ', ''));
+    var preco = parseFloat(card.querySelector('#precoE').textContent.replace('Valor Total: R$', '').trim());
+    var precoUnitario = (preco / quantidade).toFixed(2)
+    // Se eu quiser passar o nome basta adicionar o nome aqui
+    product.push({ nome: nome, ean: ean, qnt: quantidade, precounitario: precoUnitario, valor: preco.toFixed(2) });
   }
 
-  // Salvar os cards e totalPreco no localStorage como uma string JSON
+  // Calcular o valor total
+  var valorTotal = totalPreco.toFixed(2);
+
+  let cpfDigitado;
+
+  document.getElementById('cpfInput').addEventListener('input', function () {
+    let cpfDigitado = this.value;
+    if (!isNaN(cpfDigitado)) {
+      cpfDigitado = parseInt(cpfDigitado);
+      console.log("O cpf digitado foi: ", cpfDigitado)
+    }
+
+    console.log("O cpf é: ", cpfDigitado)
+    // Criar o objeto final
+    var dadosParaSalvar = {
+      product,
+      valorTotal,
+      cpf: cpfDigitado
+    };
+
+    // Salvar os dados no localStorage
+    localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
+  });
 
   var dadosParaSalvar = {
-    cards: cardsArray,
-    ValorTotalCard: ValorTotalCard
+    product,
+    valorTotal,
+    cpf: cpfDigitado
   };
-
   localStorage.setItem('dados', JSON.stringify(dadosParaSalvar));
 }
 
+
+/////////////////////////////////////
 function carregarCardsDoLocalStorage() {
   var dadosArmazenados = JSON.parse(localStorage.getItem('dados')) || {};
 
   // Carregar os cards do localStorage
-  if (dadosArmazenados.cards) {
-    dadosArmazenados.cards.forEach(function (cardData) {
-      gerarCard(cardData.nome, cardData.ean, cardData.ValorTotalCard, cardData.quantidade, true);
+  if (dadosArmazenados.product) {
+    dadosArmazenados.product.forEach(function (cardData) {
+      gerarCard(cardData.nome, cardData.ean, cardData.valor, cardData.qnt, true);
     });
   }
 
@@ -218,3 +300,86 @@ function carregarCardsDoLocalStorage() {
 
 // Chamar a função para carregar os cards ao carregar a página
 carregarCardsDoLocalStorage();
+
+function limparTodosOsCards() {
+  var cardsContainer = document.getElementById("cardsContainer");
+  var vizualizadorw = document.getElementById("vizualizaProd")
+  var vizualizaimg = document.getElementById("vizualizaImgProd")
+
+  // Remover todos os cards
+  while (cardsContainer.firstChild) {
+    cardsContainer.removeChild(cardsContainer.firstChild);
+  }
+
+  while (vizualizadorw.firstChild) {
+    vizualizadorw.removeChild(vizualizadorw.firstChild)
+  }
+
+  while (vizualizaimg.firstChild) {
+    vizualizaimg.removeChild(vizualizaimg.firstChild)
+  }
+
+  // Atualizar o total
+  totalPreco = 0;
+  atualizarTotal();
+
+  // Salvar o estado atual no localStorage
+  salvarCardsNoLocalStorage();
+}
+
+/**/
+//Teste Retorno de dados local para um db básico em json:
+
+function emitirNota() {
+  try {
+    var inputCpf = document.getElementById('cpfInput');
+    inputCpf.value = '';
+    const itens = localStorage.getItem('dados')
+    console.log(itens)
+    if (itens) {
+      const dados = JSON.parse(itens)
+      if (dados.product) {
+        dados.product.forEach(function (item) {
+          delete item.nome
+        })
+      }
+      //delete dados.id
+      //console.log(`dados: ${dados}`)
+      //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
+      const linkAPI = 'https://api-n56x.onrender.com/v1/api'
+      console.log('Dados' + JSON.stringify(dados))
+      const configOp = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': 'BearereyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxvcHBlc0B0ZXN0ZS5jb20iLCJ1c2VybmFtZSI6IkxvcHBlcyIsImlhdCI6MTcwMjk5OTQxOSwiZXhwIjoxNzAzMDg1ODE5fQ.NZlOCZTcTyGFsteYN5aDSnh_H3VIt0d73fWYH64OM50',
+        },
+        body: JSON.stringify(dados),
+
+        //body: JSON.stringify(dados),
+      };
+      console.log("Dados a caminho:  ", configOp)
+      fetch(linkAPI + '/sell-product', configOp) // "/dados"
+        .then(res => {
+          console.log(res)
+
+          if (!res.ok) {
+            throw new Error('Erro no envio de dados!!!!')
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log(data)
+        })
+        .catch(erro => {
+          console.log(`Erro ao enviar os dados ${erro}`)
+        })
+    } else {
+      console.log('Deu erro nos dados, eles não tão no localstorage')
+    }
+    fecharModalfinalizar()
+    cancelarCompra(true)
+  } catch (error) {
+    console.log(`Erro no envio ao servidor: ${error}`)
+  }
+}

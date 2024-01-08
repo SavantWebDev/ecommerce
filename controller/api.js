@@ -237,6 +237,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
 
     console.log(product, valorTotal, cpf)
     var valorTotal = 0
+    var def = '';
 
     if (cpf != undefined) {
         var idcliente = await knex.raw(`
@@ -244,8 +245,12 @@ router.post(apiURL + '/sell-product', async (req, res) => {
         `)
 
         if (idcliente.rows[0] == undefined || idcliente.rows[0] == '' || idcliente.rows[0].length == 0) {
-            idcliente.rows[0] = "0b982466-96b2-40c9-bb83-7f0243ace5e1"
+            def = "0b982466-96b2-40c9-bb83-7f0243ace5e1"
+        } else {
+            def = idcliente.rows[0]['idcliente']
         }
+    } else {
+        def = "0b982466-96b2-40c9-bb83-7f0243ace5e1"
     }
 
     var stringAleatoria = ''
@@ -268,6 +273,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
         console.log('Valor: ' + product[i].valor)
         console.log('Valor Total Produto: ' + valorTotalProduto)
         console.log(stringAleatoria)
+        console.log(def)
         console.log('-------------------------------------')
         //console.log(moment().format('YYYY-MM-DD'))
 
@@ -283,7 +289,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${idcliente.rows[0]['idcliente'] == undefined ? idcliente.rows[0] : idcliente.rows[0]['idcliente']}', '${stringAleatoria}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${def}', '${stringAleatoria}')`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
