@@ -289,7 +289,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${def}', '${stringAleatoria}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${def}', '#${stringAleatoria}')`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
@@ -334,20 +334,24 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                 LIMIT 20
             `) */
 
-            /* var npedido = await knex.raw(`
-                SELECT numeropedido FROM tb_vendas tv INNER JOIN tb_clientes tc
-                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
-                GROUP BY numeropedido
-            `) */
-
             var pedidos = await knex.raw(`
-                SELECT numeropedido, eanproduto,datavenda, valor FROM tb_vendas tv INNER JOIN tb_clientes tc
-                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
-				GROUP BY numeropedido, eanproduto, datavenda, valor
-				ORDER BY datavenda DESC
-                LIMIT 20
+                SELECT numeropedido, jsonb_agg(
+                    jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valor', tv.valor)) itens
+                FROM tb_vendas tv INNER JOIN tb_clientes tc
+                                ON tv.uuiduser = tc.idcliente
+                                INNER JOIN estoque e
+                                ON e.ean = tv.eanproduto WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
+                                GROUP BY numeropedido
+                                LIMIT 10
             `)
 
+            /* var pedidos = await knex.raw(`
+                SELECT numeropedido, eanproduto,datavenda, valor FROM tb_vendas tv INNER JOIN tb_clientes tc
+                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
+                GROUP BY numeropedido, eanproduto, datavenda, valor
+                ORDER BY datavenda DESC
+                LIMIT 20
+            `) */
 
             res.json({
                 usuario:
