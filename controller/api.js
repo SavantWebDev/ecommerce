@@ -8,9 +8,22 @@ const moment = require('moment')
 const jwt = require('jsonwebtoken')
 const apiURL = '/v1/api'
 
+const multer = require('multer')
+
 const verifyJWT = require('../middleware/jwt')
 
 const auth = require('../middleware/jwt')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/uploads/profile");
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname + Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({ storage });
 
 router.get(apiURL + '/produtos', async (req, res) => {
 
@@ -195,7 +208,7 @@ router.post(apiURL + '/cadastrar', async (req, res) => {
                 var salt = bcrypt.genSaltSync(10)
                 var hash = bcrypt.hashSync(senha, salt)
                 await knex.raw(`
-                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpfCompleto}', '${celular}', '${nascimento}', '${nome}', '${notificacao}')
+                    INSERT INTO tb_clientes VALUES('${id}', '${email}', '${hash}', '${cpfCompleto}', '${celular}', '${nascimento}', '${nome}', '${notificacao}', '/src/image/default.png')
                 `)
                     .then(() => {
                         res.status(200).json({ msg: "Sucesso" })
@@ -327,22 +340,16 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
     `)
         .then(async resultQuery => {
             console.log(resultQuery.rows[0]['idcliente'])
-            /* var pedidos = await knex.raw(`
-                SELECT eanproduto, qntvendido, datavenda FROM tb_vendas tv INNER JOIN tb_clientes tc
-                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
-                ORDER BY datavenda DESC
-                LIMIT 20
-            `) */
 
             var pedidos = await knex.raw(`
                 SELECT numeropedido, jsonb_agg(
                     jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valor', tv.valor)) itens
                 FROM tb_vendas tv INNER JOIN tb_clientes tc
-                                ON tv.uuiduser = tc.idcliente
-                                INNER JOIN estoque e
-                                ON e.ean = tv.eanproduto WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
-                                GROUP BY numeropedido
-                                LIMIT 10
+                ON tv.uuiduser = tc.idcliente
+                INNER JOIN estoque e
+                ON e.ean = tv.eanproduto WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
+                GROUP BY numeropedido
+                LIMIT 10
             `)
 
             /* var pedidos = await knex.raw(`
@@ -360,7 +367,8 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                     cpf: resultQuery.rows[0].cpf,
                     celular: resultQuery.rows[0].celular,
                     nascimento: resultQuery.rows[0].nascimento,
-                    username: resultQuery.rows[0].username
+                    username: resultQuery.rows[0].username,
+                    imageProfile: 'https://api-n56x.onrender.com' + resultQuery.rows[0].image
                 },
                 endereco: {},
                 ultimosPedidos: pedidos.rows,
