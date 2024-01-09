@@ -288,7 +288,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
         console.log(stringAleatoria)
         console.log(def)
         console.log('-------------------------------------')
-        //console.log(moment().format('YYYY-MM-DD'))
+        console.log(moment().format())
 
         var verifyEstoque = await knex.raw(
             `SELECT * FROM estoque WHERE ean = '${product[i].ean}' AND qnt >= ${product[i].qnt}`
@@ -302,7 +302,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format('YYYY-MM-DD')}', '${def}', '#${stringAleatoria}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format()}', '${def}', '#${stringAleatoria}')`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
@@ -342,13 +342,14 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
             console.log(resultQuery.rows[0]['idcliente'])
 
             var pedidos = await knex.raw(`
-                SELECT numeropedido, jsonb_agg(
+                SELECT numeropedido, datavenda, SUM(CAST(replace(tv.valor, ',', '.') as numeric)) as valortotal, jsonb_agg(
                     jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valor', tv.valor)) itens
                 FROM tb_vendas tv INNER JOIN tb_clientes tc
                 ON tv.uuiduser = tc.idcliente
                 INNER JOIN estoque e
                 ON e.ean = tv.eanproduto WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
-                GROUP BY numeropedido
+                GROUP BY numeropedido, datavenda
+                ORDER BY datavenda DESC
                 LIMIT 10
             `)
 
