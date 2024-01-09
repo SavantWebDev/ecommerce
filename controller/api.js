@@ -251,6 +251,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
     console.log(product, valorTotal, cpf)
     var valorTotal = 0
     var def = '';
+    var transicao = moment().format()
 
     if (cpf != undefined) {
         var idcliente = await knex.raw(`
@@ -302,7 +303,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${moment().format()}', '${def}', '#${stringAleatoria}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${transicao}', '${def}', '#${stringAleatoria}')`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
