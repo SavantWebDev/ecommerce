@@ -344,23 +344,16 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
 
             var pedidos = await knex.raw(`
                 SELECT numeropedido, datavenda, SUM(CAST(replace(tv.valor, ',', '.') as numeric)) as valortotal, jsonb_agg(
-                    jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valor', tv.valor)) itens
+                    jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valorTotalProd', tv.valor, 'qnt', tv.qntvendido, 'valUnit', e.valor)) itens
                 FROM tb_vendas tv INNER JOIN tb_clientes tc
                 ON tv.uuiduser = tc.idcliente
                 INNER JOIN estoque e
                 ON e.ean = tv.eanproduto WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
                 GROUP BY numeropedido, datavenda
-                ORDER BY datavenda DESC
+				ORDER BY datavenda DESC
                 LIMIT 10
             `)
 
-            /* var pedidos = await knex.raw(`
-                SELECT numeropedido, eanproduto,datavenda, valor FROM tb_vendas tv INNER JOIN tb_clientes tc
-                ON tv.uuiduser = tc.idcliente WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
-                GROUP BY numeropedido, eanproduto, datavenda, valor
-                ORDER BY datavenda DESC
-                LIMIT 20
-            `) */
 
             res.json({
                 usuario:
