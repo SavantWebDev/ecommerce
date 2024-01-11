@@ -321,6 +321,10 @@ router.post(apiURL + '/sell-product', async (req, res) => {
 
 router.get(apiURL + '/usuario', auth, async (req, res) => {
 
+    var verifyName = await knex.raw(`SELECT * FROM tb_clientes WHERE idcliente = '${req.session.uuid}'`)
+
+    req.session.user = verifyName.rows[0].username
+
     var carrinho = await knex.raw(`
         SELECT eanproduto, tcr.qnt, nomeproduto, valor, e.image, nomecategoria FROM tb_carrinho tcr
         INNER JOIN estoque e
@@ -336,8 +340,10 @@ router.get(apiURL + '/usuario', auth, async (req, res) => {
 })
 
 router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
+    //var query = `SELECT * FROM tb_clientes WHERE email = '${req.session.email}' AND username = '${req.session.user}'`
+    var query = `SELECT * FROM tb_clientes WHERE idcliente = '${req.session.uuid}'`
     await knex.raw(`
-        SELECT * FROM tb_clientes WHERE email = '${req.session.email}' AND username = '${req.session.user}'
+        ${query}
     `)
         .then(async resultQuery => {
             console.log(resultQuery.rows[0]['idcliente'])
@@ -474,6 +480,27 @@ router.get(apiURL + '/banners', async (req, res) => {
         .catch(e => {
             res.status(400).json({ error: "Ocorreu um Erro", nomeErro: e })
         })
+
+})
+
+router.post(apiURL + '/edit', auth, async (req, res) => {
+    var { username, telefone } = req.body
+    var uuid = req.session.uuid
+
+    var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE idcliente = '${uuid}'`)
+
+    if(exist.rows[0] != undefined){
+        await knex.raw(`
+            UPDATE tb_clientes SET username = '${username}', celular = '${telefone}' WHERE idcliente = '${uuid}'
+        `).then(() => {
+            res.status(201).json({msg: "Success"})
+        })
+        .catch( e => {
+            res.status(400).json({msg: e})
+        })
+    }else{
+        res.status(401).json({msg: "Not Found!"})
+    }
 
 })
 
