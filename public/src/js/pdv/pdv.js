@@ -210,8 +210,8 @@ document.getElementById("formaPag").innerHTML =
   '<select id="formpagmt" name="form_pagamento" style="border-width: 1px; border-radius: 5px;">' +
   '<option value="1">Dinheiro Espécie</option>' +
   '<option value="2">PIX</option>' +
-  '<option value="3">Cartão</option>' +
-  '<option value="4">Boleto</option>' +
+  '<option value="3">Crédito</option>' +
+  '<option value="4">Débito</option>' +
   '</select>' +
   '</div>';
 document.getElementById("parcelas").innerHTML =
