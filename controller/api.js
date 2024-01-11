@@ -246,7 +246,7 @@ router.get(apiURL + '/categorias', async (req, res) => {
 })
 
 router.post(apiURL + '/sell-product', async (req, res) => {
-    var { product, valorTotal, cpf } = req.body
+    var { product, valorTotal, cpf, form_pagamento } = req.body
 
     console.log(product, valorTotal, cpf)
     var valorTotal = 0
@@ -303,7 +303,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
             `)
             await knex.raw(
                 `INSERT INTO tb_vendas 
-                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${transicao}', '${def}', '#${stringAleatoria}')`
+                VALUES (${product[i].ean}, ${product[i].qnt}, '${product[i].valor}', '${transicao}', '${def}', '#${stringAleatoria}', ${form_pagamento})`
             ).then(() => {
                 console.log('Produto vendido com sucesso.')
             }).catch(e => console.log(e))
@@ -349,14 +349,17 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
             console.log(resultQuery.rows[0]['idcliente'])
 
             var pedidos = await knex.raw(`
-                SELECT numeropedido, datavenda, SUM(CAST(replace(tv.valor, ',', '.') as numeric)) as valortotal, jsonb_agg(
+                SELECT numeropedido, datavenda, tfp.nome_pagamento, SUM(CAST(replace(tv.valor, ',', '.') as numeric)) as valortotal, jsonb_agg(
                     jsonb_build_object('ean', eanproduto, 'nomeproduto', nomeproduto, 'valorTotalProd', tv.valor, 'qnt', tv.qntvendido, 'valUnit', e.valor)) itens
                 FROM tb_vendas tv INNER JOIN tb_clientes tc
                 ON tv.uuiduser = tc.idcliente
                 INNER JOIN estoque e
-                ON e.ean = tv.eanproduto WHERE tv.uuiduser = '${resultQuery.rows[0]['idcliente']}'
-                GROUP BY numeropedido, datavenda
-				ORDER BY datavenda DESC
+                ON e.ean = tv.eanproduto
+                INNER JOIN tb_forma_pagamentos tfp
+                ON tfp.id = tv.form_pagamento
+                WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
+                GROUP BY numeropedido, datavenda, tfp.nome_pagamento
+                ORDER BY datavenda DESC
                 LIMIT 10
             `)
 
