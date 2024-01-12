@@ -208,10 +208,10 @@ document.getElementById("formaPag").innerHTML =
   '<div class="modal-c">' +
   '<label for="formPag" class="label-modal-fin-venda">Forma de Pagamento:   </label>' +
   '<select id="formpagmt" name="form_pagamento" style="border-width: 1px; border-radius: 5px;">' +
-  '<option value="1">Dinheiro Espécie</option>' +
-  '<option value="2">PIX</option>' +
-  '<option value="3">Cartão</option>' +
-  '<option value="4">Boleto</option>' +
+  '<option value="1">PIX</option>' +
+  '<option value="2">Crédito</option>' +
+  '<option value="3">Débito</option>' +
+  '<option value="4">Espécie</option>' +
   '</select>' +
   '</div>';
 document.getElementById("parcelas").innerHTML =
@@ -343,6 +343,10 @@ function emitirNota() {
           delete item.nome
         })
       }
+
+      const formaPagSel = document.getElementById('formpagmt')
+      dados.form_pagamt = formaPagSel.value
+      console.log('A forma de pagamento: ',dados.form_pagamt)
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
