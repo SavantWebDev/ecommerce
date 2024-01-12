@@ -208,10 +208,17 @@ document.getElementById("formaPag").innerHTML =
   '<div class="modal-c">' +
   '<label for="formPag" class="label-modal-fin-venda">Forma de Pagamento:   </label>' +
   '<select id="formpagmt" name="form_pagamento" style="border-width: 1px; border-radius: 5px;">' +
+<<<<<<< HEAD
   '<option value="1">PIX</option>' +
   '<option value="2">Crédito</option>' +
   '<option value="3">Débito</option>' +
   '<option value="4">Espécie</option>' +
+=======
+  '<option value="1">Dinheiro Espécie</option>' +
+  '<option value="2">PIX</option>' +
+  '<option value="3">Crédito</option>' +
+  '<option value="4">Débito</option>' +
+>>>>>>> 7aa564b6547f0217a0a6e86171b7ee88b3beb9e2
   '</select>' +
   '</div>';
 document.getElementById("parcelas").innerHTML =
