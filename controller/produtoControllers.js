@@ -103,7 +103,7 @@ router.get("/estoque", auth, async (req, res) => {
 });
 
 router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
-  var { ean, nomeproduto, descricao, qnt, valor, categoria } = req.body;
+  var { ean, nomeproduto, descricao, qnt, valor, categoria, valorpix, valorprazo } = req.body;
   var foto = req.file;
 
   if (foto != undefined) {
@@ -120,7 +120,11 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
     qnt == undefined ||
     qnt.length == 0 ||
     valor == undefined ||
-    valor.length == 0
+    valor.length == 0 ||
+    valorpix == undefined ||
+    valorpix.length == 0 ||
+    valorprazo == undefined ||
+    valorprazo.length == 0
   ) {
     var error = "Proibido campos vazios!";
     req.flash("error", error);
@@ -128,6 +132,8 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   }
 
   valor = valor.includes(",") ? valor : valor + ",00";
+  valorpix = valorpix.includes(',') ? valorpix.replace(',', '.') : valorpix
+  valorprazo = valorprazo.includes(',') ? valorprazo.replace(',', '.') : valorprazo
 
   var exist = await knex.raw(`SELECT * FROM estoque WHERE ean = ${ean}`);
 
@@ -143,7 +149,7 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   } else {
     await knex
       .raw(
-        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto.toUpperCase()}', '${descricao}', ${qnt}, '${foto}', '${categoria}') `
+        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto.toUpperCase()}', '${descricao}', ${qnt}, '${foto}', '${categoria}', default, ${valorpix}, ${valorprazo}) `
       )
       .then(() => {
         console.log("Inserido");
@@ -199,7 +205,7 @@ router.get("/add-product/exist", auth, async (req, res) => {
 });
 
 router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
-  var { ean, nomeproduto, descricao, qnt, valor, id, categoria } = req.body;
+  var { ean, nomeproduto, descricao, qnt, valor, id, categoria, valorpix, valorprazo } = req.body;
   var foto = req.file;
 
   console.log(categoria);
@@ -226,7 +232,11 @@ router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
     qnt == undefined ||
     qnt.length == 0 ||
     valor == undefined ||
-    valor.length == 0
+    valor.length == 0 ||
+    valorpix == undefined ||
+    valorpix.length == 0 ||
+    valorprazo == undefined ||
+    valorprazo.length == 0
   ) {
     var error = "Proibido campos vazios!";
     req.flash("error", error);
@@ -234,6 +244,8 @@ router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
   }
 
   valor = valor.includes(",") ? valor : valor + ",00";
+  valorpix = valorpix.includes(',') ? valorpix.replace(',', '.') : valorpix
+  valorprazo = valorprazo.includes(',') ? valorprazo.replace(',', '.') : valorprazo
 
   console.log(valor);
 
@@ -242,8 +254,8 @@ router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
       await knex
         .raw(
           `
-        UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}', idcategoria = ${categoria} WHERE id = ${id}
-    `
+            UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}', idcategoria = ${categoria}, valor_pix = ${valorpix}, valor_prazo = ${valorprazo} WHERE id = ${id}
+          `
         )
         .then(function () {
           var success = "Produto editado com sucesso!";

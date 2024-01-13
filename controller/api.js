@@ -360,7 +360,7 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                 WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
                 GROUP BY numeropedido, datavenda, tfp.nome_pagamento
                 ORDER BY datavenda DESC
-                LIMIT 10
+                LIMIT 5
             `)
 
 
