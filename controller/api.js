@@ -28,7 +28,7 @@ const upload = multer({ storage });
 router.get(apiURL + '/produtos', async (req, res) => {
 
     var firstArray = await knex.raw(
-        `SELECT ean, valor, nomeproduto, descricao, qnt, idcategoria,
+        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
@@ -38,7 +38,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
     )
 
     var secondArray = await knex.raw(
-        `SELECT ean, valor, nomeproduto, descricao, qnt, idcategoria,
+        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
@@ -72,7 +72,7 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
 	            WHEN e.image = '/src/image/imagemImagem.png'
                 THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                 ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
-			END as image, descricao, valor, nomecategoria
+			END as image, descricao, valor, valor_pix, valor_prazo, nomecategoria
         FROM estoque e
 		INNER JOIN tb_categorias tc
 		ON e.idcategoria = tc.idcategoria
@@ -86,7 +86,7 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
                             WHEN e.image = '/src/image/imagemImagem.png'
                             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
                             ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
-                        END as image, descricao, valor, nomecategoria
+                        END as image, descricao, valor, valor_pix, valor_prazo, nomecategoria
                     FROM estoque e
                     INNER JOIN tb_categorias tc
                     ON e.idcategoria = tc.idcategoria
