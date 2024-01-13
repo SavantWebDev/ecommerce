@@ -345,8 +345,8 @@ function emitirNota() {
       }
 
       const formaPagSel = document.getElementById('formpagmt')
-      dados.form_pagamt = formaPagSel.value
-      console.log('A forma de pagamento: ',dados.form_pagamt)
+      dados.form_pagamento = formaPagSel.value
+      console.log('A forma de pagamento: ',dados.form_pagamento)
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
