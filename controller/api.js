@@ -289,6 +289,7 @@ router.post(apiURL + '/sell-product', async (req, res) => {
         console.log(stringAleatoria)
         console.log(def)
         console.log('-------------------------------------')
+        console.log(form_pagamento)
         console.log(moment().format())
 
         var verifyEstoque = await knex.raw(
@@ -486,15 +487,22 @@ router.get(apiURL + '/banners', async (req, res) => {
 
 })
 
-router.post(apiURL + '/edit', auth, async (req, res) => {
+router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     var { username, telefone } = req.body
+    var foto = req.file
     var uuid = req.session.uuid
+
+    if (foto != undefined) {
+        foto = foto.path.replace("public", "");
+      } else {
+        foto = "/src/image/default.png";
+      }
 
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE idcliente = '${uuid}'`)
 
     if(exist.rows[0] != undefined){
         await knex.raw(`
-            UPDATE tb_clientes SET username = '${username}', celular = '${telefone}' WHERE idcliente = '${uuid}'
+            UPDATE tb_clientes SET username = '${username}', celular = '${telefone}', image = '${foto}' WHERE idcliente = '${uuid}'
         `).then(() => {
             res.status(201).json({msg: "Success"})
         })
