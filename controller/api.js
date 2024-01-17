@@ -492,6 +492,13 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     var foto = req.file
     var uuid = req.session.uuid
 
+    console.log('-----------------')
+    console.log(foto)
+    console.log(telefone)
+    console.log(username)
+    console.log(uuid)
+    console.log('----------------')
+
     if (foto != undefined) {
         foto = foto.path.replace("public", "");
       } else {
