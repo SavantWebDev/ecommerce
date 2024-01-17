@@ -8,6 +8,8 @@ const moment = require('moment')
 const jwt = require('jsonwebtoken')
 const apiURL = '/v1/api'
 
+const fs = require("fs");
+
 const path = require('path')
 
 const multer = require('multer')
@@ -30,7 +32,7 @@ const upload = multer({ storage });
 router.get(apiURL + '/produtos', async (req, res) => {
 
     var firstArray = await knex.raw(
-        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria,
+        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria, created_data,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
@@ -40,7 +42,7 @@ router.get(apiURL + '/produtos', async (req, res) => {
     )
 
     var secondArray = await knex.raw(
-        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria,
+        `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria, created_data,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
             THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'

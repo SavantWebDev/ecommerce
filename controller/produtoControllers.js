@@ -105,6 +105,7 @@ router.get("/estoque", auth, async (req, res) => {
 router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   var { ean, nomeproduto, descricao, qnt, valor, categoria, valorpix, valorprazo } = req.body;
   var foto = req.file;
+  var now = moment().format()
 
   if (foto != undefined) {
     foto = foto.path.replace("public", "");
@@ -149,7 +150,7 @@ router.post("/add-product", auth, upload.single("foto"), async (req, res) => {
   } else {
     await knex
       .raw(
-        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto.toUpperCase()}', '${descricao}', ${qnt}, '${foto}', '${categoria}', default, ${valorpix}, ${valorprazo}) `
+        `INSERT INTO estoque VALUES (${ean}, '${valor}', '${nomeproduto.toUpperCase()}', '${descricao}', ${qnt}, '${foto}', '${categoria}', default, ${valorpix}, ${valorprazo}, '${now}') `
       )
       .then(() => {
         console.log("Inserido");
