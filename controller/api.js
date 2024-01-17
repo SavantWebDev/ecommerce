@@ -510,6 +510,10 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE idcliente = '${uuid}'`)
 
     if(exist.rows[0] != undefined){
+        if(exist.rows[0]['image'] != '/src/image/default.png'){
+            var x = await fs.unlinkSync(`public/${exist.rows[0].image}`);
+            console.log(x);
+        }
         await knex.raw(`
             UPDATE tb_clientes SET username = '${username}', celular = '${telefone}', image = '${foto}' WHERE idcliente = '${uuid}'
         `).then(() => {
