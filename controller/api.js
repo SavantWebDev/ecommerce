@@ -494,6 +494,13 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     var foto = req.file
     var uuid = req.session.uuid
 
+    if(
+        username == 'undefined' || username.length == 0 || username == null || username == undefined || username == '' ||
+        telefone == 'undefined' || telefone.length == 0 || telefone == null || telefone == undefined || telefone == '' 
+    ){
+        return res.status(401).json({msg: "Informações inválidas!"})
+    }
+
     console.log('-----------------')
     console.log(foto)
     console.log(telefone)
