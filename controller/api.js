@@ -260,11 +260,15 @@ router.get(apiURL + '/categorias', async (req, res) => {
 
 router.get(apiURL + '/maisvendidos', async(req, res) => {
     await knex.raw(`
-        SELECT eanproduto, count(eanproduto) as quantidade, nomeproduto, image, e.valor, valor_pix, valor_prazo, created_data FROM tb_vendas tv
-        INNER JOIN estoque e
-        ON e.ean = tv.eanproduto
-        GROUP BY eanproduto, nomeproduto, image, e.valor, valor_pix, valor_prazo, created_data
-        ORDER BY quantidade DESC
+    SELECT eanproduto, count(eanproduto) as quantidade, nomeproduto, CASE 
+        WHEN e.image = '/src/image/imagemImagem.png'
+        THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
+        ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+        END as image, e.valor, valor_pix, valor_prazo, created_data FROM tb_vendas tv
+    INNER JOIN estoque e
+    ON e.ean = tv.eanproduto
+    GROUP BY eanproduto, nomeproduto, image, e.valor, valor_pix, valor_prazo, created_data
+    ORDER BY quantidade DESC
     `)
     .then(resp => {
         res.json(
