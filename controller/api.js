@@ -510,10 +510,11 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     console.log(uuid)
     console.log('----------------')
 
-    if (foto != undefined) {
-        foto = foto.path.replace("public", "");
+    if (foto == undefined) {
+        var sql = `UPDATE tb_clientes SET username = '${username}', celular = '${telefone}'`
       } else {
-        foto = "/src/image/default.png";
+        foto = foto.path.replace("public", "");
+        var sql = `UPDATE tb_clientes SET username = '${username}', celular = '${telefone}', image = '${foto}'`
       }
 
     var exist = await knex.raw(`SELECT * FROM tb_clientes WHERE idcliente = '${uuid}'`)
@@ -523,8 +524,9 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
             var x = await fs.unlinkSync(`public${exist.rows[0].image}`);
             console.log(x);
         }
+        
         await knex.raw(`
-            UPDATE tb_clientes SET username = '${username}', celular = '${telefone}', image = '${foto}' WHERE idcliente = '${uuid}'
+            ${sql} WHERE idcliente = '${uuid}'
         `).then(() => {
             res.status(201).json({msg: "Success"})
         })
@@ -536,5 +538,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     }
 
 })
+
+router.post()
 
 module.exports = router
