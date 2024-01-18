@@ -137,7 +137,7 @@ router.get(apiURL + '/search', async (req, res) => {
                     INNER JOIN tb_categorias tc
                     ON e.idcategoria = tc.idcategoria
                     WHERE nomeproduto LIKE '%${nomeproduto.toUpperCase()}%'
-                    OR nomecategoria LIKE '%${nomeproduto}%'
+                    OR nomecategoria LIKE '%${nomeproduto.toUpperCase()}%'
                     LIMIT ${limit} OFFSET ${pg}
     `)
         .then(response => {
@@ -538,5 +538,24 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
     }
 
 })
+
+/* router.post('/edit/pass', auth, async(req, res) => {
+
+    var { senhaAtual, senhaNova } = req.body
+    var uuid = req.session.uuid
+
+    var exist = await knex.raw(`
+        SELECT * FROM tb_clientes WHERE idcliente = ${uuid}
+    `)
+
+    if(exist.rows[0] != undefined){
+
+
+
+    }else{
+        res.status(404).json({msg: 'Not Found!'})
+    }
+
+}) */
 
 module.exports = router

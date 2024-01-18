@@ -256,7 +256,7 @@ router.post("/edit-product", auth, upload.single("foto"), async (req, res) => {
       await knex
         .raw(
           `
-            UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}', idcategoria = ${categoria}, valor_pix = ${valorpix}, valor_prazo = ${valorprazo} WHERE id = ${id}
+            UPDATE estoque SET ean = ${ean}, nomeproduto = '${nomeproduto.toUpperCase()}', descricao = '${descricao}', qnt = ${qnt}, valor = '${valor}', image = '${foto}', idcategoria = ${categoria}, valor_pix = ${valorpix}, valor_prazo = ${valorprazo} WHERE id = ${id}
           `
         )
         .then(function () {
