@@ -276,12 +276,12 @@ router.get(apiURL + '/maisvendidos', async(req, res) => {
                 'mais_vendidos': resp.rows.map(i => (
                     {
                         'ean': i.eanproduto,
-                        'nome_produto': i.nomeproduto,
+                        'nomeproduto': i.nomeproduto,
                         'image': i.image,
                         'valor': i.valor,
                         'valor_pix': i.valor_pix,
                         'valor_prazo': i.valor_prazo,
-                        'created_data': i.created_datas
+                        'created_data': i.created_data
                     }
                 ))
             }
