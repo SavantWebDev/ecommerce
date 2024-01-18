@@ -520,7 +520,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
 
     if(exist.rows[0] != undefined){
         if(exist.rows[0]['image'] != '/src/image/default.png'){
-            var x = await fs.unlinkSync(`public/${exist.rows[0].image}`);
+            var x = await fs.unlinkSync(`public${exist.rows[0].image}`);
             console.log(x);
         }
         await knex.raw(`
