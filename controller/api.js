@@ -539,6 +539,4 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
 
 })
 
-router.post()
-
 module.exports = router
