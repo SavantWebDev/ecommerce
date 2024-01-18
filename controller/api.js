@@ -539,7 +539,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
 
 })
 
-/* router.post('/edit/pass', auth, async(req, res) => {
+router.post('/edit/pass', auth, async(req, res) => {
 
     var { senhaAtual, senhaNova } = req.body
     var uuid = req.session.uuid
@@ -550,12 +550,27 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
 
     if(exist.rows[0] != undefined){
 
+        var correct = bcrypt.compareSync(senhaAtual, exist.rows[0].pass)
 
+        if(correct){
+            var salt = bcrypt.genSaltSync(10)
+            var hash = bcrypt.hashSync(senhaNova, salt)
+            await knex.raw(`
+                UPDATE tb_clientes SET pass = '${hash}' WHERE idcliente = '${uuid}'
+            `).then(() => {
+                res.json({msg: "Success"})
+            })
+            .catch(e => {
+                res.json({msg: "Error", error: e})
+            })
+        }else{
+            return res.json({msg: 'Invalid!'})
+        }
 
     }else{
         res.status(404).json({msg: 'Not Found!'})
     }
 
-}) */
+})
 
 module.exports = router
