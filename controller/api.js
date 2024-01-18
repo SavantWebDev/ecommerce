@@ -117,7 +117,16 @@ router.get(apiURL + '/search', async (req, res) => {
 
     var limit = 16
 
-    var totalpaginas = await knex.raw('SELECT CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(' + limit + ' as numeric(18, 2))) as totalpaginas FROM estoque')
+    var totalpaginas = await knex.raw(
+        `
+        SELECT tc.nomecategoria, CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(${limit} as numeric(18, 2))) as totalpaginas
+        FROM estoque e
+        INNER JOIN tb_categorias tc
+        ON e.idcategoria = tc.idcategoria
+        WHERE tc.nomecategoria = '${nomeproduto}'
+        GROUP BY tc.nomecategoria
+        `
+    )
 
     page < 1 || page == undefined ? page = 1 : page > totalpaginas.rows[0]['totalpaginas'] ? page = totalpaginas.rows[0]['totalpaginas'] : page = page
 
@@ -249,6 +258,36 @@ router.get(apiURL + '/categorias', async (req, res) => {
 
 })
 
+router.get(apiURL + '/maisvendidos', async(req, res) => {
+    await knex.raw(`
+        SELECT eanproduto, count(eanproduto) as quantidade, nomeproduto, image, e.valor, valor_pix, valor_prazo, created_data FROM tb_vendas tv
+        INNER JOIN estoque e
+        ON e.ean = tv.eanproduto
+        GROUP BY eanproduto, nomeproduto, image, e.valor, valor_pix, valor_prazo, created_data
+        ORDER BY quantidade DESC
+    `)
+    .then(resp => {
+        res.json(
+            {
+                'mais_vendidos': resp.rows.map(i => (
+                    {
+                        'ean': i.eanproduto,
+                        'nome_produto': i.nomeproduto,
+                        'image': i.image,
+                        'valor': i.valor,
+                        'valor_pix': i.valor_pix,
+                        'valor_prazo': i.valor_prazo,
+                        'created_data': i.created_datas
+                    }
+                ))
+            }
+        )
+    })
+    .catch(e => {
+        res.json({msg: 'Error', error: e})
+    })
+})
+
 router.post(apiURL + '/sell-product', async (req, res) => {
     var { product, valorTotal, cpf, form_pagamento } = req.body
 
@@ -362,7 +401,7 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                 ON e.ean = tv.eanproduto
                 INNER JOIN tb_forma_pagamentos tfp
                 ON tfp.id = tv.form_pagamento
-                WHERE tv.uuiduser = '781cb7ad-f70a-473b-918d-69c21ab2a4be'
+                WHERE tv.uuiduser = '${req.session.uuid}'
                 GROUP BY numeropedido, datavenda, tfp.nome_pagamento
                 ORDER BY datavenda DESC
                 LIMIT 5
@@ -539,7 +578,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
 
 })
 
-router.post('/edit/pass', auth, async(req, res) => {
+router.post(apiURL + '/edit/pass', auth, async(req, res) => {
 
     var { senhaAtual, senhaNova } = req.body
     var uuid = req.session.uuid
