@@ -123,8 +123,8 @@ router.get(apiURL + '/search', async (req, res) => {
         FROM estoque e
         INNER JOIN tb_categorias tc
         ON e.idcategoria = tc.idcategoria
-        WHERE e.nomeproduto LIKE '%${nomeproduto}%'
-		OR tc.nomecategoria LIKE '%${nomeproduto}%'
+        WHERE e.nomeproduto LIKE '%${nomeproduto.toUpperCase()}%'
+		OR tc.nomecategoria LIKE '%${nomeproduto.toUpperCase()}%'
         GROUP BY e.nomeproduto
         `
     )
