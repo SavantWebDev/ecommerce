@@ -119,12 +119,13 @@ router.get(apiURL + '/search', async (req, res) => {
 
     var totalpaginas = await knex.raw(
         `
-        SELECT tc.nomecategoria, CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(${limit} as numeric(18, 2))) as totalpaginas
+        SELECT e.nomeproduto, CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(16 as numeric(18, 2))) as totalpaginas
         FROM estoque e
         INNER JOIN tb_categorias tc
         ON e.idcategoria = tc.idcategoria
-        WHERE tc.nomecategoria = '${nomeproduto}'
-        GROUP BY tc.nomecategoria
+        WHERE e.nomeproduto LIKE '%${nomeproduto}%'
+		OR tc.nomecategoria LIKE '%${nomeproduto}%'
+        GROUP BY e.nomeproduto
         `
     )
 
