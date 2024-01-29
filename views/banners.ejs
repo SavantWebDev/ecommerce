@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/header.ejs') %>
-
+    <head>
+        <link rel="stylesheet" href="../public/src/css/configuracao/conficguracao.css">
+    </head>
     <body>
         <%- include('./partials/nav.ejs') %>
             <main>
                 <%- include('./partials/usermenu.ejs') %>
-
+                    <div class="conf-all">
+                        <h2 class="conf-h2">Configuração</h2>
+                        <p class="conf-al-p-1">Conforme as especificações do sistema e suas funcionalidades, concordo que o mesmo trabalhará da seguinte maneira:</p>
+                        <form action="" class="conf-al-form">
+                            <div class="conf-al-form">
+                                <label for="valorDinheiro">A partir de R$</label>
+                                <input type="number" name="valorDinheiro" id="valorDinheiro" class="conf-tam-input" placeholder="000,00">
+                                <label for="pontosChopp">o cliente receberá </label>
+                                <input type="number" name="pontosChopp" id="pontosChopp" class="conf-tam-input" placeholder="000">
+                                <label for="cashBack">mls de Chopp, e R$</label>
+                                <input type="number" name="cashBack" id="cashBack" class="conf-tam-input" placeholder="000,00">
+                                <label for=""> de Cash Back.</label>
+                            </div>
+                            <div class="conf-al-btn">
+                                <input type="button" value="Atualizar Configurações" class="conf-btn-atualizar">
+                            </div>
+                        </form>
+                    </div>
+                    <!--
                     <form action="/banners" method="post" enctype="multipart/form-data">
                         <label for="title">Título</label>
                         <input type="text" name="titulo">
@@ -18,7 +38,7 @@
                         <input type="file" name="foto">
                         <button type="submit">Enviar Banners</button>
                     </form>
-
+                    -->
             </main>
             <%- include('./partials/scripts.ejs') %>
     </body>
