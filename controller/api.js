@@ -570,7 +570,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
                 console.log(x);
             }
             catch{
-                res.status(400).msg({erroName: "Pedro Boiola",msg: 'Erro em tentar apagar a imagem no servidor.'})
+                res.status(400).json({erroName: "Pedro Boiola",msg: 'Erro em tentar apagar a imagem no servidor.'})
             }
         }
         
