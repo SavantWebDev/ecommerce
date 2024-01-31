@@ -119,13 +119,12 @@ router.get(apiURL + '/search', async (req, res) => {
 
     var totalpaginas = await knex.raw(
         `
-        SELECT e.nomeproduto, CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(16 as numeric(18, 2))) as totalpaginas
+        SELECT CEILING(CAST(COUNT(*) as numeric(18, 2)) / CAST(`+ limit +` as numeric(18, 2))) as totalpaginas
         FROM estoque e
         INNER JOIN tb_categorias tc
         ON e.idcategoria = tc.idcategoria
         WHERE e.nomeproduto LIKE '%${nomeproduto.toUpperCase()}%'
 		OR tc.nomecategoria LIKE '%${nomeproduto.toUpperCase()}%'
-        GROUP BY e.nomeproduto
         `
     )
 
@@ -570,7 +569,7 @@ router.post(apiURL + '/edit', auth, upload.single('foto'), async (req, res) => {
                 console.log(x);
             }
             catch{
-                res.status(400).json({erroName: "Pedro Boiola",msg: 'Erro em tentar apagar a imagem no servidor.'})
+                res.status(400).json({erroName: "100325 - API Error",msg: 'Erro em tentar apagar a imagem no servidor.'})
             }
         }
         
