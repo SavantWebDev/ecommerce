@@ -31,6 +31,7 @@ export default function CadastroAuth() {
   const [idade, setIdade] = useState("");
   const [Cpf, setCpf] = useState("");
   const [notificacoes, setNotificacoes] = useState("");
+  const [privacidade, setPrivacidade] = useState("");
   const [numero, setNumero] = useState("");
   const [isNomeValid, setIsNomeValid] = useState();
   const [isEmailValid, setIsEmailValid] = useState();
@@ -39,6 +40,7 @@ export default function CadastroAuth() {
   const [isCpfValid, setIsCpfValid] = useState();
   const [isNotificacoesValid, setIsNotificacoesValid] = useState();
   const [isNumeroValid, setIsNumeroValid] = useState();
+  const [isPrivacidade, setIsPrivacidade] = useState();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,7 +53,7 @@ export default function CadastroAuth() {
       !isSenhaValid ||
       !isIdadeValid ||
       !isCpfValid ||
-      !isNotificacoesValid
+      !isPrivacidade
     ) {
       console.log("campos invalidos");
       console.log(isNomeValid);
@@ -59,6 +61,7 @@ export default function CadastroAuth() {
       console.log(isSenhaValid);
       console.log(isIdadeValid);
       console.log(isCpfValid);
+      console.log(isPrivacidade);
       console.log(isNotificacoesValid);
       return;
     } else {
@@ -68,8 +71,9 @@ export default function CadastroAuth() {
       console.log("idade:" + idade);
       console.log("Cpf :" + Cpf);
       console.log("notificacoes:" + notificacoes);
+      console.log("privacidade:" + privacidade);
       console.log("numero:" + numero);
-      cadastro(nome, email, senha, idade, Cpf, notificacoes, numero);
+      cadastro(nome, email, senha, idade, Cpf, notificacoes, numero, privacidade);
     }
   };
 
@@ -129,6 +133,12 @@ export default function CadastroAuth() {
     const valor = event.target.checked;
     setNotificacoes(valor);
     setIsNotificacoesValid(valor);
+  }
+
+  function inputPrivacidade(event) {
+    const valor = event.target.checked;
+    setPrivacidade(valor);
+    setIsPrivacidade(valor);
   }
 
   function inputNumero(event) {
@@ -381,6 +391,10 @@ export default function CadastroAuth() {
                 <input
                   className="w-[19px] h-[19px] border border-[#000] rounded-[4px]"
                   type="checkbox"
+                  onClick={(evento) => {
+                    inputPrivacidade(evento);
+                    console.log(evento.target.checked);
+                  }}
                 />
                 <p className="text-[14px] text-left">
                   Aceitar

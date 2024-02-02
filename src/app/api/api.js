@@ -77,7 +77,7 @@ export const checkToken = async () => {
 };
 
 export const cadastro = async (nome ,email, senha, idade, cpf, notificacoes, numero) => {
-  const response = await fetch("http://45.188.156.17:5464/v1/api/cadastrar", {
+  const response = await fetch("https://api-n56x.onrender.com/v1/api/cadastrar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

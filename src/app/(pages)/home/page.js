@@ -1,4 +1,4 @@
-
+"use client"
 
 
 import Cards from "../../Components/CardsProdutos";
@@ -12,10 +12,11 @@ import CarrosselKitsChurrasco from "../../Components/CarrosselKitsChurrasco";
 import CarrosselKitsBebidas from "../../Components/CarrosselKitsBebidas";
 import CardCategorias from "../../Components/cardCategorias";
 import CategoriasHome from "../../Components/CardCategoriasHome";
+import ModalCard from "../../Components/Modal/ModalCard";
 
 export default function HomePage() {
   return (
-    <>
+    <main className="w-full h-full xl:max-w-[1416px] 3xl:max-w-[1516px]  xl:mx-auto max-2xl:px-5 ">
       {/* section categorias */}
       <section className="max-w-[1516px] mx-auto mt-10 mb-[60px] flex flex-col justify-center items-center">
         <Image
@@ -231,7 +232,8 @@ export default function HomePage() {
             corPadrao="bg-[rgba(0,_0,_0,_0.78)] group-hover:bg-[#080B12]"
           />
         </div>
+        <ModalCard/>
       </section>
-    </>
+    </main>
   );
 }

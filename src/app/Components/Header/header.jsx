@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { IoMenu } from "react-icons/io5";
@@ -31,7 +31,9 @@ import BarraCarrinho from "../carrinho/carrinho";
 import { usePathname } from "next/navigation";
 import { IoChevronBack } from "react-icons/io5";
 import { Cairo } from "next/font/google";
+import { CarrinhoContext } from "../context/CarrinhoContext";
 export default function Header({ props }) {
+  const {carrinhoLocalStorage,usuarioLogado, carrinhoApi} = useContext(CarrinhoContext)
   const [pesquisaInput, setPesquisaInput] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuNavigation, setIsMenuNavigation] = useState(false);
@@ -80,7 +82,8 @@ export default function Header({ props }) {
       console.log("result aqui", result);
     }
     fetchData();
-  }, []);
+  }, [checkToken
+  ]);
   console.log(checkToken);
   console.log("nav aqui:");
   console.log(nav);
@@ -207,7 +210,7 @@ export default function Header({ props }) {
                 />
                 <div className="absolute w-[13px] h-[14px] top-0 right-0 bg-[#fff] fill-[#fff] drop-shadow-lg flex items-center justify-center rounded-full">
                   <span className="text-primaria text-[12px] font-semibold">
-                    1
+                  {`${usuarioLogado ? (carrinhoApi.length === undefined || carrinhoApi.length === 0 ? "0" : carrinhoApi.length) : carrinhoLocalStorage.length}`}
                   </span>
                 </div>
               </div>
@@ -330,7 +333,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/fidelidade"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
                 >
                   <IoSnow size={24} />

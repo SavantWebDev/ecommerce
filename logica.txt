@@ -14,96 +14,51 @@ export const CarrinhoProvider = ({ children }) => {
 
   const [carrinhoApi, setCarrinhoApi] = useState([]);
   const [usuarioLogado, setUsuarioLogado] = useState();
-  const [timerBtn, setTimerBtn] = useState(null);
-  const [totalCarrinho, setTotalCarrinho] = useState();
-  const [SubTotalCarrinho, setSubTotalCarrinho] = useState();
+  const [timerBtn,setTimerBtn] = useState(null)
 
   useEffect(() => {
     return () => {
-      if (timerBtn) {
-        clearTimeout(timerBtn);
-      }
+        if (timerBtn) {
+            clearTimeout(timerBtn);
+        }
     };
-  }, [timerBtn]);
+ }, [timerBtn]);
 
-  let quantidadeprodutoAdd = {};
-  let clickContador = {};
-  let timers = {};
 
-  const iniciaContador = (ean, quantidade) => {
-    if (!clickContador[ean]) {
-      clickContador[ean] = 0;
-    }
-
-    if (timers[ean]) {
-      clearTimeout(timers[ean]);
-    }
-
-    quantidadeprodutoAdd[ean] = quantidade + 1;
-    clickContador[ean]++;
-
-    const productData = {
-      eanproduto: ean,
-      qnt: quantidadeprodutoAdd[ean],
-    };
-
-    const atualizaCarrinho = (eanproduto, novaQuantidade) => {
-      setCarrinhoApi(
-        carrinhoApi.map((produto) =>
-          produto.eanproduto === eanproduto
-            ? { ...produto, qnt: novaQuantidade }
-            : produto
-        )
-      );
-    };
-
-    atualizaCarrinho(productData.eanproduto, productData.qnt);
-
-    timers[ean] = setTimeout(() => {
-      enviaProdutoLogado({ eanproduto: ean, qnt: clickContador[ean] });
-      clickContador[ean] = 0;
-    }, 5000); // Debounce de 5 segundos
-  };
-
-  //====================================
-  let quantidadeprodutoDel = {};
-  let clickContadorDel = {};
-  let timersDel = {};
-
-  const iniciaContadorDel = (ean, quantidade) => {
-    if (!clickContadorDel[ean]) {
-      clickContadorDel[ean] = 0;
-    }
-
-    if (timersDel[ean]) {
-      clearTimeout(timersDel[ean]);
-    }
-
-    quantidadeprodutoDel[ean] = quantidade + 1;
-    clickContadorDel[ean]++;
-
-    const productData = {
-      eanproduto: ean,
-      qnt: quantidadeprodutoDel[ean],
-    };
-
-    const atualizaCarrinho = (eanproduto) => {
-      setCarrinhoApi(
-        carrinhoApi.map((produto) =>
-          produto.eanproduto === eanproduto
-            ? { ...produto, qnt: produto.qnt - 1 }
-            : produto
-        )
-      );
-    };
-
-    atualizaCarrinho(productData.eanproduto);
-
-    timers[ean] = setTimeout(() => {
-      enviaProdutoLogado({ eanproduto: ean, qnt: -clickContadorDel[ean] });
-      clickContadorDel[ean] = 0;
-    }, 5000); // Debounce de 5 segundos
-  };
+ let quantidadeprodutoAdd = {};
+ let clickContador = {};
+ let timers = {};
+ 
+ const iniciaContador = (ean, quantidade) => {
+   if (!clickContador[ean]) {
+     clickContador[ean] = 0;
+   }
+ 
+   if (timers[ean]) {
+     clearTimeout(timers[ean]);
+   }
+ 
+   quantidadeprodutoAdd[ean] = quantidade + 1;
+   clickContador[ean]++;
+ 
+   const productData = {
+     eanproduto: ean,
+     qnt: quantidadeprodutoAdd[ean]
+   };
+ 
+   const atualizaCarrinho = (eanproduto, novaQuantidade) => {
+     setCarrinhoApi(carrinhoApi.map(produto => 
+       produto.eanproduto === eanproduto ? {...produto, qnt: novaQuantidade} : produto
+     ));
+   };
+ 
+   atualizaCarrinho(productData.eanproduto, productData.qnt);
+ 
+   timers[ean] = setTimeout(() => {
+     enviaProdutoLogado({eanproduto: ean, qnt: clickContador[ean]});
+     clickContador[ean] = 0;
+   }, 5000); // Debounce de 5 segundos
+ };
 
   // useEffect(() => {
   //   setUsuarioLogado(verificaLogin());
@@ -244,10 +199,8 @@ export const CarrinhoProvider = ({ children }) => {
         nomeproduto: produtoNovo.nomeproduto,
         image: produtoNovo.image,
         valor: produtoNovo.valor,
-        pix: produtoNovo.valor_pix,
         variacao: variacao,
       });
-      console.log(produtoadd)
     }
 
     setCarrinhoLocalStorage(produtoadd);
@@ -280,7 +233,6 @@ export const CarrinhoProvider = ({ children }) => {
 
   useEffect(() => {
     salvarCarrinhoLocalStorage(carrinhoLocalStorage);
-    calculaValor();
   }, [carrinhoLocalStorage]);
 
   function salvarCarrinhoLocalStorage(carrinho) {
@@ -323,12 +275,14 @@ export const CarrinhoProvider = ({ children }) => {
       })
     );
 
-    if (usuarioLogado) {
+    if(usuarioLogado) {
       // console.log("EAN USUARIO LOGADO",ean)
       // console.log("QUANTIDADE USUARIO LOGADO",quantidade)
-      iniciaContador(ean, quantidade);
+      iniciaContador(ean,quantidade);
     }
   }
+
+  
 
   function removeQtdCarrinho(ean, quantidade) {
     setCarrinhoLocalStorage(
@@ -342,9 +296,6 @@ export const CarrinhoProvider = ({ children }) => {
         return item;
       })
     );
-    if (usuarioLogado) {
-      iniciaContadorDel(ean, quantidade);
-    }
   }
 
   const [carrinhoApiLS, setCarrinhoApiLs] = useState([]);
@@ -363,11 +314,10 @@ export const CarrinhoProvider = ({ children }) => {
         qnt: quantidade,
         nomeproduto: produtoNovo.nomeproduto,
         image: produtoNovo.image,
-        pix: produtoNovo.valor_pix,
         valor: produtoNovo.valor,
         variacao: variacao,
       };
-
+ 
       setCarrinhoApi([...carrinhoApi, novoItem]);
       enviaProdutoLogado(novoItem);
     } else {
@@ -375,21 +325,15 @@ export const CarrinhoProvider = ({ children }) => {
       const itemAtualizado = {
         ...verificaItem,
         // qnt: verificaItem.qnt + quantidade
-        qnt: verificaItem.qnt + quantidade - quantidadeAnterior,
-      };
+        qnt: (verificaItem.qnt + quantidade)- quantidadeAnterior
+      }
       const itemAtualizadoCarrinho = {
         ...verificaItem,
-        qnt: verificaItem.qnt + quantidade,
+        qnt: verificaItem.qnt + quantidade
         // qnt: (verificaItem.qnt + quantidade)- quantidadeAnterior
-      };
+      }
 
-      setCarrinhoApi(
-        carrinhoApi.map((produto) =>
-          produto.eanproduto === produtoNovo.ean
-            ? itemAtualizadoCarrinho
-            : produto
-        )
-      );
+      setCarrinhoApi(carrinhoApi.map(produto => produto.eanproduto === produtoNovo.ean ? itemAtualizadoCarrinho : produto));
       enviaProdutoLogado(itemAtualizado);
     }
   }
@@ -405,7 +349,6 @@ export const CarrinhoProvider = ({ children }) => {
   // }, [carrinhoApi]);
 
   console.log("Estado do Login:", usuarioLogado);
-  // console.log("Estado Carrinho:", carrinhoApi);
   //envia carrinho para api
   function enviarCarrinhoDeslogadoParaApi() {
     console.log(carrinhoLocalStorage.length);
@@ -421,58 +364,6 @@ export const CarrinhoProvider = ({ children }) => {
     enviarCarrinhoDeslogadoParaApi();
   }, [usuarioLogado]);
 
-  useEffect(() => {
-    calculaValor();
-  }, [carrinhoApi]);
-
-  function calculaValor() {
-    // console.log("Carrinho Produtos", carrinhoApi);
-    if (usuarioLogado) {
-      let total = 0;
-      let subtotal = 0;
-      for (let i = 0; i < carrinhoApi.length; i++) {
-        // const valor = converterNumero(carrinhoApi[i].pix);
-        const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
-        const quantidade = carrinhoApi[i].qnt;
-
-        const subResultado = ValorSubtotal * quantidade;
-        // const resultado = valor * quantidade;
-
-        subtotal = subtotal + subResultado
-        // total = total + resultado;
-        // console.log(total.toFixed(2));
-      }
-      // console.log("Valor Total:", total.toFixed(2));
-      setSubTotalCarrinho(subtotal.toFixed(2));
-      // setTotalCarrinho(total.toFixed(2));
-    } else {
-      let total = 0;
-      let subtotal = 0;
-      for (let i = 0; i < carrinhoLocalStorage.length; i++) {
-        if (carrinhoLocalStorage[i] && carrinhoLocalStorage[i].pix) {
-          const valor = converterNumero(carrinhoLocalStorage[i].pix);
-          const ValorSubtotal = converterNumero(carrinhoLocalStorage[i].valor);
-          const quantidade = carrinhoLocalStorage[i].qnt;
-
-          const resultado = valor * quantidade;
-          const subResultado = ValorSubtotal * quantidade;
-
-          total = total + resultado;
-          subtotal = subtotal + subResultado
-        }
-      }
-      // console.log("Valor Total:", subtotal.toFixed(2));
-      setTotalCarrinho(total.toFixed(2));
-      setSubTotalCarrinho(subtotal.toFixed(2));
-    }
-  }
-
-  function converterNumero(num) {
-    return parseFloat(num.replace(",", "."));
-  }
-
-  // calculaValor()
-
   return (
     <CarrinhoContext.Provider
       value={{
@@ -483,8 +374,6 @@ export const CarrinhoProvider = ({ children }) => {
         adicionarProdutoLocalStorage,
         adicionarProdutoApi,
         setCarrinhoApi,
-        totalCarrinho,
-        SubTotalCarrinho,
         // exibirCarrinhoLocalStorage,
         removerProduto,
         addQtdCarrinho,
@@ -499,3 +388,113 @@ export const CarrinhoProvider = ({ children }) => {
     </CarrinhoContext.Provider>
   );
 };
+
+==========================================================================================================
+"use client"
+import React, { useContext } from 'react'
+import ProductRow from '../ProductRow'
+import { CarrinhoContext } from '../context/CarrinhoContext'
+
+const TabelaProdutos = () => {
+    const { carrinhoApi} = useContext(CarrinhoContext)
+    console.log("carrinho page",carrinhoApi)
+
+  return (
+    <table>
+     <thead>
+       <tr className='uppercase tracking-[.05rem] leading-[1.05px] text-left font-bold'>
+         <th className='p-[0.5rem] w-[50%]'>Produtos</th>
+         <th className='p-[0.5rem] w-[20%]'>Quantidade</th>
+         <th className='p-[0.5rem] w-[15%]'>Preço</th>
+         <th className='text-right p-[0.5rem] w-[15%]'>Subtotal</th>
+       </tr>
+     </thead>
+     <tbody>
+     {carrinhoApi.map((produto) => (
+         <ProductRow key={produto.eanproduto} produto={produto} />
+       ))}
+     </tbody>
+   </table>
+  )
+}
+
+export default TabelaProdutos
+
+============
+import Image from "next/image";
+import React, { useContext, useEffect, useState } from "react";
+import { CarrinhoContext } from "../context/CarrinhoContext";
+
+const ProductRow = ({ produto }) => {
+  const { carrinhoApi,removeQtdCarrinho, addQtdCarrinho } = useContext(CarrinhoContext);
+  const [subtotal, setsubtotal] = useState(0);
+  function calculaSubTotal() {
+    const qnt = produto.qnt;
+    const valor = converterNumero(produto.valor);
+    let total = valor * qnt;
+    return setsubtotal(total.toFixed(2));
+  }
+  function converterNumero(num) {
+    return parseFloat(num.replace(",", "."));
+  }
+
+  useEffect(() => {
+    calculaSubTotal();
+  }, [carrinhoApi]);
+  return (
+    // <h1>r</h1>
+    <tr>
+      <td className='text-left p-[0.5rem] w-[50%] flex items-center justify-between gap-3'>
+        <Image
+          //  src={image?.replace("/", "")}
+          src="/images/produtos/image 73.png"
+          width={150}
+          height={150}
+          alt={produto.nomeproduto}
+        />
+      <td>{produto.nomeproduto}</td>
+      </td>
+      <td className="text-left p-[0.5rem] w-[20%]">
+        <div className="flex items-center gap-3">
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl flex items-center justify-center bg-cinza text-neutral-dark p-1 rounded-full"
+            onClick={(e) => removeQtdCarrinho(produto.eanproduto, produto.qnt)}
+          >
+            -
+          </button>
+          <span className="font-bold">{produto.qnt}</span>
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl  flex items-center justify-center bg-primaria text-neutral-dark p-1 rounded-full"
+            onClick={(e) => addQtdCarrinho(produto.eanproduto, produto.qnt, e)}
+          >
+            +
+          </button>
+        </div>
+      </td>
+      <td className="text-left p-[0.5rem] w-[15%]">R${" "}{produto.valor}</td>
+      <td className="text-center p-[0.5rem] w-[15%]">R${" "}{subtotal}</td>
+    </tr>
+  );
+};
+
+export default ProductRow;
+
+loading ? <section className="mt-[30px] max-w-[1416px] w-full h-[862.4px] mx-auto pl-5 pr-5 lg:mt-10"></section>
+
+<>
+        <section className="mt-[30px] max-w-[1376px] w-full h-[411.1px]  lg:mt-10 flex gap-[75px] xl:gap-[20px] lg:gap-[10px]">
+          {skeletonCard.map((card, i) => (
+            <div className="" key={i}>
+              {card}
+            </div>
+          ))}
+        </section>
+        <section className="mt-[30px] max-w-[1376px] w-full h-[411.1px]  lg:mt-10 flex gap-[75px]">
+          {skeletonCard.map((card, i) => (
+            <div className="" key={i}>
+              {card}
+            </div>
+          ))}
+        </section>  
+         </> 
+w-full h-full xl:max-w-[1416px] 3xl:max-w-[1516px]  xl:mx-auto max-2xl:px-5 

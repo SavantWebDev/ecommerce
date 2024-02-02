@@ -57,6 +57,7 @@ module.exports = {
       'cinza-medio-c': '##D9D9D9',
       'cinza-medio-f': '#909090',
       'cinza-medio-g': '##ECECEC',
+      'cinza-skeleton': 'rgb(209 213 219)',
       'cinza-escuro': '#696868',
       "amarelo-mostarda": "#584808",
       'amarelo-claro': '#FC0',
@@ -70,6 +71,8 @@ module.exports = {
       'branco-medio-m': '#D6D6D6',
       verde: "#009B48",
       'verde-medio': '#33BB89',
+      'verde-escuto': '#339500',
+      'roxo': '#57009B',
     },
     extend: {
       fontFamily: {
@@ -79,6 +82,7 @@ module.exports = {
         login: "url('/images/login.svg')",
         teste: "url('/images/Banner-Categoria.jpg')",
         banner: "url('/images/Banner-categoria.svg')",
+        fidelidade: "url('/images/Banner-fidelidade.jpg')",
       },
       height: {
         screendv: "100dvh",

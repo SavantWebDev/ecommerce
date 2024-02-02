@@ -6,6 +6,7 @@ import { cn } from "@nextui-org/react";
 
 export default function Pagi() {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPaginas, settotalPaginas] = React.useState(null);
 
   const renderItem = ({
     ref,
@@ -16,7 +17,10 @@ export default function Pagi() {
     onPrevious,
     setPage,
     className,
+    totalPaginas,
   }) => {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAA",totalPaginas)
+    settotalPaginas(totalPaginas)
     if (value === PaginationItemType.NEXT) {
         if (currentPage === 10) {
             return null; // Hide PREV on the first page
@@ -59,18 +63,20 @@ export default function Pagi() {
       </button>
     );
   };
+  console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD",totalPaginas)
 
   return (
     <Pagination
       disableCursorAnimation
       showControls
-      total={10}
+      total={totalPaginas}
       initialPage={1}
       className="gap-2"
       radius="full"
       renderItem={renderItem}
       variant="light"
       onChange={(e) => {console.log(e)}}
+      
     />
   );
 }

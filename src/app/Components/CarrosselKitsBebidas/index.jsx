@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Cards from "../CardsProdutos";
 import { getProductHome } from "../../api/apiEcommerce";
+import "./CarrosselKitBebidas.css"
 
 
 export default function CarrosselKitsBebidas() {
@@ -73,6 +74,10 @@ export default function CarrosselKitsBebidas() {
                   slidesPerView: 4,
                   spaceBetween: 75,
                 },
+                1920: {
+                  slidesPerView: 4,
+                  spaceBetween: 68,
+                },
               }}
               keyboard
               spaceBetween={20}
@@ -99,8 +104,8 @@ export default function CarrosselKitsBebidas() {
                     // promoQtd="Compre 3 leve 1"
                     // promoNovo="Novo"
                     // promoValor="R$ 55,00 a partir de 6 un."
-                    a="R$ 50,00"
-                    valor="R$ 50,00"
+                    a="50,00"
+                    valor="50,00"
                     parcelas="até 4x sem juros"
                   />
                 </SwiperSlide>

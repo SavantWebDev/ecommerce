@@ -4,14 +4,14 @@ const nextConfig = {
   //     domains: ['https://api-n56x.onrender.com'],
   remotePatterns: [
     {
-      protocol: 'https',
-      hostname: 'api-n56x.onrender.com',
+      protocol: 'http',
+      hostname: '20.197.251.208',
       port: '',
       pathname: '/uploads/**',
     },
     {
-      protocol: 'https',
-      hostname: 'api-n56x.onrender.com',
+      protocol: 'http',
+      hostname: '20.197.251.208',
       port: '',
       pathname: '/src/image/**',
     },
