@@ -50,7 +50,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
             <RiShoppingBagFill size={30} className="text-primaria" />
             <h3 className="text-lg">{`Você adicionou ${
               usuarioLogado
-                ? carrinhoApi.length === undefined || carrinhoApi.length === 0
+                ? carrinhoApi && carrinhoApi.length === undefined || carrinhoApi.length === 0
                   ? "0"
                   : carrinhoApi.length
                 : carrinhoLocalStorage.length

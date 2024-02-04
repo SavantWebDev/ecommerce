@@ -211,6 +211,7 @@ export default function Header({ props }) {
                 <div className="absolute w-[13px] h-[14px] top-0 right-0 bg-[#fff] fill-[#fff] drop-shadow-lg flex items-center justify-center rounded-full">
                   <span className="text-primaria text-[12px] font-semibold">
                   {`${usuarioLogado ? (carrinhoApi.length === undefined || carrinhoApi.length === 0 ? "0" : carrinhoApi.length) : carrinhoLocalStorage.length}`}
+                  {/* {`${usuarioLogado ? (carrinhoApi && carrinhoApi.length !== undefined ? carrinhoApi.length : 0) : carrinhoLocalStorage.length}`} */}
                   </span>
                 </div>
               </div>

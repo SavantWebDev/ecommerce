@@ -1,6 +1,6 @@
 // api.js
 export const login = async (email, senha) => {
-  const response = await fetch("https://api-n56x.onrender.com/v1/api/login", {
+  const response = await fetch("http://20.197.251.208/v1/api/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const loginVerify = async (token) => {
   console.log("=============");
   console.log(token);
   console.log("loginverify");
-  const res = await fetch("https://api-n56x.onrender.com/v1/api/usuario", {
+  const res = await fetch("http://20.197.251.208/v1/api/usuario", {
     cache: 'no-store',
     method: "GET",
     headers: {
@@ -53,7 +53,7 @@ export const loginVerify = async (token) => {
 export const checkToken = async () => {
   var token = localStorage.getItem("token");
   // var token2 = "eyJhbciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM";
-  if (token === null || "" || undefined) {
+  if (token === null ||token === "" || undefined) {
     return false;
   } else {
     try {
@@ -61,8 +61,11 @@ export const checkToken = async () => {
       console.log('pega token')
       console.log(pegaToken);
       const username = pegaToken.username;
-      if (pegaToken.msg == "Token Inválido" || pegaToken.msg == "Acesso Negado") {
+      if (pegaToken.msg == "Token Inválido!" || pegaToken.msg == "Acesso Negado") {
         console.log("invalido====");
+        console.log("Removendo token inválido do localStorage");
+        window.location.reload();
+        localStorage.removeItem("token")
         return false;
       } else {
         console.log('pegatoken aqui:' ,pegaToken)
@@ -77,7 +80,7 @@ export const checkToken = async () => {
 };
 
 export const cadastro = async (nome ,email, senha, idade, cpf, notificacoes, numero) => {
-  const response = await fetch("https://api-n56x.onrender.com/v1/api/cadastrar", {
+  const response = await fetch("http://20.197.251.208/v1/api/cadastrar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import useTimer from "../../Hooks/useTimer";
 
 const CardFidelidade = ({ imagem, promoValor, promoQtd,nome,pontos }) => {
   const [dia, hora, minuto, segundos] = useTimer(promoValor)
+  
   return (
     <div className="flex flex-col py-[1rem] max-w-[306px] 3xl:w-[306px] mx-auto w-full justify-center items-center relative lg:mx-auto mb:max-mn:mx-auto">
       <div className=" w-full relative h-[255px] rounded-[10px] bg-[#F4F4F4] flex justify-center items-center">
@@ -30,7 +31,7 @@ const CardFidelidade = ({ imagem, promoValor, promoQtd,nome,pontos }) => {
             className="bg-verde-escuto  absolute top-[216px] inline-flex justify-center items-center  w-full py-[10px] text-branco font-bold 
                 rounded-b-xl leading-[normal]"
           >
-            Acaba em : {dia}d {hora}:{minuto}:{segundos} 
+            Acaba em : {dia < 10 ? String(dia).padStart(2, '0'): dia}d {hora < 10 ? String(hora).padStart(2, "0"): hora}:{minuto < 10 ? String(minuto).padStart(2 , '0'): minuto}:{segundos < 10 ? String(segundos).padStart(2, '0') : segundos} 
           </div>
         )}
         <div className="w-full max-w-[198px]  h-[186px] text-center flex flex-col items-center justify-center rounded-[10px]">
