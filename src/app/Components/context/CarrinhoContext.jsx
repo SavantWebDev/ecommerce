@@ -283,7 +283,6 @@ export const CarrinhoProvider = ({ children }) => {
 
   useEffect(() => {
     salvarCarrinhoLocalStorage(carrinhoLocalStorage);
-    calculaValor();
   }, [carrinhoLocalStorage]);
 
   function salvarCarrinhoLocalStorage(carrinho) {
@@ -434,10 +433,8 @@ export const CarrinhoProvider = ({ children }) => {
           // const valor = converterNumero(carrinhoApi[i].pix);
           const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
           const quantidade = carrinhoApi[i].qnt;
-
           const subResultado = ValorSubtotal * quantidade;
           // const resultado = valor * quantidade;
-
           subtotal = subtotal + subResultado;
           // total = total + resultado;
           // console.log(total.toFixed(2));
@@ -455,10 +452,8 @@ export const CarrinhoProvider = ({ children }) => {
               carrinhoLocalStorage[i].valor
             );
             const quantidade = carrinhoLocalStorage[i].qnt;
-
             const resultado = valor * quantidade;
             const subResultado = ValorSubtotal * quantidade;
-
             total = total + resultado;
             subtotal = subtotal + subResultado;
           }
