@@ -2,6 +2,7 @@
 
 var contadorCards = 0;
 var totalPreco = 0;
+var cards = {};//
 
 function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois adiciono quantidade
   //var codigo = document.getElementById("codigo").value;
@@ -11,40 +12,22 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
     alert("Por favor, insira um código válido.");
     return;
   }
+  var precoU = parseFloat(String(preco).replace(",", "."));
+  var quantidadeT = parseFloat(quantidade);
+  var ValorTotalCard = precoU * quantidadeT;
+  totalPreco += ValorTotalCard;
 
-  contadorCards++;
-
-  if (!isLocalStorageData) {
-    var precoU = parseFloat(String(preco).replace(",", "."))
-    var quantidadeT = parseFloat(quantidade)
-    //var ValorTotalCard = ValorTotalCard
-    var ValorTotalCard = precoU * quantidadeT
-    totalPreco = totalPreco + ValorTotalCard
-
-    //------------------------------
+  if (cards[ean]) {
+    // Se o card com o mesmo código já existe, atualiza as informações
+    var cardExistente = cards[ean];
+    cardExistente.quantidade += quantidadeT;
+    cardExistente.valorTotal += ValorTotalCard;
+    cardExistente.elemento.querySelector("#quantidadeE").textContent = "Quantidade: " + cardExistente.quantidade;
+    cardExistente.elemento.querySelector("#precoE").textContent = "Valor Total: R$" + cardExistente.valorTotal.toFixed(2);
+  } else {
+    // Se o card com o mesmo código não existe, cria um novo card
+    contadorCards++;
     var novoCard = document.createElement("div");
-    novoCard.id = "card" + contadorCards;
-    novoCard.innerHTML =
-      "<div class='produto-single-store'>" +
-      "<br>" +
-      "<span id='nomeE' class='nome-produto-compra' >" + nome + "</span>" +
-      "<span id='codigoE'>Código: " + ean + "</span>" +
-      "<div class='dados-compra-single'>" +
-      "<span id='quantidadeE'>Quantidade: " + quantidade + "</span>" +
-      "<span id='precoE'>Valor Total: R$" + ValorTotalCard + "</span>" + // Aqui multiplico o preço pela quantidade
-      "<div class='btn-comp-al'>" +
-      "<button class='btn-excluir' onclick='excluirCard(" + contadorCards + ")'><span class='material-symbols-outlined'>delete</span></button>" +
-      "</div>" +
-      "</div>" +
-      "</div>";
-
-    document.getElementById("cardsContainer").appendChild(novoCard);
-    atualizarTotal();
-  }
-  else {
-    var ValorTotalCard = parseFloat(String(preco).replace(",", "."));
-    var novoCard = document.createElement("div");
-    totalPreco = totalPreco + ValorTotalCard
     novoCard.id = "card" + contadorCards;
     novoCard.innerHTML =
       "<div class='produto-single-store'>" +
@@ -61,15 +44,24 @@ function gerarCard(nome, ean, preco, quantidade, isLocalStorageData) { // depois
       "</div>";
 
     document.getElementById("cardsContainer").appendChild(novoCard);
-    atualizarTotal();
+    cards[ean] = { quantidade: quantidadeT, valorTotal: ValorTotalCard, elemento: novoCard };
   }
-  //
-  var primeiroFila = document.getElementById("cardsContainer").firstChild;
-  document.getElementById("cardsContainer").insertBefore(novoCard, primeiroFila);
+
   atualizarTotal();
   document.getElementById("codigo").value = "";
-  salvarCardsNoLocalStorage();
+  if (!isLocalStorageData) {
+    salvarCardsNoLocalStorage();
+    atualizarTotal()
+  }
 
+}
+
+function limparCards() {
+  // Limpar os cards existentes
+  document.getElementById("cardsContainer").innerHTML = "";
+  totalPreco = 0;
+  cards = {};
+  atualizarTotal();
 }
 
 function atualizarTotal() {
@@ -346,11 +338,11 @@ function emitirNota() {
 
       const formaPagSel = document.getElementById('formpagmt')
       dados.form_pagamento = formaPagSel.value
-      console.log('A forma de pagamento: ',dados.form_pagamento)
+      console.log('A forma de pagamento: ', dados.form_pagamento)
       //delete dados.id
       //console.log(`dados: ${dados}`)
       //const linkAPI = 'http://localhost:5001' // Caminho inverso do retorno de informações ao vender o produto // executar serverT
-      const linkAPI = 'https://api-n56x.onrender.com/v1/api'
+      const linkAPI = 'http://20.197.251.208/v1/api'
       console.log('Dados' + JSON.stringify(dados))
       const configOp = {
         method: 'POST',
@@ -382,6 +374,7 @@ function emitirNota() {
       console.log('Deu erro nos dados, eles não tão no localstorage')
     }
     fecharModalfinalizar()
+    limparCards()
     cancelarCompra(true)
   } catch (error) {
     console.log(`Erro no envio ao servidor: ${error}`)
