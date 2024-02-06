@@ -1,0 +1,500 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { createContext } from "react";
+import { delProdutoLogado, enviaProdutoLogado } from "../../api/apiEcommerce";
+import { cadastro, checkToken } from "../../api/api";
+
+export const CarrinhoContext = createContext();
+
+export const CarrinhoProvider = ({ children }) => {
+  const [carrinhoLocalStorage, setCarrinhoLocalStorage] = useState(() => {
+    const carrinhoSalvo = localStorage.getItem("carrinho");
+    return carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
+  });
+
+  const [carrinhoApi, setCarrinhoApi] = useState([]);
+  const [usuarioLogado, setUsuarioLogado] = useState();
+  const [timerBtn,setTimerBtn] = useState(null)
+
+  useEffect(() => {
+    return () => {
+        if (timerBtn) {
+            clearTimeout(timerBtn);
+        }
+    };
+ }, [timerBtn]);
+
+
+ let quantidadeprodutoAdd = {};
+ let clickContador = {};
+ let timers = {};
+ 
+ const iniciaContador = (ean, quantidade) => {
+   if (!clickContador[ean]) {
+     clickContador[ean] = 0;
+   }
+ 
+   if (timers[ean]) {
+     clearTimeout(timers[ean]);
+   }
+ 
+   quantidadeprodutoAdd[ean] = quantidade + 1;
+   clickContador[ean]++;
+ 
+   const productData = {
+     eanproduto: ean,
+     qnt: quantidadeprodutoAdd[ean]
+   };
+ 
+   const atualizaCarrinho = (eanproduto, novaQuantidade) => {
+     setCarrinhoApi(carrinhoApi.map(produto => 
+       produto.eanproduto === eanproduto ? {...produto, qnt: novaQuantidade} : produto
+     ));
+   };
+ 
+   atualizaCarrinho(productData.eanproduto, productData.qnt);
+ 
+   timers[ean] = setTimeout(() => {
+     enviaProdutoLogado({eanproduto: ean, qnt: clickContador[ean]});
+     clickContador[ean] = 0;
+   }, 5000); // Debounce de 5 segundos
+ };
+
+  // useEffect(() => {
+  //   setUsuarioLogado(verificaLogin());
+  // }, []);
+
+  useEffect(() => {
+    async function buscaCarrinhoUsuario() {
+      const token = localStorage.getItem("token");
+      console.log("ADSADASDADASDASDADADAd");
+      const resultado = await checkToken();
+      if (token) {
+        console.log("buscaCArrinhoF", resultado);
+        console.log("buscaCArrinhoF", resultado.carrinho);
+        setCarrinhoApi(resultado.carrinho);
+      }
+    }
+    buscaCarrinhoUsuario();
+  }, []);
+
+  // useEffect(() => {
+  //   async function fetchCarrinhoUsuario() {
+  //     const resultado = await checkToken();
+  //     if (usuarioLogado) {
+
+  //       localStorage.setItem(
+  //         "carrinhoLogado",
+  //         JSON.stringify(resultado.carrinho)
+  //       );
+  //       return setCarrinhoApi(resultado.carrinho);
+  //     }
+  //     console.log("carrinho aqui", carrinhoApi);
+  //     // console.log("carrinho aqui", resultado.carrinho);
+  //   }
+  //   fetchCarrinhoUsuario();
+  // }, [usuarioLogado]);
+
+  // async function verCarrinhoUsuario() {
+  //   const resultado = await checkToken();
+  //   if (usuarioLogado) {
+
+  //     localStorage.setItem(
+  //       "carrinhoLogado",
+  //       JSON.stringify(resultado.carrinho)
+  //     );
+  //     setCarrinhoApi(resultado.carrinho);
+  //   }
+  //   console.log("carrinho aqui", carrinhoApi);
+  //   // console.log("carrinho aqui", resultado.carrinho);
+  // }
+
+  async function verificaCarrinhoUsuario() {
+    const token = localStorage.getItem("token");
+    const resposta = await fetch(
+      "https://api-n56x.onrender.com/v1/api/usuario",
+      {
+        cache: "no-store",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token} `,
+        },
+        // Token estático
+        //  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM
+      }
+    );
+    const dados = await resposta.json();
+    console.log("data AQUI", dados);
+    if (usuarioLogado) {
+      localStorage.setItem("carrinhoLogado", JSON.stringify(dados.carrinho));
+      console.log("carrinho atualizado apos salvar", dados.carrinho);
+      return setCarrinhoApi(dados.carrinho);
+    }
+  }
+  // console.log("carrinho aqui", resultado.carrinho);
+
+  // function loadCarrinhoFromLocalStorage() {
+  //   const carrinhoApiLS = localStorage.getItem("carrinhoApi");
+  //   if (carrinhoApiLS) {
+  //     setCarrinhoApi(JSON.parse(carrinhoApiLS));
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   loadCarrinhoFromLocalStorage();
+  // }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUsuarioLogado(true);
+    } else {
+      setUsuarioLogado(false);
+    }
+  }, []);
+
+  async function adicionarProdutoLocalStorage(
+    produtoNovo,
+    quantidade,
+    variacao
+  ) {
+    // const index = carrinhoLocalStorage.findIndex(
+    //   (produto) => produto.eanproduto === produtoNovo.ean
+    //  );
+
+    //  if (index === -1) {
+    //   // O produto não existe no carrinho, então adicione-o
+    //   carrinhoLocalStorage.push({
+    //     eanproduto: produtoNovo.ean,
+    //     qnt: quantidade,
+    //     nomeproduto: produtoNovo.nomeproduto,
+    //     image: produtoNovo.image,
+    //     valor: produtoNovo.valor,
+    //     variacao: variacao,
+    //   });
+    //  } else {
+    //   // O produto já existe no carrinho, então atualize a quantidade
+    //   carrinhoLocalStorage[index].qnt += quantidade;
+    //  }
+
+    //  setCarrinhoLocalStorage(carrinhoLocalStorage);
+    //  salvarCarrinhoLocalStorage(carrinhoLocalStorage);
+
+    //VERSION MAP
+    const produtoadd = carrinhoLocalStorage.map((produto) => {
+      if (produto.eanproduto === produtoNovo.ean) {
+        return {
+          ...produto,
+          qnt: produto.qnt + quantidade,
+        };
+      }
+      return produto;
+    });
+
+    if (!produtoadd.some((produto) => produto.eanproduto === produtoNovo.ean)) {
+      produtoadd.push({
+        eanproduto: produtoNovo.ean,
+        qnt: quantidade,
+        nomeproduto: produtoNovo.nomeproduto,
+        image: produtoNovo.image,
+        valor: produtoNovo.valor,
+        variacao: variacao,
+      });
+    }
+
+    setCarrinhoLocalStorage(produtoadd);
+    salvarCarrinhoLocalStorage(produtoadd);
+
+    // const copyCart = [...carrinhoLocalStorage];
+    // const verificaItem = copyCart.find(
+    //   (produto) => produto.eanproduto === produtoNovo.ean
+    // );
+    // if (!verificaItem) {
+    //   copyCart.push({
+    //     eanproduto: produtoNovo.ean,
+    //     qnt: quantidade,
+    //     nomeproduto: produtoNovo.nomeproduto,
+    //     image: produtoNovo.image,
+    //     valor: produtoNovo.valor,
+    //     variacao: variacao,
+    //   });
+    // } else {
+    //   verificaItem.qnt = verificaItem.qnt + quantidade;
+    // }
+
+    // setCarrinhoLocalStorage(copyCart);
+    // salvarCarrinhoLocalStorage(copyCart);
+  }
+
+  // useEffect(() => {
+  //   salvarCarrinhoLogado(carrinhoApi);
+  // }, [carrinhoApi]);
+
+  useEffect(() => {
+    salvarCarrinhoLocalStorage(carrinhoLocalStorage);
+  }, [carrinhoLocalStorage]);
+
+  function salvarCarrinhoLocalStorage(carrinho) {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }
+
+  const removerProduto = (ean) => {
+    console.log(ean);
+    setCarrinhoLocalStorage((carrinhoAntigo) =>
+      carrinhoAntigo.filter((itemNoCarrinho) => {
+        console.log(itemNoCarrinho.eanproduto);
+        console.log(itemNoCarrinho.ean);
+        console.log(ean);
+        return itemNoCarrinho.eanproduto !== ean;
+      })
+    );
+
+    if (usuarioLogado) {
+      delProdutoLogado(ean);
+      setCarrinhoApi((carrinhoAntigo) =>
+        carrinhoAntigo.filter((itemNoCarrinho) => {
+          console.log(carrinhoAntigo);
+          console.log(itemNoCarrinho.eanproduto);
+          console.log(ean);
+          return itemNoCarrinho.eanproduto !== ean;
+        })
+      );
+    }
+  };
+  //a
+
+  function addQtdCarrinho(ean, quantidade) {
+    setCarrinhoLocalStorage(
+      carrinhoLocalStorage.map((item) => {
+        if (item.eanproduto === ean) {
+          const add = quantidade + 1;
+          return { ...item, qnt: add };
+        }
+        return item;
+      })
+    );
+
+    if(usuarioLogado) {
+      // console.log("EAN USUARIO LOGADO",ean)
+      // console.log("QUANTIDADE USUARIO LOGADO",quantidade)
+      iniciaContador(ean,quantidade);
+    }
+  }
+
+  
+
+  function removeQtdCarrinho(ean, quantidade) {
+    setCarrinhoLocalStorage(
+      carrinhoLocalStorage.map((item) => {
+        if (item.eanproduto === ean) {
+          console.log(item.ean);
+          console.log(item.eanproduto);
+          const remove = quantidade > 1 ? quantidade - 1 : 1;
+          return { ...item, qnt: remove };
+        }
+        return item;
+      })
+    );
+  }
+
+  const [carrinhoApiLS, setCarrinhoApiLs] = useState([]);
+
+  async function adicionarProdutoApi(produtoNovo, quantidade, variacao) {
+    const copyCart = [...carrinhoApi];
+
+    const verificaItem = copyCart.find(
+      (produto) => produto.eanproduto === produtoNovo.ean
+    );
+    console.log("ean produto novo", produtoNovo);
+
+    if (!verificaItem) {
+      const novoItem = {
+        eanproduto: produtoNovo.ean,
+        qnt: quantidade,
+        nomeproduto: produtoNovo.nomeproduto,
+        image: produtoNovo.image,
+        valor: produtoNovo.valor,
+        variacao: variacao,
+      };
+ 
+      setCarrinhoApi([...carrinhoApi, novoItem]);
+      enviaProdutoLogado(novoItem);
+    } else {
+      const quantidadeAnterior = verificaItem.qnt;
+      const itemAtualizado = {
+        ...verificaItem,
+        // qnt: verificaItem.qnt + quantidade
+        qnt: (verificaItem.qnt + quantidade)- quantidadeAnterior
+      }
+      const itemAtualizadoCarrinho = {
+        ...verificaItem,
+        qnt: verificaItem.qnt + quantidade
+        // qnt: (verificaItem.qnt + quantidade)- quantidadeAnterior
+      }
+
+      setCarrinhoApi(carrinhoApi.map(produto => produto.eanproduto === produtoNovo.ean ? itemAtualizadoCarrinho : produto));
+      enviaProdutoLogado(itemAtualizado);
+    }
+  }
+
+  // useEffect(() => {
+  //   enviaProdutoLogado(carrinhoApi);
+  //  }, [carrinhoApi]);
+
+  // useEffect(() => {
+  //   console.log(carrinhoApi);
+  //   setCarrinhoApiLs(carrinhoApi);
+  //   console.log("carrinho teste", carrinhoApiLS);
+  // }, [carrinhoApi]);
+
+  console.log("Estado do Login:", usuarioLogado);
+  //envia carrinho para api
+  function enviarCarrinhoDeslogadoParaApi() {
+    console.log(carrinhoLocalStorage.length);
+    console.log(carrinhoLocalStorage);
+    if (usuarioLogado && carrinhoLocalStorage.length > 0) {
+      enviaProdutoLogado(carrinhoLocalStorage);
+      console.log("delete carrinho");
+      localStorage.removeItem("carrinho");
+    }
+  }
+
+  useEffect(() => {
+    enviarCarrinhoDeslogadoParaApi();
+  }, [usuarioLogado]);
+
+  return (
+    <CarrinhoContext.Provider
+      value={{
+        // exibirCarrinhoLS,
+        // setExibirCarrinhoLS,
+        carrinhoLocalStorage,
+        setCarrinhoLocalStorage,
+        adicionarProdutoLocalStorage,
+        adicionarProdutoApi,
+        setCarrinhoApi,
+        // exibirCarrinhoLocalStorage,
+        removerProduto,
+        addQtdCarrinho,
+        removeQtdCarrinho,
+        usuarioLogado,
+        carrinhoApi,
+        carrinhoApiLS,
+        setCarrinhoApiLs,
+      }}
+    >
+      {children}
+    </CarrinhoContext.Provider>
+  );
+};
+
+==========================================================================================================
+"use client"
+import React, { useContext } from 'react'
+import ProductRow from '../ProductRow'
+import { CarrinhoContext } from '../context/CarrinhoContext'
+
+const TabelaProdutos = () => {
+    const { carrinhoApi} = useContext(CarrinhoContext)
+    console.log("carrinho page",carrinhoApi)
+
+  return (
+    <table>
+     <thead>
+       <tr className='uppercase tracking-[.05rem] leading-[1.05px] text-left font-bold'>
+         <th className='p-[0.5rem] w-[50%]'>Produtos</th>
+         <th className='p-[0.5rem] w-[20%]'>Quantidade</th>
+         <th className='p-[0.5rem] w-[15%]'>Preço</th>
+         <th className='text-right p-[0.5rem] w-[15%]'>Subtotal</th>
+       </tr>
+     </thead>
+     <tbody>
+     {carrinhoApi.map((produto) => (
+         <ProductRow key={produto.eanproduto} produto={produto} />
+       ))}
+     </tbody>
+   </table>
+  )
+}
+
+export default TabelaProdutos
+
+============
+import Image from "next/image";
+import React, { useContext, useEffect, useState } from "react";
+import { CarrinhoContext } from "../context/CarrinhoContext";
+
+const ProductRow = ({ produto }) => {
+  const { carrinhoApi,removeQtdCarrinho, addQtdCarrinho } = useContext(CarrinhoContext);
+  const [subtotal, setsubtotal] = useState(0);
+  function calculaSubTotal() {
+    const qnt = produto.qnt;
+    const valor = converterNumero(produto.valor);
+    let total = valor * qnt;
+    return setsubtotal(total.toFixed(2));
+  }
+  function converterNumero(num) {
+    return parseFloat(num.replace(",", "."));
+  }
+
+  useEffect(() => {
+    calculaSubTotal();
+  }, [carrinhoApi]);
+  return (
+    // <h1>r</h1>
+    <tr>
+      <td className='text-left p-[0.5rem] w-[50%] flex items-center justify-between gap-3'>
+        <Image
+          //  src={image?.replace("/", "")}
+          src="/images/produtos/image 73.png"
+          width={150}
+          height={150}
+          alt={produto.nomeproduto}
+        />
+      <td>{produto.nomeproduto}</td>
+      </td>
+      <td className="text-left p-[0.5rem] w-[20%]">
+        <div className="flex items-center gap-3">
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl flex items-center justify-center bg-cinza text-neutral-dark p-1 rounded-full"
+            onClick={(e) => removeQtdCarrinho(produto.eanproduto, produto.qnt)}
+          >
+            -
+          </button>
+          <span className="font-bold">{produto.qnt}</span>
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl  flex items-center justify-center bg-primaria text-neutral-dark p-1 rounded-full"
+            onClick={(e) => addQtdCarrinho(produto.eanproduto, produto.qnt, e)}
+          >
+            +
+          </button>
+        </div>
+      </td>
+      <td className="text-left p-[0.5rem] w-[15%]">R${" "}{produto.valor}</td>
+      <td className="text-center p-[0.5rem] w-[15%]">R${" "}{subtotal}</td>
+    </tr>
+  );
+};
+
+export default ProductRow;
+
+loading ? <section className="mt-[30px] max-w-[1416px] w-full h-[862.4px] mx-auto pl-5 pr-5 lg:mt-10"></section>
+
+<>
+        <section className="mt-[30px] max-w-[1376px] w-full h-[411.1px]  lg:mt-10 flex gap-[75px] xl:gap-[20px] lg:gap-[10px]">
+          {skeletonCard.map((card, i) => (
+            <div className="" key={i}>
+              {card}
+            </div>
+          ))}
+        </section>
+        <section className="mt-[30px] max-w-[1376px] w-full h-[411.1px]  lg:mt-10 flex gap-[75px]">
+          {skeletonCard.map((card, i) => (
+            <div className="" key={i}>
+              {card}
+            </div>
+          ))}
+        </section>  
+         </> 
+w-full h-full xl:max-w-[1416px] 3xl:max-w-[1516px]  xl:mx-auto max-2xl:px-5 

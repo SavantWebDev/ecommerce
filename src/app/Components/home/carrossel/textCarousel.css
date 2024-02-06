@@ -1,0 +1,3 @@
+.swiper-pagination {
+  @apply bottom-[var(_--swiper-pagination-bottom,_71px)] !w-[50px] !left-[20%];
+}

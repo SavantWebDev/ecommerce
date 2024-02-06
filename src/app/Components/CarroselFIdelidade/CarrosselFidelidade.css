@@ -1,0 +1,32 @@
+.swiper {
+    @apply !static p-[15px];
+  }
+  .swiper-button-next, .swiper-button-prev {
+    @apply  !w-[52px] !h-[52px] !rounded-[50%]
+  }
+  
+  .swiper-button-next::after {
+    @apply text-primaria !text-xl
+  }
+  
+  .swiper-button-prev::after {
+    @apply text-primaria !text-xl
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    @apply border-[1px] border-solid border-primaria
+  }
+  
+  .swiper-button-next {
+    /* @apply !absolute mb:!top-[130px] !right-[-15px] mn:!right-[-22px] sm:!right-[-30px] md:!right-[-36px] lg:!right-[-50px] xl:!right-[-64px] 2xl:!right-[-68px]; */
+    @apply !absolute  mb:!top-[130px] mb:!right-[-40px] mn:!right-[-40px] sm:!right-[-40px] md:!right-[-40px] lg:!right-[-40px] xl:!right-[-40px] 2xl:!right-[-40px] 3xl:!right-[-58px]
+  }
+  
+  .swiper-button-prev {
+    @apply !absolute  !top-[130px] !left-[-41px] mn:!left-[-41px] sm:!left-[-41px] md:!left-[-41px] lg:!left-[-41px] xl:!left-[-41px] 2xl:!left-[-41px] 3xl:!left-[-58px]
+  }
+  
+  .swiper-slide {
+    @apply 2xl:!w-[287px]
+  }
