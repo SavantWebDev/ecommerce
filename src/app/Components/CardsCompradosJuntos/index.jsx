@@ -6,7 +6,7 @@ const CardJuntos = ({ imagem }) => {
   return (
     <div className="max-w-[190px] w-full px-[14px]  relative">
       <div className=" max-w-[28px] w-full h-[28px] rounded-[50%] bg-verde-medio flex justify-center items-center absolute top-[3px] right-[-8px] ">
-        <Image src={check} width={18} height={18} />
+        <Image src={check} width={18} height={18} alt="check" />
       </div>
       <div className="max-w-[162px] w-full h-[143.937px] rounded-[5.645px] bg-branco mb-[6.06px]">
         <Image

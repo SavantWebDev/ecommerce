@@ -6,14 +6,16 @@ import Cards from "../../../Components/CardsProdutos";
 import Newsletter from "../../../Components/Newsletter";
 // import { Pagination } from "@nextui-org/react";
 import Paginacao from "../../../Components/Pagination/index";
-import { buscaProdutoPagina, getCategoryProduct } from "../../../api/apiEcommerce";
+import {
+  buscaProdutoPagina,
+  getCategoryProduct,
+} from "../../../api/apiEcommerce";
 import { useState, useEffect } from "react";
 import SkeletonCards from "../../../Components/Skeletons/SkeletonCards";
 import Pagi from "../../../Components/Pagination/index";
 import { Pagination, PaginationItemType, cn } from "@nextui-org/react";
 import { ChevronIcon } from "../../../Components/Pagination/ChevronIcon";
 import ModalCard from "../../../Components/Modal/ModalCard";
-
 
 export default function Page({ params }) {
   console.log("===================");
@@ -31,7 +33,7 @@ export default function Page({ params }) {
   useEffect(() => {
     async function fetchCategoriasProdutos() {
       const resultado = await getCategoryProduct(params.id);
-      console.log("resultado categoriareq",resultado);
+      console.log("resultado categoriareq", resultado);
       setProdutos(resultado.produtos);
       setPagina(resultado.page);
       setTotalPaginas(resultado.totalpaginas);
@@ -42,20 +44,29 @@ export default function Page({ params }) {
     }
 
     fetchCategoriasProdutos();
-  }, []);
+  }, [params.id]);
   console.log(produtos);
   console.log(pagina);
   console.log(totalPaginas);
-  
-  function setPage(produto,pageNumber) {
-    buscaProdutoPagina(produto, pageNumber).then(products => {
-     // Atualiza o estado dos produtos com os novos produtos
-     setProdutos(products);
-     console.log("🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩" , products)
-     console.log("🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩" , pageNumber)
-     console.log("🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩" , produto)
+
+  function setPage(produto, pageNumber) {
+    buscaProdutoPagina(produto, pageNumber).then((products) => {
+      // Atualiza o estado dos produtos com os novos produtos
+      setProdutos(products);
+      console.log(
+        "🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩",
+        products
+      );
+      console.log(
+        "🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩",
+        pageNumber
+      );
+      console.log(
+        "🚀 ➽ file: page.jsx:44  ➽ buscaProdutoPagina  ➽ products ⏩",
+        produto
+      );
     });
-   }
+  }
 
   const renderItem = ({
     ref,
@@ -69,29 +80,41 @@ export default function Page({ params }) {
   }) => {
     if (value === PaginationItemType.NEXT) {
       if (currentPage === 10) {
-          return null; // Hide PREV on the first page
+        return null; // Hide PREV on the first page
       }
       return (
-      <button key={key} className={cn(className, "bg-primaria min-w-8 w-8 h-8")} onClick={onNext}>
-        <ChevronIcon className="rotate-180" />
-      </button>
-    );
-  }
-
-  if (value === PaginationItemType.PREV) {
-    if (currentPage === 1) {
-      return null; // Hide PREV on the first page
+        <button
+          key={key}
+          className={cn(className, "bg-primaria min-w-8 w-8 h-8")}
+          onClick={onNext}
+        >
+          <ChevronIcon className="rotate-180" />
+        </button>
+      );
     }
-    return (
-      <button key={key} className={cn(className, "bg-primaria min-w-8 w-8 h-8")} onClick={onPrevious}>
-        <ChevronIcon />
-      </button>
-    );
-  }
 
-  if (value === PaginationItemType.DOTS) {
-    return <button key={key} className={className}>...</button>;
-  }
+    if (value === PaginationItemType.PREV) {
+      if (currentPage === 1) {
+        return null; // Hide PREV on the first page
+      }
+      return (
+        <button
+          key={key}
+          className={cn(className, "bg-primaria min-w-8 w-8 h-8")}
+          onClick={onPrevious}
+        >
+          <ChevronIcon />
+        </button>
+      );
+    }
+
+    if (value === PaginationItemType.DOTS) {
+      return (
+        <button key={key} className={className}>
+          ...
+        </button>
+      );
+    }
 
     // cursor is the default item
     return (
@@ -101,7 +124,7 @@ export default function Page({ params }) {
         className={cn(
           className,
           isActive &&
-          "text-white bg-primaria from-indigo-500 to-pink-500 font-bold",
+            "text-white bg-primaria from-indigo-500 to-pink-500 font-bold"
         )}
         onClick={() => setPage(value)}
       >
@@ -158,24 +181,31 @@ export default function Page({ params }) {
         </div>
         {/* <div className="grid justify-center items-center 2xl:grid-cols-4 xl:grid-cols-4 gap-10 lg:grid-cols-4  lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1"> */}
         <div className="flex  3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
-          {produtos? produtos.map((produto) => {
-            return (
-              <Cards
-                key={produto.ean}
-                ean={produto.ean}
-                imagem={produto.image.replace("\\", "")}
-                nome={produto.nomeproduto}
-                promoQtd="Compre 3 leve 1"
-                // promoNovo="Novo"
-                promoValor="R$ 55,00 a partir de 6 un."
-                a="50,00"
-                valor={produto.valor}
-                parcelas="até 4x sem juros"
-                loading={loading}
-              />
-            );
-          }): <div className="flex w-full flex-col justify-center items-center mb-[5%] mt-[5%] text-2xl font-bold"><h1>Lamentamos, nenhum produto encontrado nessa categoria.</h1><p>Tente novamente em outro categoria...</p></div>}
-          <ModalCard/>
+          {produtos ? (
+            produtos.map((produto) => {
+              return (
+                <Cards
+                  key={produto.ean}
+                  ean={produto.ean}
+                  imagem={produto.image.replace("\\", "")}
+                  nome={produto.nomeproduto}
+                  promoQtd="Compre 3 leve 1"
+                  // promoNovo="Novo"
+                  promoValor="R$ 55,00 a partir de 6 un."
+                  a="50,00"
+                  valor={produto.valor}
+                  parcelas="até 4x sem juros"
+                  loading={loading}
+                />
+              );
+            })
+          ) : (
+            <div className="flex w-full flex-col justify-center items-center mb-[5%] mt-[5%] text-2xl font-bold">
+              <h1>Lamentamos, nenhum produto encontrado nessa categoria.</h1>
+              <p>Tente novamente em outro categoria...</p>
+            </div>
+          )}
+          <ModalCard />
 
           {/* <SkeletonCards/> */}
 
@@ -239,7 +269,6 @@ export default function Page({ params }) {
             valor="R$ 50,00"
             parcelas="até 4x sem juros"
           /> */}
-          
         </div>
         <div className="flex justify-center pt-[80px] pb-[120px] items-center">
           {/* <Paginacao 
@@ -254,7 +283,7 @@ export default function Page({ params }) {
             radius="full"
             renderItem={renderItem}
             variant="light"
-            onChange={(e) => setPage(params.id,e)}
+            onChange={(e) => setPage(params.id, e)}
           />
         </div>
       </section>

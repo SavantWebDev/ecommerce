@@ -6,19 +6,20 @@ const ProductRow = ({ produto }) => {
   const { carrinhoApi, removeQtdCarrinho, addQtdCarrinho } =
     useContext(CarrinhoContext);
   const [subtotal, setsubtotal] = useState(0);
-  function calculaSubTotal() {
-    const qnt = produto.qnt;
-    const valor = converterNumero(produto.valor);
-    let total = valor * qnt;
-    return setsubtotal(total.toFixed(2));
-  }
-  function converterNumero(num) {
-    return parseFloat(num.replace(",", "."));
-  }
-
   useEffect(() => {
+    function calculaSubTotal() {
+      const qnt = produto.qnt;
+      const valor = converterNumero(produto.valor);
+      let total = valor * qnt;
+      return setsubtotal(total.toFixed(2));
+    }
+
+    function converterNumero(num) {
+      return parseFloat(num.replace(",", "."));
+    }
+
     calculaSubTotal();
-  }, [carrinhoApi]);
+  }, [produto.qnt, produto.valor]);
   return (
     <div className="flex gap-3 items-center justify-center">
       <div className="text-left p-[0.5rem] w-[50%] flex items-center gap-6">

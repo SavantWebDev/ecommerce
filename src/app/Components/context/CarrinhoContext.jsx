@@ -410,65 +410,66 @@ export const CarrinhoProvider = ({ children }) => {
   console.log("Estado do Login:", usuarioLogado);
   // console.log("Estado Carrinho:", carrinhoApi);
   //envia carrinho para api
-  function enviarCarrinhoDeslogadoParaApi() {
-    console.log(carrinhoLocalStorage.length);
-    console.log(carrinhoLocalStorage);
-    if (usuarioLogado && carrinhoLocalStorage.length > 0) {
-      enviaProdutoLogado(carrinhoLocalStorage);
-      console.log("delete carrinho");
-      localStorage.removeItem("carrinho");
-    }
-  }
 
   useEffect(() => {
+    function enviarCarrinhoDeslogadoParaApi() {
+      console.log(carrinhoLocalStorage.length);
+      console.log(carrinhoLocalStorage);
+      if (usuarioLogado && carrinhoLocalStorage.length > 0) {
+        enviaProdutoLogado(carrinhoLocalStorage);
+        console.log("delete carrinho");
+        localStorage.removeItem("carrinho");
+      }
+    }
     enviarCarrinhoDeslogadoParaApi();
-  }, [usuarioLogado]);
+  }, [usuarioLogado, carrinhoLocalStorage]);
 
   useEffect(() => {
-    calculaValor();
-  }, [carrinhoApi]);
+    function calculaValor() {
+      // console.log("Carrinho Produtos", carrinhoApi);
+      if (usuarioLogado) {
+        let total = 0;
+        let subtotal = 0;
+        for (let i = 0; i < carrinhoApi.length; i++) {
+          // const valor = converterNumero(carrinhoApi[i].pix);
+          const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
+          const quantidade = carrinhoApi[i].qnt;
 
-  function calculaValor() {
-    // console.log("Carrinho Produtos", carrinhoApi);
-    if (usuarioLogado) {
-      let total = 0;
-      let subtotal = 0;
-      for (let i = 0; i < carrinhoApi.length; i++) {
-        // const valor = converterNumero(carrinhoApi[i].pix);
-        const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
-        const quantidade = carrinhoApi[i].qnt;
-
-        const subResultado = ValorSubtotal * quantidade;
-        // const resultado = valor * quantidade;
-
-        subtotal = subtotal + subResultado;
-        // total = total + resultado;
-        // console.log(total.toFixed(2));
-      }
-      // console.log("Valor Total:", total.toFixed(2));
-      setSubTotalCarrinho(subtotal.toFixed(2));
-      // setTotalCarrinho(total.toFixed(2));
-    } else {
-      let total = 0;
-      let subtotal = 0;
-      for (let i = 0; i < carrinhoLocalStorage.length; i++) {
-        if (carrinhoLocalStorage[i] && carrinhoLocalStorage[i].pix) {
-          const valor = converterNumero(carrinhoLocalStorage[i].pix);
-          const ValorSubtotal = converterNumero(carrinhoLocalStorage[i].valor);
-          const quantidade = carrinhoLocalStorage[i].qnt;
-
-          const resultado = valor * quantidade;
           const subResultado = ValorSubtotal * quantidade;
+          // const resultado = valor * quantidade;
 
-          total = total + resultado;
           subtotal = subtotal + subResultado;
+          // total = total + resultado;
+          // console.log(total.toFixed(2));
         }
+        // console.log("Valor Total:", total.toFixed(2));
+        setSubTotalCarrinho(subtotal.toFixed(2));
+        // setTotalCarrinho(total.toFixed(2));
+      } else {
+        let total = 0;
+        let subtotal = 0;
+        for (let i = 0; i < carrinhoLocalStorage.length; i++) {
+          if (carrinhoLocalStorage[i] && carrinhoLocalStorage[i].pix) {
+            const valor = converterNumero(carrinhoLocalStorage[i].pix);
+            const ValorSubtotal = converterNumero(
+              carrinhoLocalStorage[i].valor
+            );
+            const quantidade = carrinhoLocalStorage[i].qnt;
+
+            const resultado = valor * quantidade;
+            const subResultado = ValorSubtotal * quantidade;
+
+            total = total + resultado;
+            subtotal = subtotal + subResultado;
+          }
+        }
+        // console.log("Valor Total:", subtotal.toFixed(2));
+        setTotalCarrinho(total.toFixed(2));
+        setSubTotalCarrinho(subtotal.toFixed(2));
       }
-      // console.log("Valor Total:", subtotal.toFixed(2));
-      setTotalCarrinho(total.toFixed(2));
-      setSubTotalCarrinho(subtotal.toFixed(2));
     }
-  }
+    calculaValor();
+  }, [carrinhoApi, carrinhoLocalStorage, usuarioLogado]);
 
   function converterNumero(num) {
     return parseFloat(num.replace(",", "."));

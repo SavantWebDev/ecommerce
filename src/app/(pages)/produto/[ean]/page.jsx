@@ -78,7 +78,7 @@ export default function Produto({ params }) {
     }
 
     fetchProduto();
-  }, []);
+  }, [params.ean]);
 
   console.log(produto);
   console.log(produtoSemelhante);
@@ -115,6 +115,7 @@ export default function Produto({ params }) {
               src={produto.image?.replace("/", "")}
               width={446}
               height={446}
+              alt="imagem do produto"
             />
             {/* <Image src="/images/Produtos/image 26.png" width={446} height={446} /> */}
           </div>
@@ -170,7 +171,7 @@ export default function Produto({ params }) {
            border-[#FFE9D4] rounded-[20px] inline-flex p-[10px] justify-center items-center gap-[4px]"
             >
               <span>
-                <Image src={taca} width={15.001} height={18} />
+                <Image src={taca} width={15.001} height={18} alt="taca" />
               </span>
               + 12 ml de chop
             </p>
@@ -292,7 +293,7 @@ export default function Produto({ params }) {
             <div className="flex justify-between sm:w-[80%] sm:mx-auto md:w-full lg:order-1 lg:w-[100%]">
               <button className="flex justify-center items-center gap-1 py-[17px] w-[70%] bg-amarelo-medio-m text-cor-preto text-[18px] font-bold leading-[normal] rounded-[100px]">
                 <span>
-                  <Image src={cart} width={24} height={24} />{" "}
+                  <Image src={cart} width={24} height={24} alt="cart" />{" "}
                 </span>
                 Comprar
               </button>
@@ -310,7 +311,7 @@ export default function Produto({ params }) {
                   }
                 }}
               >
-                <Image src={cart} width={22} height={22} />
+                <Image src={cart} width={22} height={22} alt="cart" />
               </button>
             </div>
           </div>
@@ -326,7 +327,12 @@ export default function Produto({ params }) {
         <div className="lg:w-[50%]">
           <h2 className="flex items-center gap-[10px] text-suport-dark text-xl font-semibold leading-[normal] lg:text-2xl">
             <span>
-              <Image src={iconeDescricao} width={24} height={24} />{" "}
+              <Image
+                src={iconeDescricao}
+                width={24}
+                height={24}
+                alt="iconeDescricao"
+              />{" "}
             </span>
             Descrição do produto
           </h2>
@@ -349,7 +355,7 @@ export default function Produto({ params }) {
         <div className="lg:w-[50%]">
           <h2 className="flex items-center gap-[10px] text-suport-dark text-xl font-semibold leading-[normal] lg:text-2xl">
             <span>
-              <Image src={iconeInfo} width={24} height={24} />{" "}
+              <Image src={iconeInfo} width={24} height={24} alt="iconeinfo" />{" "}
             </span>
             Informações do Produto
           </h2>
@@ -390,6 +396,7 @@ export default function Produto({ params }) {
               src={add}
               width={30}
               height={30}
+              alt="Adicionar Produto ao Carrinho"
             />
           </span>
           Produtos Semelhantes
@@ -398,6 +405,7 @@ export default function Produto({ params }) {
           {produtoSemelhante.map((prod) => {
             return (
               <Cards
+                key={prod.ean}
                 ean={prod.ean}
                 imagem={prod.image.replace("\\", "")}
                 nome={prod.nomeproduto}
@@ -452,7 +460,7 @@ export default function Produto({ params }) {
             valor="R$ 50,00"
             parcelas="até 4x sem juros"
           /> */}
-          <ModalCard/>
+          <ModalCard />
         </div>
       </section>
     </div>

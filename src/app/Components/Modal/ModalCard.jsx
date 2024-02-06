@@ -54,6 +54,7 @@ const ModalCard = ({ isOpen, setOpen, produt, qnt }) => {
             width={25}
             height={25}
             className="text-right top-0 right-0"
+            alt="Fechar Modal"
           />
         </div>
         <div className="flex flex-col items-center mb-5">
