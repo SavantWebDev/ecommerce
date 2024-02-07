@@ -35,8 +35,8 @@ router.get(apiURL + '/produtos', async (req, res) => {
         `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria, created_data,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
-            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-            ELSE replace(image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+            THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+            ELSE replace(image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
         END as image,
         id FROM estoque LIMIT 8 OFFSET 0`
     )
@@ -45,8 +45,8 @@ router.get(apiURL + '/produtos', async (req, res) => {
         `SELECT ean, valor, valor_pix, nomeproduto, descricao, qnt, idcategoria, created_data,
         CASE
             WHEN image = '/src/image/imagemImagem.png'
-            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-            ELSE replace(image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+            THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+            ELSE replace(image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
         END as image,
         id FROM estoque LIMIT 8 OFFSET 8`
     )
@@ -74,8 +74,8 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
         SELECT ean, nomeproduto, 
             CASE 
 	            WHEN e.image = '/src/image/imagemImagem.png'
-                THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-                ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+                ELSE replace(e.image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
 			END as image, descricao, valor, valor_pix, valor_prazo, nomecategoria
         FROM estoque e
 		INNER JOIN tb_categorias tc
@@ -88,8 +88,8 @@ router.get(apiURL + '/produtos/:ean', async (req, res) => {
                     SELECT ean, nomeproduto,
                         CASE 
                             WHEN e.image = '/src/image/imagemImagem.png'
-                            THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-                            ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                            THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+                            ELSE replace(e.image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
                         END as image, descricao, valor, valor_pix, valor_prazo, nomecategoria
                     FROM estoque e
                     INNER JOIN tb_categorias tc
@@ -135,8 +135,8 @@ router.get(apiURL + '/search', async (req, res) => {
     await knex.raw(`
             SELECT ean, nomeproduto, CASE 
 	            WHEN e.image = '/src/image/imagemImagem.png'
-                THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-                ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+                ELSE replace(e.image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
 			    END as image,
             CASE
                 WHEN descricao = '' THEN 'Sem Descrição'
@@ -262,8 +262,8 @@ router.get(apiURL + '/maisvendidos', async(req, res) => {
     await knex.raw(`
     SELECT eanproduto, count(eanproduto) as quantidade, nomeproduto, CASE 
         WHEN e.image = '/src/image/imagemImagem.png'
-        THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-        ELSE replace(e.image, 'uploads', 'https://api-n56x.onrender.com/uploads')
+        THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+        ELSE replace(e.image, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
         END as image, e.valor, valor_pix, valor_prazo, created_data FROM tb_vendas tv
     INNER JOIN estoque e
     ON e.ean = tv.eanproduto
@@ -420,7 +420,7 @@ router.get(apiURL + '/perfil', verifyJWT, async (req, res) => {
                     celular: resultQuery.rows[0].celular,
                     nascimento: resultQuery.rows[0].nascimento,
                     username: resultQuery.rows[0].username,
-                    imageProfile: 'https://api-n56x.onrender.com' + resultQuery.rows[0].image
+                    imageProfile: 'https://iceberg.savantweb.com.br' + resultQuery.rows[0].image
                 },
                 endereco: {},
                 ultimosPedidos: pedidos.rows,
@@ -519,8 +519,8 @@ router.get(apiURL + '/banners', async (req, res) => {
         SELECT titulo, descricao, botao,
             CASE
                 WHEN imagem = '/src/image/imagemImagem.png'
-                    THEN 'https://api-n56x.onrender.com/src/image/imagemImagem.png'
-                    ELSE replace(imagem, 'uploads', 'https://api-n56x.onrender.com/uploads')
+                    THEN 'https://iceberg.savantweb.com.br/src/image/imagemImagem.png'
+                    ELSE replace(imagem, 'uploads', 'https://iceberg.savantweb.com.br/uploads')
                 END as image
         FROM tb_banners
     `)
