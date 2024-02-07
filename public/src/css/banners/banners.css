@@ -1,0 +1,30 @@
+.ban-all {
+    background-color: white;
+    /*color:red;*/
+    margin-top: 15px;
+    padding: 30px;
+    border-radius: 15px;
+}
+.ban-al-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ban-h2 {
+    font-size: 24px;
+    color: #000000;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.ban-all-form{
+    display: flex;
+    flex-direction: column;
+}
+.ban-card{
+    width: 43%;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    padding: 10px;
+}

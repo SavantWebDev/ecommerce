@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/header.ejs') %>
+
     <head>
-        <link rel="stylesheet" href="../public/src/css/configuracao/conficguracao.css">
+        <!--<link rel="stylesheet" href="/src/css/configuracao/conficguracao.css">-->
+        <link rel="stylesheet" href="/src/css/banners/banners.css">
     </head>
+
     <body>
         <%- include('./partials/nav.ejs') %>
             <main>
                 <%- include('./partials/usermenu.ejs') %>
+                    <!-- Configuração:
                     <div class="conf-all">
                         <h2 class="conf-h2">Configuração</h2>
                         <p class="conf-al-p-1">Conforme as especificações do sistema e suas funcionalidades, concordo que o mesmo trabalhará da seguinte maneira:</p>
@@ -26,7 +30,9 @@
                             </div>
                         </form>
                     </div>
-                    <!--
+                    -->
+
+                    <!-- Banners
                     <form action="/banners" method="post" enctype="multipart/form-data">
                         <label for="title">Título</label>
                         <input type="text" name="titulo">
@@ -39,6 +45,41 @@
                         <button type="submit">Enviar Banners</button>
                     </form>
                     -->
+                    <!-- Banners 2-->
+                    <div class="ban-all">
+                        <h2 class="ban-h2">Banners</h2>
+                        <div class="ban-al-1">
+                            <div class="ban-card">
+                                <p>Banner 1</p>
+                                <form action="" method="post" class="ban-all-form">
+                                    <label for="tituloBanner">Título: </label>
+                                    <input type="text" name="tituloBanner" placeholder="tituloBanner">
+                                    <label for="descricaoBanner">Descrição: </label>
+                                    <input type="text" name="descricaoBanner" placeholder="tituloBanner">
+                                    <label for="imagemBanner">Imagem: </label>
+                                    <input type="file" name="imagemBanner" placeholder="tituloBanner">
+
+                                    <input type="button" value="Definir Banner">
+                                </form>
+                            </div>
+
+                            <div class="ban-card">
+                                <p>Banner 2</p>
+                                <form action="" method="post" class="ban-all-form">
+                                    <label for="tituloBanner">Título: </label>
+                                    <input type="text" name="tituloBanner" placeholder="tituloBanner">
+                                    <label for="descricaoBanner">Descrição: </label>
+                                    <input type="text" name="descricaoBanner" placeholder="tituloBanner">
+                                    <label for="imagemBanner">Imagem: </label>
+                                    <input type="file" name="imagemBanner" placeholder="tituloBanner">
+
+                                    <input type="button" value="Definir Banner">
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
             </main>
             <%- include('./partials/scripts.ejs') %>
     </body>
