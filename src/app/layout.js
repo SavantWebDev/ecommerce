@@ -24,7 +24,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <link rel="icon" href="/images/logo2.svg" sizes="any" />
+      <head>
+        <link rel="icon" href="/images/logo2.svg" sizes="any" />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
+      </head>
       <body className={`${urbanist.variable} font-primary`}>
         <UsuarioProvider>{children}</UsuarioProvider>
       </body>
