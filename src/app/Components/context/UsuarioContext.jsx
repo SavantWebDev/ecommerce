@@ -14,15 +14,18 @@ export const UsuarioProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   async function login(email, senha) {
-    const response = await fetch("http://20.197.251.208/v1/api/login", {
-      cache: "no-store",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM'
-      },
-      body: JSON.stringify({ email: email, senha: senha }),
-    });
+    const response = await fetch(
+      "https://iceberg.savantweb.com.br/v1/api/login",
+      {
+        cache: "no-store",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM'
+        },
+        body: JSON.stringify({ email: email, senha: senha }),
+      }
+    );
 
     if (response.ok) {
       return await response.json();
@@ -31,7 +34,7 @@ export const UsuarioProvider = ({ children }) => {
     }
   }
   // export const cadastro = async (email, senha, celular, cpf, nascimento, notificacao) => {
-  //   const response = await fetch("http://20.197.251.208/v1/api/login", {
+  //   const response = await fetch("https://iceberg.savantweb.com.br/v1/api/login", {
   //     method: "POST",
   //     headers: {
   //       "Content-Type": "application/json",
@@ -51,7 +54,7 @@ export const UsuarioProvider = ({ children }) => {
     console.log("=============");
     console.log(token);
     console.log("loginverify");
-    const res = await fetch("http://20.197.251.208/v1/api/usuario", {
+    const res = await fetch("https://iceberg.savantweb.com.br/v1/api/usuario", {
       cache: "no-store",
       method: "GET",
       headers: {
@@ -92,7 +95,7 @@ export const UsuarioProvider = ({ children }) => {
   }
 
   function perfilUser(token) {
-    return fetch("http://20.197.251.208/v1/api/perfil", {
+    return fetch("https://iceberg.savantweb.com.br/v1/api/perfil", {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
@@ -135,7 +138,7 @@ export const UsuarioProvider = ({ children }) => {
     formData.append("username", username);
     formData.append("telefone", celular);
     console.log("Meu formdata", formData);
-    fetch("http://20.197.251.208/v1/api/edit", {
+    fetch("https://iceberg.savantweb.com.br/v1/api/edit", {
       cache: "no-store",
       method: "POST",
       headers: {

@@ -29,7 +29,7 @@ export default function CarrosselProdutos() {
 
   const [produtos, setProdutos] = useState([]);
   const [produtosSecond, setProdutosSecond] = useState([]);
-  const [filtro, setFiltro] = useState();
+  const [filtro, setFiltro] = useState("Recomendados");
 
   function filtraItem(e) {
     setFiltro(e);

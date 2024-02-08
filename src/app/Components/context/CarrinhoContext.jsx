@@ -7,9 +7,23 @@ import { UserContext } from "./UsuarioContext";
 export const CarrinhoContext = createContext();
 
 export const CarrinhoProvider = ({ children }) => {
-  const [carrinhoSalvo, setCarrinhoSalvo] = useState();
+  // const [carrinhoSalvo, setCarrinhoSalvo] = useState(localStorage.getItem("carrinho"));
+  // const [carrinhoLocalStorage, setCarrinhoLocalStorage] = useState(() => {
+  //   return carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
+  // });
+
+  const [carrinhoSalvo, setCarrinhoSalvo] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("carrinho");
+    }
+    return null;
+  });
+
   const [carrinhoLocalStorage, setCarrinhoLocalStorage] = useState(() => {
-    return carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
+    if (typeof window !== "undefined") {
+      return carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
+    }
+    return [];
   });
 
   const [carrinhoApi, setCarrinhoApi] = useState([]);
@@ -19,8 +33,16 @@ export const CarrinhoProvider = ({ children }) => {
   const [SubTotalCarrinho, setSubTotalCarrinho] = useState();
   const { checkToken } = useContext(UserContext);
   useEffect(() => {
-    setCarrinhoSalvo(localStorage.getItem("carrinho"));
+    const carrinhoDoStorage = localStorage.getItem("carrinho");
+    setCarrinhoSalvo(carrinhoDoStorage);
+    setCarrinhoLocalStorage(
+      carrinhoDoStorage ? JSON.parse(carrinhoDoStorage) : []
+    );
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("carrinho", JSON.stringify(carrinhoLocalStorage));
+  }, [carrinhoLocalStorage]);
   useEffect(() => {
     return () => {
       if (timerBtn) {
@@ -418,6 +440,7 @@ export const CarrinhoProvider = ({ children }) => {
         enviaProdutoLogado(carrinhoLocalStorage);
         console.log("delete carrinho");
         localStorage.removeItem("carrinho");
+        window.location.reload();
       }
     }
     enviarCarrinhoDeslogadoParaApi();

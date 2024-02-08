@@ -1,13 +1,16 @@
 // api.js
 export const login = async (email, senha) => {
-  const response = await fetch("http://20.197.251.208/v1/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM'
-    },
-    body: JSON.stringify({ email: email, senha: senha }),
-  });
+  const response = await fetch(
+    "https://iceberg.savantweb.com.br/v1/api/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMDMxMzc1MSwiZXhwIjoxNzAwNDAwMTUxfQ.DudgCvTiR7K2GkP9zu-5oIXAYH26mb8dAS-5Vh-q2EM'
+      },
+      body: JSON.stringify({ email: email, senha: senha }),
+    }
+  );
 
   if (response.ok) {
     return await response.json();
@@ -16,7 +19,7 @@ export const login = async (email, senha) => {
   }
 };
 // export const cadastro = async (email, senha, celular, cpf, nascimento, notificacao) => {
-//   const response = await fetch("https://api-n56x.onrender.com/v1/api/login", {
+//   const response = await fetch("https://iceberg.savantweb.com.br/v1/api/login", {
 //     method: "POST",
 //     headers: {
 //       "Content-Type": "application/json",
@@ -36,7 +39,7 @@ export const loginVerify = async (token) => {
   console.log("=============");
   console.log(token);
   console.log("loginverify");
-  const res = await fetch("http://20.197.251.208/v1/api/usuario", {
+  const res = await fetch("https://iceberg.savantweb.com.br/v1/api/usuario", {
     cache: "no-store",
     method: "GET",
     headers: {
@@ -88,21 +91,24 @@ export const cadastro = async (
   notificacoes,
   numero
 ) => {
-  const response = await fetch("http://20.197.251.208/v1/api/cadastrar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      nome: nome,
-      email: email,
-      senha: senha,
-      nascimento: idade,
-      cpf: cpf,
-      notificacao: notificacoes,
-      celular: numero,
-    }),
-  });
+  const response = await fetch(
+    "https://iceberg.savantweb.com.br/v1/api/cadastrar",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nome: nome,
+        email: email,
+        senha: senha,
+        nascimento: idade,
+        cpf: cpf,
+        notificacao: notificacoes,
+        celular: numero,
+      }),
+    }
+  );
 
   console.log(response);
   if (response.ok) {

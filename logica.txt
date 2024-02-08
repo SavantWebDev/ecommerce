@@ -112,7 +112,7 @@ export const CarrinhoProvider = ({ children }) => {
   async function verificaCarrinhoUsuario() {
     const token = localStorage.getItem("token");
     const resposta = await fetch(
-      "https://api-n56x.onrender.com/v1/api/usuario",
+      "https://iceberg.savantweb.com.br/v1/api/usuario",
       {
         cache: "no-store",
         method: "GET",

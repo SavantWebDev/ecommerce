@@ -77,7 +77,8 @@ export default function Loginauth() {
         <div className="flex max-w-[463px] w-full h-screendv flex-col items-center justify-center mx-auto max-sm:h-auto">
           <LogoForms
             titulo="Bem vindo de volta"
-            subtitulo="Coloque suas credenciais para acessar o sistema"s
+            subtitulo="Coloque suas credenciais para acessar o sistema"
+            s
           />
           <form
             id="formsLogin"
@@ -124,20 +125,18 @@ export default function Loginauth() {
                 <p className="text-[14px]">lembrar-se de mim</p>
               </div>
               <div className="w-1/2 flex justify-end">
-              <Link
-                href=""
-                className="text-[#000] border-b border-solid text-[14px]"
-              >
-                Esqueceu a senha?
-              </Link>
+                <Link
+                  href=""
+                  className="text-[#000] border-b border-solid text-[14px]"
+                >
+                  Esqueceu a senha?
+                </Link>
               </div>
             </div>
             <ButtonForms>Continuar</ButtonForms>
           </form>
 
-          <LoginSocial 
-          conect="ou continue com"
-          />
+          <LoginSocial conect="ou continue com" />
           <RedirectLoginCadastro
             fraseLink="Não tem conta?"
             link="Cadastre-se"

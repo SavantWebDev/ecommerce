@@ -1,10 +1,11 @@
 "use client";
 
 import { MdModeEdit, MdOutlineMail } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import userSvg from "../../../../public/images/assets/user.svg";
 import Image from "next/image";
+import { UserContext } from "../context/UsuarioContext";
 export default function PerfilUser({
   onFileChange,
   email,
@@ -25,7 +26,7 @@ export default function PerfilUser({
     if (perfil) {
       setLoading(false);
     }
-  }, [userImg, email, username, perfil]);
+  }, [perfil]);
 
   // useEffect(() => {
 

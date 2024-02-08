@@ -1,5 +1,5 @@
 // var rotaApi = "http://45.188.156.17:5464/v1/api"
-var rotaApi = "http://20.197.251.208/v1/api";
+var rotaApi = "https://iceberg.savantweb.com.br/v1/api";
 
 // Rota Categorias
 export async function getCategory() {
@@ -40,7 +40,9 @@ export async function getProductHomeTeste(categoria) {
 }
 
 export async function getProductHomeSecond(categoria) {
-  const response = await fetch(`http://20.197.251.208/v1/api/produtos`);
+  const response = await fetch(
+    `https://iceberg.savantweb.com.br/v1/api/produtos`
+  );
   const data = await response.json();
   // console.log(data.firstProduct)
   console.log(data.secondProduct);
@@ -90,14 +92,17 @@ export const enviaProdutoLogado = async (produtos) => {
   // console.log(ean)
   // console.log(qnt)
   try {
-    const response = await fetch("http://20.197.251.208/v1/api/card", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ product: produtosArray }),
-    });
+    const response = await fetch(
+      "https://iceberg.savantweb.com.br/v1/api/card",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ product: produtosArray }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`erro status: ${response.status}`);
@@ -116,7 +121,7 @@ export const delProdutoLogado = async (ean) => {
   console.log(ean);
   try {
     const response = await fetch(
-      `http://20.197.251.208/v1/api/card/delprod/${ean}`,
+      `https://iceberg.savantweb.com.br/v1/api/card/delprod/${ean}`,
       {
         method: "DELETE",
         headers: {
@@ -137,7 +142,9 @@ export const delProdutoLogado = async (ean) => {
   }
 };
 export async function TextBannerHome() {
-  const response = await fetch("http://20.197.251.208/v1/api/banners");
+  const response = await fetch(
+    "https://iceberg.savantweb.com.br/v1/api/banners"
+  );
   const data = await response.json();
 
   if (response.ok) {

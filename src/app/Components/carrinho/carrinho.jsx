@@ -50,10 +50,8 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
             <RiShoppingBagFill size={30} className="text-primaria" />
             <h3 className="text-lg">{`Você adicionou ${
               usuarioLogado
-                ? carrinhoApi && carrinhoApi.length === undefined || carrinhoApi.length === 0
-                  ? "0"
-                  : carrinhoApi.length
-                : carrinhoLocalStorage.length
+                ? (carrinhoApi && carrinhoApi.length) || 0
+                : (carrinhoLocalStorage && carrinhoLocalStorage.length) || 0
             } itens`}</h3>
           </div>
 
@@ -116,12 +114,13 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
                   </span>
                 </div>
               </div>
-              <button className="text-branco text-lg font-semibold leading-[140%] bg-neutral-dark text-center w-full py-5 rounded-[10px]"
+              <button
+                className="text-branco text-lg font-semibold leading-[140%] bg-neutral-dark text-center w-full py-5 rounded-[10px]"
                 onClick={() => {
-                  if(usuarioLogado) {
-                    router.push("/carrinho")
+                  if (usuarioLogado) {
+                    router.push("/carrinho");
                   } else {
-                    router.push("/auth/login")
+                    router.push("/auth/login");
                   }
                 }}
               >

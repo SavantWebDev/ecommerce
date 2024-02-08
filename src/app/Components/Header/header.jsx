@@ -67,16 +67,20 @@ export default function Header() {
     setIsMenuOpen(false);
     document.body.classList.remove("overflow-hidden");
   }
+
   function Logout(e) {
     e.preventDefault();
     localStorage.removeItem("token");
+
     router.push("/home");
-    setNav(false);
   }
   function signIn(e) {
     e.preventDefault();
-
     router.push("/auth/login");
+  }
+  function cadastroClick(e) {
+    e.preventDefault();
+    router.push("/auth/cadastro");
   }
 
   const navigationMobile = (e) => {
@@ -200,7 +204,9 @@ export default function Header() {
                     <DropdownItem key="settings" onClick={signIn}>
                       Login
                     </DropdownItem>
-                    <DropdownItem key="team_settings">Cadastre-se</DropdownItem>
+                    <DropdownItem key="team_settings" onClick={cadastroClick}>
+                      Cadastre-se
+                    </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </div>
