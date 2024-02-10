@@ -63,6 +63,9 @@ export default function Loginauth() {
       console.log(token);
       console.log(resVerify);
       router.push("/home");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       alert(error.message);
       router.push("/auth/login");

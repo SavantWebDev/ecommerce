@@ -138,14 +138,14 @@ export default function Page({ params }) {
       {/* <Image className='max-w-full w-[1519px] h-[253px]' src={banner2} alt=''/> */}
       {/* Header pagina */}
 
-      <div className="flex justify-between sm:max-2xl:flex-row items-center sm:max-2xl:items-center text-cor-preto mt-[50px] mb:max-mn:flex-row mb:max-mn:items-start mb:max-mn:gap-3">
-        <h3 className="mn:max-2xl:text-[24px] text-[24px] font-semibold leading-[normal] mb:max-mn:whitespace-nowrap">
+      <div className="flex justify-between sm:max-2xl:flex-row items-center sm:max-2xl:items-center text-cor-preto mt-[50px] mb:max-sm:flex-col mb:max-sm:items-start mb:max-mn:gap-3">
+        <h3 className="mn:max-2xl:text-[24px] text-[24px] font-semibold leading-[normal] mb:max-mn:whitespace-normal">
           Buscando por{" "}
-          <span className="text-amarelo-claro">“{produtoDecodificado}”</span>
+          <span className="text-amarelo-claro ">“{produtoDecodificado}”</span>
         </h3>
         <div
           className="flex items-center w-auto gap-[2.75rem] mb:max-mn:w-full sm:justify-between sm:w-auto mn:justify-end
-        mn:w-auto mb:justify-end mb:w-full"
+        mn:w-auto mb:justify-start mb:w-full"
         >
           {/* <div className="flex items-center gap-[1rem] sm:max-2xl:order-1 mb:max-mn:order-4">
             <span className="text-[32px] text-cinza cursor-pointer">
@@ -230,7 +230,7 @@ export default function Page({ params }) {
                 <Cards
                   key={produto.ean}
                   ean={produto.ean}
-                  imagem={produto.image.replace("\\", "")}
+                  imagem={produto.image.replace("/", "")}
                   nome={produto.nomeproduto}
                   promoQtd="Compre 3 leve 1"
                   // promoNovo="Novo"
@@ -404,7 +404,7 @@ export default function Page({ params }) {
           /> */}
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center mb-[20%] mt-[20%] text-2xl font-bold">
+          <div className="flex flex-col justify-center items-center mb-[20%] mt-[20%] text-2xl font-bold text-center px-2">
             <h1>
               Lamentamos, nenhum produto encontrado com esse critério de
               pesquisa.

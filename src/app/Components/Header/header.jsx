@@ -34,8 +34,11 @@ import { IoChevronBack } from "react-icons/io5";
 import { Cairo } from "next/font/google";
 import { useContext } from "react";
 import { UserContext } from "../context/UsuarioContext";
+import { CarrinhoContext } from "../context/CarrinhoContext";
 export default function Header() {
   const { checkToken, perfil } = useContext(UserContext);
+  const { contadorCarrinho } = useContext(CarrinhoContext);
+  const quantidadeItensNoCarrinho = contadorCarrinho();
   const [pesquisaInput, setPesquisaInput] = useState([]);
   const [nav, setNav] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,8 +74,10 @@ export default function Header() {
   function Logout(e) {
     e.preventDefault();
     localStorage.removeItem("token");
-
     router.push("/home");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
   function signIn(e) {
     e.preventDefault();
@@ -110,9 +115,9 @@ export default function Header() {
       setNav(result);
     }
     fetchData();
-    console.log(perfil);
+
     setImg(userImg);
-  }, [checkToken, pathname, router, perfil, userImg]);
+  }, [checkToken, userImg]);
 
   return (
     <>
@@ -222,7 +227,7 @@ export default function Header() {
                 />
                 <div className="absolute w-[13px] h-[14px] top-0 right-0 bg-[#fff] fill-[#fff] drop-shadow-lg flex items-center justify-center rounded-full">
                   <span className="text-primaria text-[12px] font-semibold">
-                    1
+                    {quantidadeItensNoCarrinho}
                   </span>
                 </div>
               </div>
@@ -344,7 +349,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/fidelidade"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
                 >
                   <IoSnow size={24} />

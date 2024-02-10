@@ -180,14 +180,14 @@ export default function Page({ params }) {
           </button>
         </div>
         {/* <div className="grid justify-center items-center 2xl:grid-cols-4 xl:grid-cols-4 gap-10 lg:grid-cols-4  lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1"> */}
-        <div className="flex  3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
-          {produtos ? (
-            produtos.map((produto) => {
+        {produtos ? (
+          <div className="flex  3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
+            {produtos.map((produto) => {
               return (
                 <Cards
                   key={produto.ean}
                   ean={produto.ean}
-                  imagem={produto.image.replace("\\", "")}
+                  imagem={produto.image.replace("/", "")}
                   nome={produto.nomeproduto}
                   promoQtd="Compre 3 leve 1"
                   // promoNovo="Novo"
@@ -198,18 +198,19 @@ export default function Page({ params }) {
                   loading={loading}
                 />
               );
-            })
-          ) : (
-            <div className="flex w-full flex-col justify-center items-center mb-[5%] mt-[5%] text-2xl font-bold">
-              <h1>Lamentamos, nenhum produto encontrado nessa categoria.</h1>
-              <p>Tente novamente em outro categoria...</p>
-            </div>
-          )}
-          <ModalCard />
+            })}
+            <ModalCard />
+          </div>
+        ) : (
+          <div className="flex w-full flex-col justify-center items-center mb-[5%] mt-[5%] text-center px-2 mb:max-3xl:w-full mb:max-3xl:flex mb:max-3xl:flex-col mb:max-3xl:justify-center mb:max-3xl:items-center text-2xl font-bold">
+            <h1>Lamentamos, nenhum produto encontrado nessa categoria.</h1>
+            <p>Tente novamente em outro categoria...</p>
+          </div>
+        )}
 
-          {/* <SkeletonCards/> */}
+        {/* <SkeletonCards/> */}
 
-          {/* <Cards
+        {/* <Cards
             imagem={"/images/Produtos/image 73.png"}
             nome="Whisky Johnnie Walker Green Label 750 ml"
             promoQtd="Compre 3 leve 1"
@@ -269,7 +270,7 @@ export default function Page({ params }) {
             valor="R$ 50,00"
             parcelas="até 4x sem juros"
           /> */}
-        </div>
+
         <div className="flex justify-center pt-[80px] pb-[120px] items-center">
           {/* <Paginacao 
           />

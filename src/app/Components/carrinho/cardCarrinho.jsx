@@ -2,12 +2,20 @@ import Image from "next/image";
 import { useContext } from "react";
 import { CarrinhoContext } from "../context/CarrinhoContext";
 
-export default function CardCarrinho({ ean, image, nome, valor, quantidade, pix }) {
+export default function CardCarrinho({
+  ean,
+  image,
+  nome,
+  valor,
+  quantidade,
+  pix,
+}) {
   // console.log("ean produto carrinho:" ,ean)
   // console.log("ean produto carrinho:" ,nome)
   // const { carrinhoCont, setCarrinhoCont, removerProduto, addQtdCarrinho, removeQtdCarrinho } =
   //   useContext(CarrinhoContext);
-  const {carrinhoLocalStorage, setCarrinhoLocalStorage, removerProduto, addQtdCarrinho, removeQtdCarrinho} = useContext(CarrinhoContext)
+  const { removerProduto, addQtdCarrinho, removeQtdCarrinho } =
+    useContext(CarrinhoContext);
   console.log(pix);
   return (
     <div className="w-full h-[204px] flex items-center justify-between gap-3 border border-solid border-[#EAEAEA] rounded-xl px-5">
@@ -35,14 +43,17 @@ export default function CardCarrinho({ ean, image, nome, valor, quantidade, pix 
         <span className="line-through text-cinza"> R$ {valor}</span>
         <span className="text-primaria text-xl font-semibold">{pix}</span>
         <div className="flex items-center gap-5">
-          <button className="w-[34px] h-[34px] font-semibold text-xl flex items-center justify-center bg-cinza text-neutral-dark p-1 rounded-full"
-          onClick={(e) => removeQtdCarrinho(ean,quantidade)}
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl flex items-center justify-center bg-cinza text-neutral-dark p-1 rounded-full"
+            onClick={(e) => removeQtdCarrinho(ean, quantidade)}
+            disabled={quantidade === 1}
           >
             -
           </button>
           <span className="font-bold">{quantidade}</span>
-          <button className="w-[34px] h-[34px] font-semibold text-xl  flex items-center justify-center bg-primaria text-neutral-dark p-1 rounded-full"
-          onClick={(e) => addQtdCarrinho(ean,quantidade,e)}
+          <button
+            className="w-[34px] h-[34px] font-semibold text-xl  flex items-center justify-center bg-primaria text-neutral-dark p-1 rounded-full"
+            onClick={(e) => addQtdCarrinho(ean, quantidade, e)}
           >
             +
           </button>

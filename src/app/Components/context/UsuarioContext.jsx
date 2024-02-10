@@ -88,6 +88,9 @@ export const UsuarioProvider = ({ children }) => {
           return pegaToken;
         }
       } catch (error) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         console.log(error);
         return false;
       }

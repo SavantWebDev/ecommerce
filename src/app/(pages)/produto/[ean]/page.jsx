@@ -93,7 +93,7 @@ export default function Produto({ params }) {
           {/* Whisky Johnnie Walker Green Label 750 ml */}
         </h2>
       )}
-      <section className="flex flex-col w-full gap-5 mb-10 mn:w-[446px] mn:mx-auto sm:w-full md:flex-row md:w-full lg:flex-row lg:m-0 lg:w-full lg:justify-normal lg:gap-10 lg:justify-between">
+      <section className="flex flex-col w-full gap-5 mb-10 mn:w-[446px] mn:mx-auto sm:w-full md:flex-row md:w-full lg:flex-row lg:m-0 lg:w-full  lg:gap-10 lg:justify-between">
         {loading ? (
           <div className="3xl:!mx-auto 2xl:!w-[556px] xl:!w-[550px] animate-pulse mn:mx-auto lg:mx-0  mn:max-sm:!h-[446px] mn:max-lg:!w-[446px] lg:!w-[446px] mb:h-[400px] bg-cinza-skeleton flex items-center justify-center rounded-xl">
             <svg
@@ -385,7 +385,10 @@ export default function Produto({ params }) {
       </section>
 
       <section className="mb-5">
-        <CardCategorias categoria="Whisky" corPadrao="bg-branco" />
+        <CardCategorias
+          categoria={produto.nomecategoria}
+          corPadrao="bg-branco"
+        />
       </section>
 
       <section>
@@ -407,7 +410,7 @@ export default function Produto({ params }) {
               <Cards
                 key={prod.ean}
                 ean={prod.ean}
-                imagem={prod.image.replace("\\", "")}
+                imagem={prod.image.replace("/", "")}
                 nome={prod.nomeproduto}
                 promoQtd="Compre 3 leve 1"
                 // promoNovo="Novo"

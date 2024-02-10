@@ -101,6 +101,12 @@ export default function CarrosselProdutos() {
           }`}
           onClick={(e) => {
             filtraItem(e.target.innerHTML);
+            getProductHome().then((products) => {
+              setProdutos(products);
+            });
+            // getProductHomeSecond().then((products) => {
+            //   setProdutosSecond(products)
+            // })
           }}
         >
           Recomendados

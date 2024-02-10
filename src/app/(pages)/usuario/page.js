@@ -1,5 +1,6 @@
 import LastOrders from "@/app/Components/usuario/orders/lastOrders";
 import PerfilUser from "@/app/Components/usuario/perfil";
+import PerfilUserHome from "@/app/Components/usuario/perfilUserHome";
 
 import PtsFidelidade from "@/app/Components/usuario/pontosFidelidade";
 import Image from "next/image";
@@ -12,7 +13,7 @@ import { MdOutlineMail } from "react-icons/md";
 export default function Usuario() {
   return (
     <>
-      <PerfilUser />
+      <PerfilUserHome />
       <div className="w-full flex gap-[10px] mt-[10px]">
         <PtsFidelidade
           icone={<FaRegSnowflake size={40} className="text-amarelo-mostarda" />}

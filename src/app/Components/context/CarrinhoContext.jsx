@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import { delProdutoLogado, enviaProdutoLogado } from "../../api/apiEcommerce";
 import { UserContext } from "./UsuarioContext";
@@ -32,6 +32,7 @@ export const CarrinhoProvider = ({ children }) => {
   const [totalCarrinho, setTotalCarrinho] = useState();
   const [SubTotalCarrinho, setSubTotalCarrinho] = useState();
   const { checkToken } = useContext(UserContext);
+
   useEffect(() => {
     const carrinhoDoStorage = localStorage.getItem("carrinho");
     setCarrinhoSalvo(carrinhoDoStorage);
@@ -50,6 +51,18 @@ export const CarrinhoProvider = ({ children }) => {
       }
     };
   }, [timerBtn]);
+
+  const contadorCarrinho = useCallback(() => {
+    return usuarioLogado
+      ? carrinhoApi.length === undefined || carrinhoApi.length === 0
+        ? "0"
+        : carrinhoApi.length
+      : carrinhoLocalStorage.length;
+  }, [usuarioLogado, carrinhoApi, carrinhoLocalStorage]);
+
+  useEffect(() => {
+    contadorCarrinho;
+  }, [contadorCarrinho, carrinhoApi, carrinhoLocalStorage]);
 
   let quantidadeprodutoAdd = {};
   let clickContador = {};
@@ -355,19 +368,41 @@ export const CarrinhoProvider = ({ children }) => {
   }
 
   function removeQtdCarrinho(ean, quantidade) {
-    setCarrinhoLocalStorage(
-      carrinhoLocalStorage.map((item) => {
-        if (item.eanproduto === ean) {
-          console.log(item.ean);
-          console.log(item.eanproduto);
-          const remove = quantidade > 1 ? quantidade - 1 : 1;
-          return { ...item, qnt: remove };
-        }
-        return item;
-      })
-    );
-    if (usuarioLogado) {
-      iniciaContadorDel(ean, quantidade);
+    if (quantidade === 1) {
+      setCarrinhoLocalStorage((carrinhoAntigo) =>
+        carrinhoAntigo.filter(
+          (itemNoCarrinho) => itemNoCarrinho.eanproduto !== ean
+        )
+      );
+
+      if (usuarioLogado) {
+        delProdutoLogado(ean);
+        setCarrinhoApi((carrinhoAntigo) =>
+          carrinhoAntigo.filter(
+            (itemNoCarrinho) => itemNoCarrinho.eanproduto !== ean
+          )
+        );
+      }
+    } else {
+      // Caso contrário, apenas diminua a quantidade
+      setCarrinhoLocalStorage(
+        carrinhoLocalStorage.map((item) => {
+          if (item.eanproduto === ean) {
+            const remove = quantidade - 1;
+            return { ...item, qnt: remove };
+          }
+          return item;
+        })
+      );
+
+      if (usuarioLogado && quantidade > 1) {
+        // Chama iniciaContadorDel apenas se a quantidade for maior que 1
+        iniciaContadorDel(ean, quantidade);
+      }
+
+      // if (usuarioLogado) {
+      //   iniciaContadorDel(ean, quantidade);
+      // }
     }
   }
 
@@ -434,13 +469,16 @@ export const CarrinhoProvider = ({ children }) => {
 
   useEffect(() => {
     function enviarCarrinhoDeslogadoParaApi() {
-      console.log(carrinhoLocalStorage.length);
-      console.log(carrinhoLocalStorage);
+      // console.log(carrinhoLocalStorage.length);
+      // console.log("🚀 ➽ file: CarrinhoContext.jsx:451  ➽ enviarCarrinhoDeslogadoParaApi  ➽ carrinhoLocalStorage.length ⏩" , carrinhoLocalStorage.length)
+      // console.log(carrinhoLocalStorage);
+      // console.log("🚀 ➽ file: CarrinhoContext.jsx:453  ➽ enviarCarrinhoDeslogadoParaApi  ➽ carrinhoLocalStorage ⏩" , carrinhoLocalStorage)
       if (usuarioLogado && carrinhoLocalStorage.length > 0) {
         enviaProdutoLogado(carrinhoLocalStorage);
-        console.log("delete carrinho");
+        // console.log("delete carrinho");
+        // console.log("🚀 ➽ file: CarrinhoContext.jsx:457  ➽ enviarCarrinhoDeslogadoParaApi  ➽⏩" , "delete carrinho")
         localStorage.removeItem("carrinho");
-        window.location.reload();
+        // window.location.reload();s
       }
     }
     enviarCarrinhoDeslogadoParaApi();
@@ -515,6 +553,7 @@ export const CarrinhoProvider = ({ children }) => {
         carrinhoApi,
         carrinhoApiLS,
         setCarrinhoApiLs,
+        contadorCarrinho,
       }}
     >
       {children}
