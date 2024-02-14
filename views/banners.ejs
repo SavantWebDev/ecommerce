@@ -45,6 +45,7 @@
                         <button type="submit">Enviar Banners</button>
                     </form>
                     -->
+
                     <!-- Banners 2-->
                     <div class="ban-all">
                         <h2 class="ban-h2">Banners</h2>
@@ -53,39 +54,62 @@
                                 <p class="ban-sub-t">Banner 1</p>
                                 <p class="ban-t-loc">Esse banner está localizado em xxxx xxxx xxxxx xxxxx</p>
                                 <form action="" method="post" class="ban-all-form">
-                                    <label for="tituloBanner" class="ban-form-l">Título: </label>
-                                    <input type="text" name="tituloBanner" placeholder="Titulo do Banner"
-                                        class="ban-form-i">
-                                    <label for="descricaoBanner" class="ban-form-l">Descrição: </label>
-                                    <input type="text" name="descricaoBanner" placeholder="Descrição do banner"
-                                        class="ban-form-i">
-                                    <label for="imagemBanner" class="ban-form-l">Imagem: </label>
-                                    <input type="file" name="imagemBanner" placeholder="Selecione o arquivo"
-                                        class="ban-form-i">
+                                    <div class="ban-al-form-3">
+
+                                        <div class="image-upload img-form-ex">
+                                            <input type="file" id="input" accept="image/*"
+                                                onchange="previewImage(event)">
+                                            <label for="input" class="blurry-button">
+                                                <img id="buttonImage" src="/src/image/banner.png"
+                                                    alt="Selecione uma imagem">
+                                            </label>
+                                        </div>
+
+                                        <div class="ban-al-form-2 ">
+                                            <label for="tituloBanne" class="ban-form-l">Título: </label>
+                                            <input type="text" name="tituloBanner" placeholder="Titulo do Banner"
+                                                class="ban-form-i">
+                                            <label for="descricaoBanner" class="ban-form-l">Descrição: </label>
+                                            <input type="text" name="descricaoBanner" placeholder="Descrição do banner"
+                                                class="ban-form-i">
+                                        </div>
+                                    </div>
 
                                     <input type="button" value="Definir Banner" class="ban-form-b">
                                 </form>
                             </div>
-
 
                             <div class="ban-card">
-                                <p class="ban-sub-t">Banner 2</p>
+                                <p class="ban-sub-t">Banner 1</p>
                                 <p class="ban-t-loc">Esse banner está localizado em xxxx xxxx xxxxx xxxxx</p>
                                 <form action="" method="post" class="ban-all-form">
-                                    <label for="tituloBanner" class="ban-form-l">Título: </label>
-                                    <input type="text" name="tituloBanner" placeholder="Titulo do Banner"
-                                        class="ban-form-i">
-                                    <label for="descricaoBanner" class="ban-form-l">Descrição: </label>
-                                    <input type="text" name="descricaoBanner" placeholder="Descrição do banner"
-                                        class="ban-form-i">
-                                    <label for="imagemBanner" class="ban-form-l">Imagem: </label>
-                                    <input type="file" name="imagemBanner" placeholder="Selecione o arquivo"
-                                        class="ban-form-i">
+                                    <div class="ban-al-form-3">
+
+                                        <div class="image-upload img-form-ex">
+                                            <input type="file" id="input" accept="image/*"
+                                                onchange="previewImage(event)">
+                                            <label for="input" class="blurry-button">
+                                                <img id="buttonImage" src="/src/image/banner.png"
+                                                    alt="Selecione uma imagem">
+                                            </label>
+                                        </div>
+
+                                        <div class="ban-al-form-2 ">
+                                            <label for="tituloBanne" class="ban-form-l">Título: </label>
+                                            <input type="text" name="tituloBanner" placeholder="Titulo do Banner"
+                                                class="ban-form-i">
+                                            <label for="descricaoBanner" class="ban-form-l">Descrição: </label>
+                                            <input type="text" name="descricaoBanner" placeholder="Descrição do banner"
+                                                class="ban-form-i">
+                                        </div>
+                                    </div>
 
                                     <input type="button" value="Definir Banner" class="ban-form-b">
                                 </form>
                             </div>
+
                         </div>
+                        <!--
                         <div class="ban-al-1 ban-c-al-1">
                             <div class="ban-card">
                                 <p class="ban-sub-t">Banner 3</p>
@@ -163,11 +187,22 @@
                                 </form>
                             </div>
                         </div>
+                        -->
                     </div>
 
 
             </main>
             <%- include('./partials/scripts.ejs') %>
+                <script>
+                    function previewImage(event) {
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                            const buttonImage = document.getElementById('buttonImage');
+                            buttonImage.src = reader.result;
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+                </script>
     </body>
 
 </html>
