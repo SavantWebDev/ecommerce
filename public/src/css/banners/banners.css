@@ -136,6 +136,11 @@ textarea {
     height: 60px;
 }
 
+.banner-img-ex img {
+    width: 350px;
+    height: auto;
+}
+
 /*Tabela*/
 
 #tabela {
@@ -358,6 +363,12 @@ table tbody tr:nth-child(even) {
     font-weight: 700;
 }
 
+@media (max-width: 1200px) {
+    .banner-img-ex-3 {
+        display: none;
+    }
+}
+
 @media (max-width: 759px) {
     .ban-al-form-3 {
         flex-direction: column;
@@ -366,6 +377,15 @@ table tbody tr:nth-child(even) {
 
     .img-form-ex {
         display: flex;
+    }
+
+    .banner-img-ex-2 {
+        display: none;
+    }
+
+    .ban-card {
+        width: 100%
+        ;
     }
 }
 
