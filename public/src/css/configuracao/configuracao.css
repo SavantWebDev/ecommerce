@@ -5,6 +5,7 @@
     padding: 30px;
     border-radius: 15px;
 }
+
 .conf-h2 {
     font-size: 24px;
     color: #000000;
@@ -12,15 +13,17 @@
     text-transform: uppercase;
     font-weight: 700;
 }
+
 .conf-tam-input {
     width: 90px;
 }
-.conf-al-p-1{
+
+.conf-al-p-1 {
     padding-top: 20px;
     padding-bottom: 10px;
 }
 
-.conf-btn-atualizar{
+.conf-btn-atualizar {
     background-color: #34495e;
     color: white;
     border: none;
@@ -30,15 +33,23 @@
     border-radius: 5px;
     padding: 10px;
 }
-.conf-btn-atualizar:hover{
+
+.conf-btn-atualizar:hover {
     background-color: gray;
 }
 
-.conf-al-form{
+.conf-al-form {
     width: 100%;
 }
-.conf-al-btn{
+
+.conf-al-btn {
     margin-top: 20px;
     margin-left: 50%;
     padding-right: 30px;
+}
+
+@media (max-width:475px) {
+    .conf-al-btn {
+        margin-left: 15%;
+    }
 }

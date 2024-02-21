@@ -3,7 +3,7 @@
 <%- include('./partials/header.ejs') %>
 
     <head>
-        <!--<link rel="stylesheet" href="/src/css/configuracao/conficguracao.css">-->
+        <link rel="stylesheet" href="/src/css/configuracao/conficguracao.css">
         <link rel="stylesheet" href="/src/css/banners/banners.css">
 
     </head>
@@ -12,18 +12,23 @@
         <%- include('./partials/nav.ejs') %>
             <main>
                 <%- include('./partials/usermenu.ejs') %>
-                    <!-- Configuração:
+                <!-- Configuração:
+                -->
                     <div class="conf-all">
                         <h2 class="conf-h2">Configuração</h2>
                         <p class="conf-al-p-1">Conforme as especificações do sistema e suas funcionalidades, concordo que o mesmo trabalhará da seguinte maneira:</p>
                         <form action="" class="conf-al-form">
                             <div class="conf-al-form">
-                                <label for="valorDinheiro">A partir de R$</label>
+                                <label for="">A partir de R$</label>
                                 <input type="number" name="valorDinheiro" id="valorDinheiro" class="conf-tam-input" placeholder="000,00">
-                                <label for="pontosChopp">o cliente receberá </label>
+
+                                
+                                <label for="">o cliente receberá </label>
                                 <input type="number" name="pontosChopp" id="pontosChopp" class="conf-tam-input" placeholder="000">
-                                <label for="cashBack">mls de Chopp, e R$</label>
+
+                                <label for="">mls de Chopp, e R$</label>
                                 <input type="number" name="cashBack" id="cashBack" class="conf-tam-input" placeholder="000,00">
+
                                 <label for=""> de Cash Back.</label>
                             </div>
                             <div class="conf-al-btn">
@@ -31,7 +36,6 @@
                             </div>
                         </form>
                     </div>
-                    -->
 
                     <!-- Banners
                     <form action="/banners" method="post" enctype="multipart/form-data">
@@ -48,6 +52,7 @@
                     -->
 
                     <!-- Banners 2-->
+                    <!--
                     <div class="ban-all">
                         <h2 class="ban-h2">Banners</h2>
                         <div class="ban-al-1">
@@ -89,7 +94,7 @@
                                 <img src="/src/image/Marketing4.png" alt="" srcset="">
                             </div>
                         </div>
-                        <!-- Tabela -->
+                        -- Tabela --
                         <div>
                             <table id="tabela" class="cell-border tabela">
                                 <thead>
@@ -155,6 +160,7 @@
                         reader.readAsDataURL(event.target.files[0]);
                     }
                 </script>
+            -->
     </body>
 
 </html>
