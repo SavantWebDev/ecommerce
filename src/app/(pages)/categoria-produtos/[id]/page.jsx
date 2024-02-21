@@ -26,6 +26,7 @@ export default function Page({ params }) {
   const [loading, setLoading] = useState(true);
   const [produtos, setProdutos] = useState([]);
   const [totalPaginas, setTotalPaginas] = useState();
+  const [totalProdutos, setTotalProdutos] = useState()
   const [pagina, setPagina] = useState();
   const [currentPage, setCurrentPage] = React.useState(1);
   console.log(params.id);
@@ -37,6 +38,7 @@ export default function Page({ params }) {
       setProdutos(resultado.produtos);
       setPagina(resultado.page);
       setTotalPaginas(resultado.totalpaginas);
+      setTotalProdutos(resultado.totalproduto)
       setTimeout(() => {
         setLoading(false);
       }, 2000);
@@ -157,7 +159,7 @@ export default function Page({ params }) {
           <p className="flex flex-col text-cinza text-[16px] leading-[normal] sm:max-2xl:order-4  mb:max-mn:order-1 ">
             Resultados:
             <span className="text-cor-preto text-[24px] font-semibold leading-[normal] ">
-              115 itens
+              {totalProdutos} itens
             </span>
           </p>
         </div>

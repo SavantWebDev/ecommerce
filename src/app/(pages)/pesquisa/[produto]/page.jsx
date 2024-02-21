@@ -29,6 +29,7 @@ export default function Page({ params }) {
   const [produtos, setProdutos] = useState([]);
   const [pagina, setPagina] = useState();
   const [totalPaginas, setTotalPaginas] = useState();
+  const [totalProdutos, setTotalProdutos] = useState();
   const [currentPage, setCurrentPage] = React.useState(1);
   // console.log(params.id)
   // console.log(params.page)
@@ -40,6 +41,7 @@ export default function Page({ params }) {
       setButtonDisabled(true);
       setPagina(resultado.page);
       setTotalPaginas(resultado.totalpaginas);
+      setTotalProdutos(resultado.totalproduto)
     }
 
     fetchBuscaProdutos();
@@ -158,7 +160,7 @@ export default function Page({ params }) {
           <p className="flex flex-col text-cinza text-[16px] leading-[normal] sm:max-2xl:order-4  mb:max-mn:order-1 ">
             Resultados:
             <span className="text-cor-preto text-[24px] font-semibold leading-[normal] ">
-              115 itens
+              {totalProdutos} itens
             </span>
           </p>
         </div>
@@ -230,7 +232,7 @@ export default function Page({ params }) {
                 <Cards
                   key={produto.ean}
                   ean={produto.ean}
-                  imagem={produto.image.replace("/", "")}
+                  imagem={produto.image}
                   nome={produto.nomeproduto}
                   promoQtd="Compre 3 leve 1"
                   // promoNovo="Novo"

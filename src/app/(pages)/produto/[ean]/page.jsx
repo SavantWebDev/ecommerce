@@ -112,7 +112,7 @@ export default function Produto({ params }) {
           <div className="mn:mx-auto lg:w-[40%] lg:mx-0">
             <Image
               className="mx-auto"
-              src={produto.image?.replace("/", "")}
+              src={produto.image}
               width={446}
               height={446}
               alt="imagem do produto"
@@ -410,7 +410,7 @@ export default function Produto({ params }) {
               <Cards
                 key={prod.ean}
                 ean={prod.ean}
-                imagem={prod.image.replace("/", "")}
+                imagem={prod.image}
                 nome={prod.nomeproduto}
                 promoQtd="Compre 3 leve 1"
                 // promoNovo="Novo"
