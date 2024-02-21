@@ -18,6 +18,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
     totalCarrinho,
     SubTotalCarrinho,
   } = useContext(CarrinhoContext);
+    console.log("🚀 ➽ file: carrinho.jsx:21  ➽ BarraCarrinho  ➽ carrinhoApi ⏩" , carrinhoApi)
   console.log(carrinhoLocalStorage.length);
   console.log(carrinhoLocalStorage);
   // console.log(usuarioLogado)
@@ -70,7 +71,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
                   <CardCarrinho
                     ean={item.eanproduto}
                     nome={item.nomeproduto}
-                    image={item.image}
+                    image={item.image.replace("\\", "")}
                     valor={item.valor}
                     pix={item.valor_pix}
                     quantidade={item.qnt}
@@ -86,7 +87,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
                 <CardCarrinho
                   ean={item.eanproduto}
                   nome={item.nomeproduto}
-                  image={item.image}
+                  image={item.image.replace("\\", "")}
                   pix={item.pix}
                   valor={item.valor}
                   quantidade={item.qnt}

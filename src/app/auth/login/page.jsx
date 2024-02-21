@@ -65,7 +65,7 @@ export default function Loginauth() {
       router.push("/home");
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 2000);
     } catch (error) {
       alert(error.message);
       router.push("/auth/login");

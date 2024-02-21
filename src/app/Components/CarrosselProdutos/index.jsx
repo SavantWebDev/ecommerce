@@ -53,9 +53,9 @@ export default function CarrosselProdutos() {
     // });
 
     Promise.all([fetchProdutos(), fetchProdutosSecond()]).then(() => {
-      setTimeout(() => {
+      // setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      // }, 2000);
     });
 
     fetchProdutos();
@@ -156,6 +156,7 @@ export default function CarrosselProdutos() {
         <div className="w-full">
           <div className="relative w-full">
             <Swiper
+            className="carousel-produtos"
               modules={[Navigation, Pagination, Scrollbar, A11y]}
               slidesPerView={4}
               navigation
@@ -196,10 +197,15 @@ export default function CarrosselProdutos() {
               keyboard
               spaceBetween={20}
             >
-              {skeletonCard.map((card, i) => (
-                // console.log(item.created_data)
-                <SwiperSlide key={i}>{card}</SwiperSlide>
-              ))}
+              <SwiperSlide key={1}>
+                <div className="flex gap-[50px] justify-between w-full">
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                </div>
+              </SwiperSlide>
+            
             </Swiper>
           </div>
           <div className="relative w-full mt-10">
@@ -245,10 +251,14 @@ export default function CarrosselProdutos() {
               keyboard
               spaceBetween={20}
             >
-              {skeletonCard.map((card, i) => (
-                // console.log(item.created_data)
-                <SwiperSlide key={i}>{card}</SwiperSlide>
-              ))}
+              <SwiperSlide key={1}>
+                <div className="flex gap-[50px] justify-between w-full">
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                <Cards loading={loading} />
+                </div>
+              </SwiperSlide>
             </Swiper>
           </div>
         </div>

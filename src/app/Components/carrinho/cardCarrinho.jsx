@@ -10,6 +10,7 @@ export default function CardCarrinho({
   quantidade,
   pix,
 }) {
+  console.log("🚀 ➽ file: cardCarrinho.jsx:13  ➽ image ⏩" , image)
   // console.log("ean produto carrinho:" ,ean)
   // console.log("ean produto carrinho:" ,nome)
   // const { carrinhoCont, setCarrinhoCont, removerProduto, addQtdCarrinho, removeQtdCarrinho } =
@@ -22,8 +23,8 @@ export default function CardCarrinho({
       {/* <p>{ean}</p> */}
       <div className="w-[30%]">
         <Image
-          // src={image?.replace("/", "")}
-          src="/images/produtos/image 73.png"
+          src={image?.replace("//", "")}
+          // src={image}
           width={200}
           height={200}
           alt="Produto carrinho"

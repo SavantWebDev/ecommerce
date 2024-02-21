@@ -187,12 +187,13 @@ export default function Page({ params }) {
                 <Cards
                   key={produto.ean}
                   ean={produto.ean}
-                  imagem={produto.image.replace("/", "")}
+                  // imagem={produto.image.replace("/", "")}
+                  imagem={produto.image}
                   nome={produto.nomeproduto}
                   promoQtd="Compre 3 leve 1"
                   // promoNovo="Novo"
                   promoValor="R$ 55,00 a partir de 6 un."
-                  a="50,00"
+                  a={produto.valor_pix}
                   valor={produto.valor}
                   parcelas="até 4x sem juros"
                   loading={loading}
