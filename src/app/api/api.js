@@ -111,9 +111,5 @@ export const cadastro = async (
   );
 
   console.log(response);
-  if (response.ok) {
-    return await response.json();
-  } else {
-    throw new Error("Erro ao enviar a mensagem.");
-  }
+  return response;
 };

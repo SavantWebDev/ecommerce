@@ -26,6 +26,8 @@ export default function Page({ params }) {
     "🚀 ➽ file: page.jsx:22  ➽ Page  ➽ produtoDecodificado ⏩",
     produtoDecodificado
   );
+
+  const [loading, setLoading] = useState(true);
   const [produtos, setProdutos] = useState([]);
   const [pagina, setPagina] = useState();
   const [totalPaginas, setTotalPaginas] = useState();
@@ -41,7 +43,8 @@ export default function Page({ params }) {
       setButtonDisabled(true);
       setPagina(resultado.page);
       setTotalPaginas(resultado.totalpaginas);
-      setTotalProdutos(resultado.totalproduto)
+      setTotalProdutos(resultado.totalproduto);
+      setLoading(false);
     }
 
     fetchBuscaProdutos();
@@ -160,7 +163,7 @@ export default function Page({ params }) {
           <p className="flex flex-col text-cinza text-[16px] leading-[normal] sm:max-2xl:order-4  mb:max-mn:order-1 ">
             Resultados:
             <span className="text-cor-preto text-[24px] font-semibold leading-[normal] ">
-              {totalProdutos} itens
+              {totalProdutos ? `${totalProdutos} itens` : "0 itens"}
             </span>
           </p>
         </div>
@@ -168,49 +171,50 @@ export default function Page({ params }) {
 
       {/* cards produtos */}
       <section className="mt-[30px]">
-        {produtos ? (
-          <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
-            <button className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]">
-              Recomendados
-            </button>
-            <button className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
-              Entrega grátis
-            </button>
-            <button className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
-              Mais Vendidos
-            </button>
-            <button className="text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
-              Promoções
-            </button>
-          </div>
-        ) : (
-          <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
-            <button
-              disabled={isButtonDisabled}
-              className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]"
-            >
-              Recomendados
-            </button>
-            <button
-              disabled={isButtonDisabled}
-              className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
-            >
-              Entrega grátis
-            </button>
-            <button
-              disabled={isButtonDisabled}
-              className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
-            >
-              Mais Vendidos
-            </button>
-            <button
-              disabled={isButtonDisabled}
-              className="text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
-            >
-              Promoções
-            </button>
-          </div>
-        )}
+        {produtos
+          ? ""
+          : // <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
+            //   <button className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]">
+            //     Recomendados
+            //   </button>
+            //   <button className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
+            //     Entrega grátis
+            //   </button>
+            //   <button className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
+            //     Mais Vendidos
+            //   </button>
+            //   <button className="text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
+            //     Promoções
+            //   </button>
+            // </div>
+            ""
+            // <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
+            //   <button
+            //     disabled={isButtonDisabled}
+            //     className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]"
+            //   >
+            //     Recomendados
+            //   </button>
+            //   <button
+            //     disabled={isButtonDisabled}
+            //     className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
+            //   >
+            //     Entrega grátis
+            //   </button>
+            //   <button
+            //     disabled={isButtonDisabled}
+            //     className="text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
+            //   >
+            //     Mais Vendidos
+            //   </button>
+            //   <button
+            //     disabled={isButtonDisabled}
+            //     className="text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]"
+            //   >
+            //     Promoções
+            //   </button>
+            // </div>
+        }
         {/* <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
           <button className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]">
             Recomendados
@@ -226,25 +230,34 @@ export default function Page({ params }) {
           </button>
         </div> */}
         {produtos ? (
-          <div className="flex 3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
-            {produtos.map((produto) => {
-              return (
-                <Cards
-                  key={produto.ean}
-                  ean={produto.ean}
-                  imagem={produto.image}
-                  nome={produto.nomeproduto}
-                  promoQtd="Compre 3 leve 1"
-                  // promoNovo="Novo"
-                  promoValor="R$ 55,00 a partir de 6 un."
-                  a={produto.valor_pix}
-                  valor={produto.valor}
-                  parcelas="até 4x sem juros"
-                />
-              );
-            })}
-            <ModalCard />
-            {/* <Cards
+          loading ? (
+            <div className="flex 3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
+              <Cards loading={loading} />
+              <Cards loading={loading} />
+              <Cards loading={loading} />
+              <Cards loading={loading} />
+            </div>
+          ) : (
+            <div className="flex 3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">
+              {produtos.map((produto) => {
+                return (
+                  <Cards
+                    key={produto.ean}
+                    ean={produto.ean}
+                    imagem={produto.image}
+                    nome={produto.nomeproduto}
+                    promoQtd="Compre 3 leve 1"
+                    // promoNovo="Novo"
+                    promoValor="R$ 55,00 a partir de 6 un."
+                    a={produto.valor_pix}
+                    valor={produto.valor}
+                    parcelas="até 4x sem juros"
+                    loading={loading}
+                  />
+                );
+              })}
+              <ModalCard />
+              {/* <Cards
             imagem={"/images/Produtos/image 73.png"}
             nome="Whisky Johnnie Walker Green Label 750 ml"
             promoQtd="Compre 3 leve 1"
@@ -324,7 +337,7 @@ export default function Page({ params }) {
             valor="R$ 50,00"
             parcelas="até 4x sem juros"
           /> */}
-            {/* <Cards
+              {/* <Cards
             imagem={"/images/Produtos/image 42.png"}
             nome="Whisky Johnnie Walker Green Label 750 ml"
             promoQtd="Compre 3 leve 1"
@@ -404,7 +417,8 @@ export default function Page({ params }) {
             valor="R$ 50,00"
             parcelas="até 4x sem juros"
           /> */}
-          </div>
+            </div>
+          )
         ) : (
           <div className="flex flex-col justify-center items-center mb-[20%] mt-[20%] text-2xl font-bold text-center px-2">
             <h1>

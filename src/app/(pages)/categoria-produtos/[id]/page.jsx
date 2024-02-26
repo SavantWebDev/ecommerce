@@ -159,7 +159,7 @@ export default function Page({ params }) {
           <p className="flex flex-col text-cinza text-[16px] leading-[normal] sm:max-2xl:order-4  mb:max-mn:order-1 ">
             Resultados:
             <span className="text-cor-preto text-[24px] font-semibold leading-[normal] ">
-              {totalProdutos} itens
+            {totalProdutos ? `${totalProdutos} itens` : "0 itens"}
             </span>
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function Page({ params }) {
 
       {/* cards produtos */}
       <section className="mt-[30px]">
-        <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
+        {/* <div className="flex overflow-x-auto w-full gap-[1.25rem] mb-[80px]  mn:overflow-x-auto  mn:w-auto">
           <button className="text-cor-preto bg-primaria px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] rounded-[40px]">
             Recomendados
           </button>
@@ -180,7 +180,7 @@ export default function Page({ params }) {
           <button className="text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px] border border-solid border-cinza-medio-g  rounded-[40px]">
             Promoções
           </button>
-        </div>
+        </div> */}
         {/* <div className="grid justify-center items-center 2xl:grid-cols-4 xl:grid-cols-4 gap-10 lg:grid-cols-4  lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1"> */}
         {produtos ? (
           <div className="flex  3xl:gap-[97.3px] 2xl:gap-[76.3px] flex-wrap  items-center xl:gap-[50.3px] mb:max-3xl:grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 lg:gap-[9.3px] md:gap-[9.3px] sm:gap-[25.3px] mn:gap-[25.3px] lg:items-center md:grid-cols-3 mn:max-md:grid-cols-2 mb:max-mn:grid-cols-1">

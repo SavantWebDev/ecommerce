@@ -52,7 +52,7 @@ export default function Produto({ params }) {
   const [produto, setProduto] = useState([]);
   const [produtoSemelhante, setProdutoSemelhante] = useState([]);
   const [quantidade, setQuantidade] = useState(1);
-  const [variacao, setVariacao] = useState("");
+  const [variacao, setVariacao] = useState("Natural");
 
   function addQuantidade() {
     const add = quantidade + 1;
@@ -72,9 +72,9 @@ export default function Produto({ params }) {
       // console.log(resultado);
       setProduto(resultado.produtoConsultado);
       setProdutoSemelhante(resultado.produtosSemelhantes);
-      setTimeout(() => {
+      // setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      // }, 2000);
     }
 
     fetchProduto();
@@ -336,7 +336,7 @@ export default function Produto({ params }) {
             </span>
             Descrição do produto
           </h2>
-          <p className="text-cor-preto-m leading-[140.4%] mt-5 text-left">
+          <div className="text-cor-preto-m leading-[140.4%] mt-5 text-left">
             {loading ? (
               <div>
                 <p className="h-4 w-full bg-cinza-skeleton rounded-full mb-2 animate-pulse"></p>
@@ -348,8 +348,8 @@ export default function Produto({ params }) {
             ) : (
               ""
             )}
-            {/* {produto.descricao ? produto.descricao : "" } */}
-          </p>
+            
+          </div>
         </div>
 
         <div className="lg:w-[50%]">

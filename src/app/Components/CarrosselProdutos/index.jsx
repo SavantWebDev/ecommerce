@@ -62,6 +62,21 @@ export default function CarrosselProdutos() {
     fetchProdutosSecond();
   }, []);
 
+
+  const filtrarProdutosNovos = async () => {
+    const hoje = new Date();
+    const trintaDiasAtras = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 30);
+    
+  
+    const todosProdutos = await getProductHome(); // Esta é a função que carrega os produtos
+    const produtosFiltrados = todosProdutos.filter(produto => {
+      const dataProduto = new Date(produto.created_data); // Substitua 'created_data' pelo campo correto
+      return dataProduto >= trintaDiasAtras;
+    });
+  
+    setProdutos(produtosFiltrados);
+  };
+
   console.log(produtos);
   console.log(produtos[0]);
   console.log(produtosSecond);
@@ -113,15 +128,16 @@ export default function CarrosselProdutos() {
         </button>
         <button
           className={`text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px]   rounded-[40px] ${
-            filtro == "Entrega grátis"
+            filtro == "Novos"
               ? "bg-primaria text-cor-preto"
               : "border border-solid border-cinza-medio-g"
           }`}
           onClick={(e) => {
             filtraItem(e.target.innerHTML);
+            filtrarProdutosNovos();
           }}
         >
-          Entrega grátis
+          Novos
         </button>
         <button
           className={`text-cinza whitespace-nowrap px-[1.25rem] py-[0.625rem] font-semibold leading-[22px]  rounded-[40px] ${
@@ -139,7 +155,7 @@ export default function CarrosselProdutos() {
         >
           Mais Vendidos
         </button>
-        <button
+        {/* <button
           className={`text-cinza px-[1.25rem] py-[0.625rem] font-semibold leading-[22px]  rounded-[40px] ${
             filtro == "Promoções"
               ? "bg-primaria text-cor-preto"
@@ -150,7 +166,7 @@ export default function CarrosselProdutos() {
           }}
         >
           Promoções
-        </button>
+        </button> */}
       </div>
       {loading ? (
         <div className="w-full">

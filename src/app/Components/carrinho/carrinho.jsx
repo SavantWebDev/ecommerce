@@ -71,7 +71,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
                   <CardCarrinho
                     ean={item.eanproduto}
                     nome={item.nomeproduto}
-                    image={item.image.replace("\\", "")}
+                    image={item.image}
                     valor={item.valor}
                     pix={item.valor_pix}
                     quantidade={item.qnt}
@@ -87,7 +87,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
                 <CardCarrinho
                   ean={item.eanproduto}
                   nome={item.nomeproduto}
-                  image={item.image.replace("\\", "")}
+                  image={item.image}
                   pix={item.pix}
                   valor={item.valor}
                   quantidade={item.qnt}

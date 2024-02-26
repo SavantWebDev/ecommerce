@@ -23,7 +23,7 @@ export default function CardCarrinho({
       {/* <p>{ean}</p> */}
       <div className="w-[30%]">
         <Image
-          src={image?.replace("//", "")}
+          src={image}
           // src={image}
           width={200}
           height={200}

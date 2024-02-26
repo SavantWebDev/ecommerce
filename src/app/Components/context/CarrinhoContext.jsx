@@ -491,24 +491,25 @@ export const CarrinhoProvider = ({ children }) => {
         let total = 0;
         let subtotal = 0;
         for (let i = 0; i < carrinhoApi.length; i++) {
-          // const valor = converterNumero(carrinhoApi[i].pix);
+          const valor = converterNumero(carrinhoApi[i].valor_pix);
           const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
           const quantidade = carrinhoApi[i].qnt;
           const subResultado = ValorSubtotal * quantidade;
-          // const resultado = valor * quantidade;
+          const resultado = valor * quantidade;
           subtotal = subtotal + subResultado;
-          // total = total + resultado;
+          total = total + resultado;
           // console.log(total.toFixed(2));
         }
         // console.log("Valor Total:", total.toFixed(2));
         setSubTotalCarrinho(subtotal.toFixed(2));
-        // setTotalCarrinho(total.toFixed(2));
+        setTotalCarrinho(total.toFixed(2));
       } else {
         let total = 0;
         let subtotal = 0;
         for (let i = 0; i < carrinhoLocalStorage.length; i++) {
           if (carrinhoLocalStorage[i] && carrinhoLocalStorage[i].pix) {
-            const valor = converterNumero(carrinhoLocalStorage[i].pix);
+            const valor = carrinhoLocalStorage[i].pix;
+            console.log("🚀 ➽ file: CarrinhoContext.jsx:512  ➽ calculaValor  ➽ valor ⏩" , valor)
             const ValorSubtotal = converterNumero(
               carrinhoLocalStorage[i].valor
             );
@@ -519,7 +520,8 @@ export const CarrinhoProvider = ({ children }) => {
             subtotal = subtotal + subResultado;
           }
         }
-        // console.log("Valor Total:", subtotal.toFixed(2));
+        console.log("Valor SUbTotal:", subtotal.toFixed(2));
+        console.log("Valor Total:", total.toFixed(2));
         setTotalCarrinho(total.toFixed(2));
         setSubTotalCarrinho(subtotal.toFixed(2));
       }

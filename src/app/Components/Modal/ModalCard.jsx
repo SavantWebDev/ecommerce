@@ -14,7 +14,7 @@ const ModalCard = ({ isOpen, setOpen, produt, qnt }) => {
     setCarrinhoApi,
   } = useContext(CarrinhoContext);
   const [quantidade, setQuantidade] = useState(1);
-  const [variacao, setVariacao] = useState("");
+  const [variacao, setVariacao] = useState("Natural");
 
   const {
     isOpenModal,
