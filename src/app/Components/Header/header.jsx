@@ -385,7 +385,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               label="Search"
               isClearable
               radius="sm"
-              className="w-full bg-[#fff] "
+              className="w-full bg-[#fff] lg:hidden "
               value={pesquisaInput}
               onChange={(event) => setPesquisaInput(event.target.value)}
               onKeyPress={(event) => {
