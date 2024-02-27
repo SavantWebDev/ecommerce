@@ -65,8 +65,7 @@ export default function Header() {
     }
   };
 
-  function closeMenu(e) {
-    e.preventDefault();
+  function closeMenu() {
     setIsMenuOpen(false);
     document.body.classList.remove("overflow-hidden");
   }
@@ -283,17 +282,17 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                 />
                 <div className="flex flex-col gap-5 mt-2">
                   <Link
-                    onClick={closeMenu}
                     className="lg:hidden flex items-center gap-2"
                     href="/usuario"
+                    onClick={closeMenu}
                   >
                     <FaRegUserCircle size={24} />
                     Minha conta
                   </Link>
                   <Link
-                    onClick={closeMenu}
                     className="lg:hidden flex items-center gap-2"
                     href="/usuario/meus-dados"
+                    onClick={closeMenu}
                   >
                     <HiOutlineShoppingBag size={24} />
                     Meus pedidos
@@ -311,24 +310,6 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                   description="Faça login ou cadastre-se"
                   name="Olá, visitante!"
                 />
-                <div className="flex flex-col gap-5 mt-2">
-                  <Link
-                    onClick={closeMenu}
-                    className="lg:hidden flex items-center gap-2"
-                    href="/auth/login"
-                  >
-                    <FaRegUserCircle size={24} />
-                    Login
-                  </Link>
-                  <Link
-                    onClick={closeMenu}
-                    className="lg:hidden flex items-center gap-2"
-                    href="/auth/cadastro"
-                  >
-                    <HiOutlineShoppingBag size={24} />
-                    Cadastro
-                  </Link>
-                </div>
               </div>
             )}
             <div className="w-full flex justify-center items-center gap-[70px] max-lg:flex-col max-lg:gap-5 max-lg:items-start ">
@@ -365,9 +346,9 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
-                  onClick={closeMenu}
                   href="/fidelidade"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
+                  onClick={closeMenu}
                 >
                   <IoSnow size={24} />
                   Programa de Fidelidade
@@ -384,9 +365,9 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
-                  onClick={closeMenu}
                   href="/categorias"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
+                  onClick={closeMenu}
                 >
                   <CgFileDocument size={24} />
                   Categorias
