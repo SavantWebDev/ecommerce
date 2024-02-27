@@ -25,15 +25,17 @@ export default function PtsFidelidade({ icone, text, pontos }) {
           </div>
         </div>
       ) : (
-        <>
+        <div className="flex items-center justify-center gap-3 max-mc:flex-col max-mc:text-center max-mc:gap-2">
           {icone}
           <div className="">
             <h1 className="text-base font-nnormal text-amarelo-mostarda">
               {text}
             </h1>
-            <p className="text-2xl text-amarelo-mostarda font-bold">{pontos}</p>
+            <p className="text-2xl max-mc:text-lg text-amarelo-mostarda font-bold">
+              {pontos}
+            </p>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

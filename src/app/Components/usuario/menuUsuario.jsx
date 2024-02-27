@@ -22,15 +22,15 @@ export default function MenuUsuario() {
     // Adicione mais itens conforme necessário
   ];
   return (
-    <div className="w-[368px] bg-[#fff]   flex flex-col items-start  rounded-[20px] max-lg:bg-primaria max-lg:w-full max-lg:fixed max-lg:bottom-0 max-lg:rounded-none  ">
+    <div className="w-[368px] bg-[#fff]   flex flex-col items-start  rounded-[20px] max-lg:bg-branco max-lg:w-full max-lg:fixed max-lg:bottom-0 max-lg:rounded-none  ">
       <h3 className="p-5 font-bold text-lg max-lg:hidden">Minha conta</h3>
       <ul className="w-full list-none max-lg:flex max-lg:items-center max-lg:justify-center ">
         {menuItems.map(({ href, text, Icon }) => (
           <li
             key={href}
             className={`   ${
-              pathname === href ? "bg-[#FFEAA6]" : ""
-            } max-lg:rounded-xl `}
+              pathname === href ? "bg-primaria" : ""
+            } max-lg:rounded-lg `}
           >
             <Link
               href={href}
@@ -39,10 +39,10 @@ export default function MenuUsuario() {
               <Icon
                 className={` ${
                   pathname === href ? "text-[#554503]" : "text-primaria"
-                } max-lg:text-[#000]`}
+                } max-lg:text-[#000] `}
                 size={24}
               />
-              {text}
+              <span className="max-mc:hidden">{text}</span>
             </Link>
           </li>
         ))}

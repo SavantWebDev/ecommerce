@@ -11,7 +11,7 @@ import LoginSocial from "../../Components/FormsLoginCadastro/loginsocial";
 import RedirectLoginCadastro from "../../Components/FormsLoginCadastro/redirectLoginCadastro";
 import valido from "../../../../public/images/assets/verificado.svg";
 import erro from "../../../../public/images/assets/erro.svg";
-import CloseIcon from "../../../../public/images/assets/close.svg"
+import CloseIcon from "../../../../public/images/assets/close.svg";
 
 import {
   validaCpf,
@@ -23,8 +23,10 @@ import {
 import { cadastro } from "../../api/api";
 import Image from "next/image";
 import { MaskCpf, MaskTelefone } from "./Mascaras";
+import { useRouter } from "next/navigation";
 
 export default function CadastroAuth() {
+  const router = useRouter();
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -90,10 +92,11 @@ export default function CadastroAuth() {
         }
         // Trate a resposta de sucesso aqui
         console.log("Formulário enviado com sucesso");
+        router.push("/auth/login");
       } catch (error) {
         setModalErroVisivel(true);
-        setIsEmailValid(false)
-        setIsCpfValid(false)
+        setIsEmailValid(false);
+        setIsCpfValid(false);
       }
     }
   };
@@ -466,18 +469,18 @@ export default function CadastroAuth() {
       {modalErroVisivel && (
         <div className="fixed top-0 bottom-0 right-0 left-0 bg-cor-preto/[.40] backdrop-blur-[2px] z-[99] overflow-hidden ">
           <div className="text-center relative bg-branco top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] px-14 py-10 rounded-lg max-w-[409px] mn:max-3xl:max-w-[409px] w-full mb:max-mn:max-w-[310px]">
-          <div
-          className="cursor-pointer absolute top-[7px] right-3"
-          onClick={() => setModalErroVisivel(false)}
-        >
-          <Image
-            src={CloseIcon}
-            width={25}
-            height={25}
-            className="text-right top-0 right-0"
-            alt="Fechar Modal"
-          />
-        </div>
+            <div
+              className="cursor-pointer absolute top-[7px] right-3"
+              onClick={() => setModalErroVisivel(false)}
+            >
+              <Image
+                src={CloseIcon}
+                width={25}
+                height={25}
+                className="text-right top-0 right-0"
+                alt="Fechar Modal"
+              />
+            </div>
             <p className="text-base font-bold">
               CPF ou email inválido. Por favor, verifique os dados e tente
               novamente.

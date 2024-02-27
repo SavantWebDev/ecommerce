@@ -52,9 +52,9 @@ export default function TextCarousel() {
         >
           {banners.map((item, index) => (
             <SwiperSlide key={index}>
-              <article className="flex flex-row-reverse justify-center items-start w-full mx-auto py-10 gap-[100px] max-lg:flex-col">
+              <article className="flex flex-row-reverse justify-center items-start w-full mx-auto py-10 gap-[100px] max-lg:flex-col max-lg:text-center max-lg:justify-center max-lg:gap-[20px]  ">
                 <article
-                  className="max-w-[813px] w-full rounded-[40px] h-[337px] bg-center bg-cover bg-no-repeat object-cover "
+                  className="max-w-[813px] w-full rounded-[40px]  h-[337px] bg-center bg-cover bg-no-repeat object-cover max-lg:rounded-[20px] "
                   style={{
                     backgroundImage: `url(${item.image})`,
                   }}
@@ -67,7 +67,7 @@ export default function TextCarousel() {
                     src={item.image.replace("/", "")}
                   /> */}
                 </article>
-                <article className=" flex flex-col gap-10 h-auto">
+                <article className=" flex flex-col gap-10 h-auto max-lg:items-center max-lg:px-3 ">
                   <h1 className="text-4xl font-semibold leading-[140%] ">
                     {item.titulo.replace("$1", "?")}
                   </h1>

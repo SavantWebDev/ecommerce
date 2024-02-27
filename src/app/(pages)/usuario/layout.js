@@ -1,5 +1,6 @@
 import MenuUsuario from "@/app/Components/usuario/menuUsuario";
 import PerfilUser from "@/app/Components/usuario/perfil";
+
 export default function LayoutUsuario({ children }) {
   return (
     <main className="w-full h-full  bg-[#F2F3F4] max-xl:px-[10px]  ">

@@ -141,7 +141,7 @@ export default function Header() {
             label="Search"
             isClearable
             radius="sm"
-            className="w-[40%] mx-5 bg-[#fff] "
+            className="w-[40%] mx-5 bg-[#fff] max-mc:hidden "
             value={pesquisaInput}
             onChange={(event) => setPesquisaInput(event.target.value)}
             onKeyPress={(event) => {
@@ -375,7 +375,31 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                 </Link>
               </li>
             </div>
-
+            <Input
+              label="Search"
+              isClearable
+              radius="sm"
+              className="w-full bg-[#fff] "
+              value={pesquisaInput}
+              onChange={(event) => setPesquisaInput(event.target.value)}
+              onKeyPress={(event) => {
+                console.log(event.key);
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  router.push(`/pesquisa/${pesquisaInput}`);
+                }
+              }}
+              classNames={{
+                label: ["hidden"],
+                base: ["rounded-[10px]", "!items-center"],
+                innerWrapper: ["!items-center", "gap-5", "!bg-[#fff]"],
+                inputWrapper: ["bg-[#fff]", "!bg-[#fff]", "!h-[45px]"],
+              }}
+              placeholder="Busque por um item"
+              startContent={
+                <SearchIcon className="text-primaria mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+              }
+            />
             {nav ? (
               <button
                 onClick={Logout}

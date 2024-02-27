@@ -109,8 +109,8 @@ export default function PerfilUserHome() {
               height={139}
               className="rounded-full max-mn:max-w-[80px] "
             /> */}
-            <div className="flex flex-col items-start max-mn:items-center max-mn:justify-center w-full">
-              <span className="font-bold leading-[140%] text-[24px] ">
+            <div className=" w-full flex flex-col items-start max-mn:gap-3 max-mn:items-center max-mn:justify-center">
+              <span className="font-bold leading-[140%] text-[24px] max-mn:text-center max-lg:text-left">
                 Bem vindo, {username}.
               </span>
               <div className="flex items-center   gap-2  ">

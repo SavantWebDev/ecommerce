@@ -26,7 +26,7 @@ export default function PerfilUser({
     if (perfil) {
       setLoading(false);
     }
-  }, [perfil]);
+  }, [perfil, router]);
 
   // useEffect(() => {
 
