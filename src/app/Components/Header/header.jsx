@@ -282,11 +282,17 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                   name={`Olá, ${nav.username}`}
                 />
                 <div className="flex flex-col gap-5 mt-2">
-                  <Link className="lg:hidden flex items-center gap-2" href="#">
+                  <Link
+                    className="lg:hidden flex items-center gap-2"
+                    href="/usuario"
+                  >
                     <FaRegUserCircle size={24} />
                     Minha conta
                   </Link>
-                  <Link className="lg:hidden flex items-center gap-2" href="#">
+                  <Link
+                    className="lg:hidden flex items-center gap-2"
+                    href="/usuario/meus-dados"
+                  >
                     <HiOutlineShoppingBag size={24} />
                     Meus pedidos
                   </Link>
