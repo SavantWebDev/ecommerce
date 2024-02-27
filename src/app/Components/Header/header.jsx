@@ -283,6 +283,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                 />
                 <div className="flex flex-col gap-5 mt-2">
                   <Link
+                    onClick={closeMenu}
                     className="lg:hidden flex items-center gap-2"
                     href="/usuario"
                   >
@@ -290,6 +291,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                     Minha conta
                   </Link>
                   <Link
+                    onClick={closeMenu}
                     className="lg:hidden flex items-center gap-2"
                     href="/usuario/meus-dados"
                   >
@@ -310,11 +312,19 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                   name="Olá, visitante!"
                 />
                 <div className="flex flex-col gap-5 mt-2">
-                  <Link className="lg:hidden flex items-center gap-2" href="#">
+                  <Link
+                    onClick={closeMenu}
+                    className="lg:hidden flex items-center gap-2"
+                    href="/auth/login"
+                  >
                     <FaRegUserCircle size={24} />
                     Login
                   </Link>
-                  <Link className="lg:hidden flex items-center gap-2" href="#">
+                  <Link
+                    onClick={closeMenu}
+                    className="lg:hidden flex items-center gap-2"
+                    href="/auth/cadastro"
+                  >
                     <HiOutlineShoppingBag size={24} />
                     Cadastro
                   </Link>
@@ -355,6 +365,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
+                  onClick={closeMenu}
                   href="/fidelidade"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
                 >
@@ -373,6 +384,7 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
               </li>
               <li>
                 <Link
+                  onClick={closeMenu}
                   href="/categorias"
                   className="text-[#090909] font-semibold flex items-center gap-[10px]"
                 >
@@ -392,7 +404,10 @@ max-lg:left-0 max-lg:flex-col max-lg:z-50 max-lg:h-screendv max-lg:bg-[#F7F7F7] 
                 console.log(event.key);
                 if (event.key === "Enter") {
                   event.preventDefault();
+
                   router.push(`/pesquisa/${pesquisaInput}`);
+                  setIsMenuOpen(false);
+                  document.body.classList.remove("overflow-hidden");
                 }
               }}
               classNames={{
