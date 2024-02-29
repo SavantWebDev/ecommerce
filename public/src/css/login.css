@@ -75,3 +75,32 @@ header {
   font-weight: bold;
   cursor: pointer;
 }
+
+.logo__login--mob {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  header {
+    display: none;
+  }
+
+  .login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .form-login {
+    padding: 0 2rem;
+    max-width: 463px;
+    width: 100%;
+  }
+
+  .logo__login--mob {
+    display: block;
+  }
+
+}
