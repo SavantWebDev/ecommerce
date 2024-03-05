@@ -491,7 +491,7 @@ export const CarrinhoProvider = ({ children }) => {
         let total = 0;
         let subtotal = 0;
         for (let i = 0; i < carrinhoApi.length; i++) {
-          const valor = converterNumero(carrinhoApi[i].valor_pix);
+          const valor = carrinhoApi[i].valor_pix;
           const ValorSubtotal = converterNumero(carrinhoApi[i].valor);
           const quantidade = carrinhoApi[i].qnt;
           const subResultado = ValorSubtotal * quantidade;

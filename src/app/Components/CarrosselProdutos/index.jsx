@@ -405,7 +405,7 @@ export default function CarrosselProdutos() {
                 <SwiperSlide key={item.ean}>
                   <Cards
                     ean={item.ean}
-                    imagem={item.image.replace("\\", "")}
+                    imagem={item.image}
                     nome={item.nomeproduto}
                     // promoQtd="Compre 3 leve 1"
                     // promoNovo="Novo"

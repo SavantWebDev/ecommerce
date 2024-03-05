@@ -63,7 +63,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
             color="red"
           />
         </div>
-        <div className="lg:h-[80%] md:h-[85%] flex flex-col justify-between">
+        <div className="lg:h-[80%] md:h-[85%] sm:h-[85%] mc:h-[85%] mn:h-[85%] mb:h-[88%] flex flex-col justify-between">
           <div className=" flex flex-col gap-5 px-5 h-[100%] overflow-auto">
             {usuarioLogado ? (
               carrinhoApi && carrinhoApi.length > 0 ? (
@@ -99,7 +99,7 @@ export default function BarraCarrinho({ carrinho, setCarrinho }) {
             )}
           </div>
 
-          <div className="bg-amarelo-medio-m h-[215px] w-full px-11">
+          <div className="bg-amarelo-medio-m h-[215px] w-full px-11 mb:pb-60">
             <div className="pt-[42px] mb-[32px] ">
               <div>
                 <div className="flex justify-between">

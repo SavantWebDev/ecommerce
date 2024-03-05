@@ -83,6 +83,8 @@ export const UsuarioProvider = ({ children }) => {
           pegaToken.msg == "Acesso Negado" ||
           pegaToken.msg == "undefined"
         ) {
+          window.location.reload();
+          localStorage.removeItem("token");
           return false;
         } else {
           return pegaToken;

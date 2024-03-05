@@ -7,11 +7,11 @@
 }
 
 .kitbebidas .swiper-button-next::after {
-  @apply text-primaria !text-xl;
+  @apply text-primaria !text-xl mb:!text-4xl !font-bold;
 }
 
 .kitbebidas .swiper-button-prev::after {
-  @apply text-primaria !text-xl;
+  @apply text-primaria !text-xl mb:!text-4xl !font-bold;
 }
 
 .kitbebidas .swiper-button-next:hover,
@@ -21,11 +21,11 @@
 
 .kitbebidas .swiper-button-next {
   /* @apply !absolute mb:!top-[130px] !right-[-15px] mn:!right-[-22px] sm:!right-[-30px] md:!right-[-36px] lg:!right-[-50px] xl:!right-[-64px] 2xl:!right-[-68px]; */
-  @apply !absolute  mb:!top-[130px] mb:!right-[-40px] mn:!right-[-40px] sm:!right-[-40px] md:!right-[-35px] lg:!right-[-40px] xl:!right-[-40px] 2xl:!right-[-40px] 3xl:!right-[-92px];
+  @apply !absolute  mb:!top-[130px] mb:!right-[-15px] mn:!right-[-20px] sm:!right-[-20px] md:!right-[-2px] lg:!right-[-20px] xl:!right-[-20px] 2xl:!right-[-38px] 3xl:!right-[-88px];
 }
 
 .kitbebidas .swiper-button-prev {
-  @apply !absolute  !top-[130px] !left-[-41px] mn:!left-[-41px] sm:!left-[-39px] md:!left-[-41px] lg:!left-[-41px] xl:!left-[-41px] 2xl:!left-[-41px] 3xl:!left-[-92px];
+  @apply !absolute  !top-[130px] !left-[-41px] mb:!left-[-16px] mn:!left-[-19px] sm:!left-[-19px] md:!left-[-20px] lg:!left-[-19px] xl:!left-[-21px] 2xl:!left-[-37px] 3xl:!left-[-86px];
 }
 
 .kitbebidas .swiper-slide {

@@ -12,12 +12,15 @@ export default function Categorias() {
   useEffect(() => {
     async function fetchCategorias() {
       const resultado = await getCategory();
-      // console.log(resultado);
+      console.log("🚀 ➽ file: page.js:15  ➽ fetchCategorias  ➽ resultado ⏩" , resultado)
       setCategorias(resultado);
     }
 
     fetchCategorias();
   }, []);
+
+  const [arrays,setArrays] = useState([]);
+  
 
   console.log(categorias);
 
