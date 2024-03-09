@@ -32,7 +32,7 @@ function vizualizarImg(Urlimagem) {
 // Verificador de Existência // Não pode ser um número que não exista e nenhum vazio
 function verificarExApi(quantidadeA, codigoA) {//, Ipreco, Iquantidade
     if (codigoA && codigoA.trim() !== '') {
-        fetch(`http://20.197.251.208/v1/api/produtos/${codigoA}`)
+        fetch(`https://iceberg.savantweb.com.br/v1/api/produtos/${codigoA}`)
             .then(response => response.json())
             .then(data => {
 
