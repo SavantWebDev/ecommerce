@@ -36,14 +36,23 @@ const Cards = ({
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     return diffInDays;
   }
-  
-  const [produtoCard, setProdutoCard] = useState({ean: ean,
+
+  const [produtoCard, setProdutoCard] = useState({
+    ean: ean,
     nomeproduto: nome,
     image: imagem,
     valor_pix: a,
-    valor: valor,});
+    valor: valor,
+  });
 
-  const {isOpenModal,setIsOpenMOdal,produto, setProduto,quantidadeModal, setQuantidadeModal} = useContext(ModalContext)
+  const {
+    isOpenModal,
+    setIsOpenMOdal,
+    produto,
+    setProduto,
+    quantidadeModal,
+    setQuantidadeModal,
+  } = useContext(ModalContext);
 
   const [OpenModal, setOpenModal] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
