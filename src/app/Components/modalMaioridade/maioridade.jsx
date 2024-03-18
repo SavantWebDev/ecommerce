@@ -23,12 +23,12 @@ export default function Maioridade() {
     <div className="fixed z-50 w-full h-full flex items-center justify-center">
       <div className="absolute w-full h-full bg-cor-preto opacity-60"></div>
 
-      <div className="relative bg-branco flex flex-col items-center gap-8  p-10 rounded-xl ">
+      <div className="relative bg-branco flex flex-col items-center gap-8  p-10 rounded-xl max-mn:p-5 max-mn:mx-2 ">
         <div>
           <Image alt="logo 18" src={Logo2} width={100} height={100} />
         </div>
 
-        <h1 className="text-3xl font-bold text-cor-preto">
+        <h1 className="text-3xl font-bold text-center text-cor-preto">
           Você possui 18 anos ou mais?
         </h1>
         <div className="flex gap-4 ">
